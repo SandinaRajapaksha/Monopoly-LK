@@ -1,5 +1,6 @@
 #ifndef TYPES_H
 #define TYPES_H
+#define notInitialized -99;
 
 // square
 typedef enum {
@@ -22,20 +23,47 @@ typedef enum {
     none
 } playerType;
 
-typedef enum { mortgagedToBank, noMortgage } mortgageType;
+typedef enum { cannotMortgage, mortgagedToBank, noMortgage } mortgageType;
+
+typedef enum {
+    brown,
+    lightBlue,
+    pink,
+    orange,
+    red,
+    yellow,
+    green,
+    darkBlue
+} groupType;
+
+typedef enum { inusured, notInsurd } insurance;
 
 typedef struct {
+    int squareID;
     char *name;
     squareType type;
     playerType owner;
+    mortgageType mortgageStatus;
+    int mortgageValue;
+    int value;
 
     struct {
         int rental;
-    } utilityProperties;
+    } utilityproperties;
 
     struct {
-        mortgageType mortgageStatus;
     } railwayProperties;
+
+    struct {
+        groupType propertyGroup;
+        int baseRental;
+        int houseConstructionCost;
+        int hotelConstructionCost;
+        insurance insuranceStatus;
+        int noOfHouses;
+        int noOfHotels;
+    } PropertyProperties;
+
 } square;
 
 #endif
