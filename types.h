@@ -71,6 +71,10 @@ typedef struct s {
         int noOfHotels;
     } PropertyProperties;
 
+    struct {
+        int taxAmount;
+    } TaxSquareProperties;
+
 } square;
 
 #endif
