@@ -1,6 +1,8 @@
 #ifndef TYPES_H
 #define TYPES_H
-#define notInitialized -99;
+#define NOT_INITIALIZED -99;
+#define TRUE 1;
+#define FALSE 0;
 
 // square
 typedef enum {
@@ -16,11 +18,11 @@ typedef enum {
 } squareType;
 
 typedef enum {
+    none,
     aggresiveInvester,
     conservativeBanker,
     riskTaker,
-    opportunisticTrader,
-    none
+    opportunisticTrader
 } playerType;
 
 typedef enum { cannotMortgage, mortgagedToBank, noMortgage } mortgageType;
@@ -36,7 +38,7 @@ typedef enum {
     darkBlue
 } groupType;
 
-typedef enum { inusured, notInsurd } insurance;
+typedef enum { inusured, notInsured } insurance;
 
 typedef struct s {
     int squareID;
@@ -48,13 +50,15 @@ typedef struct s {
     int value;
 
     struct {
-        int rental;
+        int BaseRentalOfUtility;
+        int noOfUtiliesOwnedByOwner;
+        int currentRentOfUtility; // based on dice role
     } utilityproperties;
 
     struct {
         int noOfRailwaysOwnedByOwner;
         int baseRentOfRailway;
-        int currentRent = noOfRailwaysOwnedByOwner * baseRentOfRailway;
+        int currentRentOfRailway = noOfRailwaysOwnedByOwner * baseRentOfRailway;
     } railwayProperties;
 
     struct {
