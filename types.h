@@ -18,7 +18,8 @@ typedef enum {
     aggresiveInvester,
     conservativeBanker,
     riskTaker,
-    opportunisticTrader
+    opportunisticTrader,
+    none
 } playerType;
 
 typedef enum { mortgagedToBank, noMortgage } mortgageType;
