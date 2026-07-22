@@ -38,7 +38,7 @@ typedef enum {
 
 typedef enum { inusured, notInsurd } insurance;
 
-typedef struct {
+typedef struct s {
     int squareID;
     char *name;
     squareType type;
@@ -52,6 +52,9 @@ typedef struct {
     } utilityproperties;
 
     struct {
+        int noOfRailwaysOwnedByOwner;
+        int baseRentOfRailway;
+        int currentRent = noOfRailwaysOwnedByOwner * baseRentOfRailway;
     } railwayProperties;
 
     struct {
