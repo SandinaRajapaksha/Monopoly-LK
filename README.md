@@ -1,5 +1,5 @@
 # Monopoly-LK
-### A modified monopoly simulation
+### A simulation of an extended version of monopoly  
 ![banner](public/images/monopoly.png)
 
 [![Licence](https://img.shields.io/github/license/Ileriayo/markdown-badges?style=for-the-badge)](./LICENSE)   
