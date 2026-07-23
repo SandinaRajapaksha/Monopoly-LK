@@ -1,6 +1,6 @@
 #include "types.h"
 int main(void) {
     // entryPoint
-    initializeGame();
+    startGame();
     return 0;
 }

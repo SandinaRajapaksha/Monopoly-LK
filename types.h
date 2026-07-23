@@ -81,7 +81,8 @@ typedef struct sq {
 } square;
 
 // function Prototypes
-void initializeGame(void);
+void startGame(void);
+void initializeBoard(square *);
 //  econ func prototypes
 void econEventActivate(square *);
 void govRegulationsActivate(square *);
