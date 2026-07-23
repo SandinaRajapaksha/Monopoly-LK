@@ -18,7 +18,8 @@ typedef enum {
 } squareType;
 
 typedef enum {
-    none,
+    noOwnner,
+    bankOfCeylon,
     aggresiveInvester,
     conservativeBanker,
     riskTaker,
@@ -40,7 +41,8 @@ typedef enum {
 
 typedef enum { inusured, notInsured } insurance;
 
-typedef struct s {
+typedef struct sq {
+
     int squareID;
     char *name;
     squareType type;
@@ -58,7 +60,7 @@ typedef struct s {
     struct {
         int noOfRailwaysOwnedByOwner;
         int baseRentOfRailway;
-        int currentRentOfRailway = noOfRailwaysOwnedByOwner * baseRentOfRailway;
+        int currentRentOfRailway; // calculated using other two properties
     } railwayProperties;
 
     struct {
@@ -69,6 +71,7 @@ typedef struct s {
         insurance insuranceStatus;
         int noOfHouses;
         int noOfHotels;
+        int currentRentalofProperty;
     } PropertyProperties;
 
     struct {
@@ -77,4 +80,7 @@ typedef struct s {
 
 } square;
 
+// function Protypes
+
+// void initializeBoard(square *boardPointer);
 #endif
