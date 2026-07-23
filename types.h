@@ -82,6 +82,9 @@ typedef struct sq {
 
 // function Prototypes
 void initializeGame(void);
+//  econ func prototypes
+void econEventActivate(square *);
+void govRegulationsActivate(square *);
 
 // event_related types
 typedef enum {
