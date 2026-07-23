@@ -83,5 +83,32 @@ typedef struct sq {
 // function Prototypes
 void initializeGame(void);
 
-// void initializeBoard(square *boardPointer);
+// event_related types
+typedef enum {
+
+    TourismBoom = 1001,
+    FuelCrisis,
+    HeavyMonsoon,
+    EconomicRecession,
+    StockMarketBoom,
+    GovernmentHousingProgramme,
+    ForeignInvestment,
+    PoliticalUnrest
+
+} economicEventCardType;
+
+// goverment regulation types
+typedef enum {
+
+    IncreasePropertyTax = 2001,
+    ReduceLoanInterest,
+    HousingSubsidy,
+    LuxaryPropertyTax,
+    RailwayModernization,
+    ElectricityTariffRevision,
+    InsuranceRegulation,
+    AntiSpeculantAct
+
+} govRegulationsType;
+
 #endif
