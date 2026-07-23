@@ -123,6 +123,30 @@ typedef enum {
 
 } govRegulationsType;
 
-// regional development cards
+// national event cards
+
+typedef enum {
+
+    TourismHype,
+    FuelShortage,
+    PoliticalRally,
+    StockMarketRise,
+    EconomicDowntime,
+    HousingSubsidy_NationalEvent,
+    InterestRateCut,
+    InterestRateIncrease,
+    TaxAmnesty,
+    PowerFailure,
+    ForeignFunding,
+    PortExpansion,
+    FestivalSeason,
+    LabourStrike,
+    InsuranceDiscount,
+    PropertyRevaluation,
+    CurrencyDepreciation,
+    GovernmentGrant,
+    NationalDisaster
+
+} NationalEventType;
 
 #endif
