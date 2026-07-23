@@ -80,7 +80,7 @@ typedef struct sq {
 
 } square;
 
-// function Protypes
+// function Prototypes
 void initializeGame(void);
 
 // void initializeBoard(square *boardPointer);
