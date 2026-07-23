@@ -1,4 +1,5 @@
 #include "types.h"
+#include <stdio.h>
 
 void startGame(void) {
     //

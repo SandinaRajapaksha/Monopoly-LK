@@ -4,6 +4,14 @@
 #define TRUE 1;
 #define FALSE 0;
 
+// player types
+typedef struct {
+
+    int playerId;
+    int turnOrder;
+
+} player;
+
 // square
 typedef enum {
     go,
@@ -114,5 +122,7 @@ typedef enum {
     AntiSpeculantAct
 
 } govRegulationsType;
+
+// regional development cards
 
 #endif
