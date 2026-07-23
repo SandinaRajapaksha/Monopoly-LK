@@ -94,6 +94,8 @@ void initializeBoard(square *);
 //  econ func prototypes
 void econEventActivate(square *);
 void govRegulationsActivate(square *);
+// nationa event prototypes
+void nationalEventActivate(int *, square *);
 
 // event_related types
 typedef enum {
@@ -127,7 +129,7 @@ typedef enum {
 
 typedef enum {
 
-    TourismHype,
+    TourismHype = 3001,
     FuelShortage,
     PoliticalRally,
     StockMarketRise,
