@@ -1,6 +1,7 @@
 #include "types.h"
 
-void initializeBoard(square *board) {
+void initializeGame(void) {
+    square board[40];
     board[0] = (square){.squareID = 0,
                         .name = "go",
                         .type = go,
