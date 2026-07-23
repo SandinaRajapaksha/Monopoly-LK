@@ -81,6 +81,7 @@ typedef struct sq {
 } square;
 
 // function Protypes
+void initializeGame(void);
 
 // void initializeBoard(square *boardPointer);
 #endif
