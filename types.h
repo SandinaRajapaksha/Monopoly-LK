@@ -151,4 +151,23 @@ typedef enum {
 
 } NationalEventType;
 
+// regional development type
+
+typedef enum {
+
+    southernTourismBoom,
+    portCityExpansion,
+    itIndustryGrowth,
+    nothernDevelopmentProgramme,
+    teaExportBoom,
+    airPortExpansion,
+    universityCityGrowth,
+    beachPollution,
+    floodDamage,
+    transportStrike,
+    electricityTariffIncrease,
+    waterShortage
+
+} regionalDevelopmentType;
+
 #endif
