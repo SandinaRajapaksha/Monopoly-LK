@@ -89,13 +89,15 @@ typedef struct sq {
 } square;
 
 // function Prototypes
+
 void startGame(void);
 void initializeBoard(square *);
-//  econ func prototypes
+//  randomly choosen after round count
 void econEventActivate(square *);
 void govRegulationsActivate(square *);
-// nationa event prototypes
+// card decks and draws
 void nationalEventActivate(int *, square *);
+void regionalDevelopmentActivate(int *, square *);
 
 // event_related types
 typedef enum {
@@ -155,7 +157,7 @@ typedef enum {
 
 typedef enum {
 
-    southernTourismBoom,
+    southernTourismBoom = 4001,
     portCityExpansion,
     itIndustryGrowth,
     nothernDevelopmentProgramme,

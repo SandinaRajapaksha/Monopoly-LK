@@ -30,5 +30,34 @@ void nationalEventActivate(int *topNationalEventcard, square *board) {
     NationalEventType currentNationalEvent =
         NationalEventCards[*topNationalEventcard];
     // all the shit happening accoding to event
+
+    // push the card to bottom
     *topNationalEventcard = (*topNationalEventcard + 1) % 19;
+}
+
+void regionalDevelopmentActivate(int *topreigionaldevelopmentcard,
+                                 square *board) {
+    // deck
+    regionalDevelopmentType regionalDevelopmentCards[12] = {
+
+        southernTourismBoom,
+        portCityExpansion,
+        itIndustryGrowth,
+        nothernDevelopmentProgramme,
+        teaExportBoom,
+        airPortExpansion,
+        universityCityGrowth,
+        beachPollution,
+        floodDamage,
+        transportStrike,
+        electricityTariffIncrease,
+        waterShortage};
+
+    regionalDevelopmentType currentRegionalEvent =
+        regionalDevelopmentCards[*topreigionaldevelopmentcard];
+
+    // all the shit happening in regional devellopment
+
+    // push the card to bottom
+    *topreigionaldevelopmentcard = (*topreigionaldevelopmentcard + 1) % 12;
 }
