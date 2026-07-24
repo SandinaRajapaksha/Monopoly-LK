@@ -1,16 +1,8 @@
 #ifndef TYPES_H
 #define TYPES_H
-#define NOT_INITIALIZED -99;
-#define TRUE 1;
-#define FALSE 0;
-
-// player types
-typedef struct {
-
-    int playerId;
-    int turnOrder;
-
-} player;
+#include <stdbool.h>
+#include <stdlib.h>
+#include <time.h>
 
 // square
 typedef enum {
@@ -26,13 +18,18 @@ typedef enum {
 } squareType;
 
 typedef enum {
-    noOwnner,
+    noOwnner = 301,
     bankOfCeylon,
     aggresiveInvester,
     conservativeBanker,
     riskTaker,
     opportunisticTrader
 } playerType;
+
+typedef struct {
+    playerType playerID;
+    int initialDiceRollValue;
+} player;
 
 typedef enum { cannotMortgage, mortgagedToBank, noMortgage } mortgageType;
 
@@ -175,9 +172,13 @@ void initializeBoard(square *);
 //  randomly choosen after round count
 void econEventActivate(square *);
 void govRegulationsActivate(square *);
-void dynamicPropertyEventActivate(square *board);
+void dynamicPropertyEventActivate(square *);
 // card decks and draws
 void nationalEventActivate(int *, square *);
 void regionalDevelopmentActivate(int *, square *);
+
+void initializeTurnOrder(player *, player *, player *, player *, player *,
+                         player *, player *, player *);
+int diceRoll();
 
 #endif
