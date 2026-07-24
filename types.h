@@ -161,6 +161,13 @@ typedef enum {
 
 } regionalDevelopmentType;
 
+typedef enum {
+
+    dynamicPropertyMarketBoom = 5001,
+    dynamicPropertyMarketDecline
+
+} dynamicPropertyMarketEventType;
+
 // function Prototypes
 
 void startGame(void);
