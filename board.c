@@ -67,8 +67,29 @@ void initializeTurnOrder(player *aggr, player *risktkr, player *investbnkr,
         invest_opprt_pivot++;
     }
 
+    if (aggr_risk_pivot != 0) {
+        aggr->initialDiceRollValue = aggrTurn[aggr_risk_pivot];
+        risktkr->initialDiceRollValue = risktktTurn[aggr_risk_pivot];
+    }
+    if (aggr_invest_pivot != 0) {
+        investbnkr->initialDiceRollValue = investbnkrTurn[aggr_invest_pivot];
+        aggr->initialDiceRollValue = aggrTurn[aggr_invest_pivot];
+    }
+    if (aggr_opport_pivot != 0) {
+        aggr->initialDiceRollValue = aggrTurn[aggr_opport_pivot];
+        opporttrdr->initialDiceRollValue = opporttrdrTurn[aggr_opport_pivot];
+    }
+    if (risk_invest_pivot != 0) {
+        investbnkr->initialDiceRollValue = investbnkrTurn[risk_invest_pivot];
+        risktkr->initialDiceRollValue = risktktTurn[risk_invest_pivot];
+    }
+    if (risk_opport_pivot != 0) {
+        risktkr->initialDiceRollValue = risktktTurn[risk_opport_pivot];
+        opporttrdr->initialDiceRollValue = opporttrdrTurn[risk_opport_pivot];
+    }
     if (invest_opprt_pivot != 0) {
         investbnkr->initialDiceRollValue = investbnkrTurn[invest_opprt_pivot];
+        opporttrdr->initialDiceRollValue = opporttrdrTurn[invest_opprt_pivot];
     }
 }
 
