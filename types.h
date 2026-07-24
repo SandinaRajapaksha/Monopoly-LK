@@ -88,17 +88,6 @@ typedef struct sq {
 
 } square;
 
-// function Prototypes
-
-void startGame(void);
-void initializeBoard(square *);
-//  randomly choosen after round count
-void econEventActivate(square *);
-void govRegulationsActivate(square *);
-// card decks and draws
-void nationalEventActivate(int *, square *);
-void regionalDevelopmentActivate(int *, square *);
-
 // event_related types
 typedef enum {
 
@@ -171,5 +160,16 @@ typedef enum {
     waterShortage
 
 } regionalDevelopmentType;
+
+// function Prototypes
+
+void startGame(void);
+void initializeBoard(square *);
+//  randomly choosen after round count
+void econEventActivate(square *);
+void govRegulationsActivate(square *);
+// card decks and draws
+void nationalEventActivate(int *, square *);
+void regionalDevelopmentActivate(int *, square *);
 
 #endif
