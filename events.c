@@ -61,3 +61,10 @@ void regionalDevelopmentActivate(int *topreigionaldevelopmentcard,
     // push the card to bottom
     *topreigionaldevelopmentcard = (*topreigionaldevelopmentcard + 1) % 12;
 }
+
+void dynamicPropertyEventActivate(square *board) { // parameters to be added
+    // random event
+    dynamicPropertyMarketEventType dynamicPropertyEvents[2] = {
+        dynamicPropertyMarketBoom, dynamicPropertyMarketDecline};
+    // all the other shit
+}
