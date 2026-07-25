@@ -1,7 +1,9 @@
 #ifndef TYPES_H
 #define TYPES_H
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
 // square
@@ -28,9 +30,10 @@ typedef enum {
 
 typedef struct {
     playerType playerID;
-    int initialDiceRollValue;
+    char *name;
+    int rank;
+    int diceRoll;
 } player;
-
 typedef enum { cannotMortgage, mortgagedToBank, noMortgage } mortgageType;
 
 typedef enum {
@@ -179,6 +182,8 @@ void regionalDevelopmentActivate(int *, square *);
 
 void initializeTurnOrder(player *, player *, player *, player *, player *,
                          player *, player *, player *);
-int diceRoll();
-
+void finalRankAssign(player *player_X, player *player_1, player *player_2,
+                     player *player_3, player *player_4);
+void ranker(player *player1, player *player2, player *player3, player *player4);
+int dice_roller();
 #endif
