@@ -1,5 +1,5 @@
 #include "types.h"
-#include <stdio.h>
+#include <stdbool.h>
 
 void startGame(void) {
     //
@@ -8,10 +8,13 @@ void startGame(void) {
     square board[40];
 
     srand((unsigned int)time(NULL));
-    player aggressiveInvesterPlayer = {1001, .name = "Aggressive Invester"};
-    player conservativeBankerPlayer = {1002, .name = "Conservative Banker"};
-    player riskTakerPlayer = {1003, .name = "Risk Taker"};
-    player opportunisticTraderPlayer = {1004, .name = "Oppotunistic Trader"};
+    player aggressiveInvesterPlayer = {1001, .name = "Aggressive Invester",
+                                       .currentSquare = 1};
+    player conservativeBankerPlayer = {1002, .name = "Conservative Banker",
+                                       .currentSquare = 1};
+    player riskTakerPlayer = {1003, .name = "Risk Taker", .currentSquare = 1};
+    player opportunisticTraderPlayer = {1004, .name = "Oppotunistic Trader",
+                                        .currentSquare = 1};
 
     player player_1;
     player player_2;
@@ -31,4 +34,17 @@ void startGame(void) {
                     &player_4);
 
     initializeBoard(board);
+
+    // main game loop
+    int i = 0;
+    while (true) {
+        move(&player_1, board);
+        move(&player_2, board);
+        move(&player_3, board);
+        move(&player_4, board);
+        i++;
+        if (i == 500) {
+            break;
+        }
+    }
 }
