@@ -8,7 +8,7 @@ void ranker(player *player1, player *player2, player *player3,
     player *players[4] = {player1, player2, player3, player4};
     for (int i = 0; i < 4; i++) {
         players[i]->diceRoll = dice_roller();
-        printf("%d\n", players[i]->diceRoll);
+        printf("%s rolls %d\n", players[i]->name, players[i]->diceRoll);
     }
 
     // sort dice values of players

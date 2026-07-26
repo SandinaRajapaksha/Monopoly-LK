@@ -22,6 +22,14 @@ void startGame(void) {
     player player_3;
     player player_4;
 
+    printf("MONOPOLY-LK Simulation\n\n");
+    printf("Player 1 : %s\n", aggressiveInvesterPlayer.name);
+    printf("Player 2 : %s\n", conservativeBankerPlayer.name);
+    printf("Player 3 : %s\n", riskTakerPlayer.name);
+    printf("Player 4 : %s\n\n", opportunisticTraderPlayer.name);
+
+    printf("Each player begins with LKR 30,000.\n\n");
+
     ranker(&aggressiveInvesterPlayer, &conservativeBankerPlayer,
            &riskTakerPlayer, &opportunisticTraderPlayer);
 
@@ -36,14 +44,21 @@ void startGame(void) {
 
     initializeBoard(board);
 
+    printf("%s will begin the game.\n\n", player_1.name);
+    printf("Turn order : \n");
+    printf("%s\n", player_1.name);
+    printf("%s\n", player_2.name);
+    printf("%s\n", player_3.name);
+    printf("%s\n\n", player_4.name);
+
     // main game loop
     while (true) {
         move(&player_1, board);
         move(&player_2, board);
         move(&player_3, board);
         move(&player_4, board);
-        printf("currunt round is : %d\n", curruntBoardRound);
-        if (curruntBoardRound == 500) {
+        printf("\ncurrunt round is : %d\n\n", curruntBoardRound);
+        if (curruntBoardRound == 50) {
             break;
         }
 
