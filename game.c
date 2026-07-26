@@ -58,7 +58,7 @@ void startGame(void) {
         move(&player_3, board);
         move(&player_4, board);
         printf("\ncurrunt round is : %d\n\n", curruntBoardRound);
-        if (curruntBoardRound == 50) {
+        if (curruntBoardRound == 500) {
             break;
         }
 
