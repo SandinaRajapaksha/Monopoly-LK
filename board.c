@@ -9,7 +9,7 @@ void initializeBoard(square *board) {
         .type = property,
         .mortgageStatus = noMortgage,
         .mortgageValue = 750,
-        .value = 1500,
+        .curruntValue = 1500,
         .PropertyProperties.propertyGroup = brown,
         .PropertyProperties.baseRental = 500};
 
@@ -19,264 +19,264 @@ void initializeBoard(square *board) {
                         .owner = noOwnner,
                         .mortgageStatus = cannotMortgage,
                         .mortgageValue = 0,
-                        .value = 0};
+                        .curruntValue = 0};
     board[3] = (square){.squareID = 3,
                         .name = "Colombo Fort Railway Station",
                         .type = railway,
                         .owner = noOwnner,
                         .mortgageStatus = cannotMortgage,
                         .mortgageValue = 0,
-                        .value = 0};
+                        .curruntValue = 0};
     board[4] = (square){.squareID = 4,
                         .name = "Go",
                         .type = go,
                         .owner = noOwnner,
                         .mortgageStatus = cannotMortgage,
                         .mortgageValue = 0,
-                        .value = 0};
+                        .curruntValue = 0};
     board[5] = (square){.squareID = 5,
                         .name = "Go",
                         .type = go,
                         .owner = noOwnner,
                         .mortgageStatus = cannotMortgage,
                         .mortgageValue = 0,
-                        .value = 0};
+                        .curruntValue = 0};
     board[6] = (square){.squareID = 6,
                         .name = "Go",
                         .type = go,
                         .owner = noOwnner,
                         .mortgageStatus = cannotMortgage,
                         .mortgageValue = 0,
-                        .value = 0};
+                        .curruntValue = 0};
     board[7] = (square){.squareID = 7,
                         .name = "Go",
                         .type = go,
                         .owner = noOwnner,
                         .mortgageStatus = cannotMortgage,
                         .mortgageValue = 0,
-                        .value = 0};
+                        .curruntValue = 0};
     board[8] = (square){.squareID = 8,
                         .name = "Go",
                         .type = go,
                         .owner = noOwnner,
                         .mortgageStatus = cannotMortgage,
                         .mortgageValue = 0,
-                        .value = 0};
+                        .curruntValue = 0};
     board[9] = (square){.squareID = 9,
                         .name = "Go",
                         .type = go,
                         .owner = noOwnner,
                         .mortgageStatus = cannotMortgage,
                         .mortgageValue = 0,
-                        .value = 0};
+                        .curruntValue = 0};
     board[10] = (square){.squareID = 10,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[11] = (square){.squareID = 11,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[12] = (square){.squareID = 12,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[13] = (square){.squareID = 13,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[14] = (square){.squareID = 14,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[15] = (square){.squareID = 15,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[16] = (square){.squareID = 16,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[17] = (square){.squareID = 17,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[18] = (square){.squareID = 18,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[19] = (square){.squareID = 19,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[20] = (square){.squareID = 20,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[21] = (square){.squareID = 21,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[22] = (square){.squareID = 22,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[23] = (square){.squareID = 23,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[24] = (square){.squareID = 24,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[25] = (square){.squareID = 25,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[26] = (square){.squareID = 26,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[27] = (square){.squareID = 27,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[28] = (square){.squareID = 28,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[29] = (square){.squareID = 29,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[30] = (square){.squareID = 30,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[31] = (square){.squareID = 31,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[32] = (square){.squareID = 32,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[33] = (square){.squareID = 33,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[34] = (square){.squareID = 34,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[35] = (square){.squareID = 35,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[36] = (square){.squareID = 36,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[37] = (square){.squareID = 37,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[38] = (square){.squareID = 38,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
     board[39] = (square){.squareID = 39,
                          .name = "Go",
                          .type = go,
                          .owner = noOwnner,
                          .mortgageStatus = cannotMortgage,
                          .mortgageValue = 0,
-                         .value = 0};
+                         .curruntValue = 0};
 }

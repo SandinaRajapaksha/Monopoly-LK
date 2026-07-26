@@ -59,7 +59,7 @@ typedef struct sq {
     playerType owner;
     mortgageType mortgageStatus;
     int mortgageValue;
-    int value;
+    int curruntValue;
 
     struct {
         int BaseRentalOfUtility;
@@ -74,6 +74,7 @@ typedef struct sq {
     } railwayProperties;
 
     struct {
+        int initialPrice;
         groupType propertyGroup;
         int baseRental;
         int houseConstructionCost;
@@ -175,7 +176,7 @@ typedef enum {
 void startGame(void);
 void initializeBoard(square *);
 //  randomly choosen after round count
-void econEventActivate(square *);
+void econEventActivate(square *, int *, economicEventCardType *);
 void govRegulationsActivate(square *);
 void dynamicPropertyEventActivate(square *);
 // card decks and draws
@@ -191,5 +192,6 @@ int dice_roller();
 void move(player *player_x, square *board);
 void roundCounter(int *curruntBoardRound, player *player_1, player *player_2,
                   player *player_3, player *player_4);
+void eventChecker(int, int *, square *, int *, economicEventCardType *);
 
 #endif

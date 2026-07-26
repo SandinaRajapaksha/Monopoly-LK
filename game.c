@@ -1,8 +1,13 @@
 #include "types.h"
-#include <stdio.h>
 
 void startGame(void) {
     //
+
+    // event counters
+
+    int econEventRoundCounter = 15;
+    economicEventCardType curruntActiveEconEvent;
+
     int topNationalEventCard = 0;
     int topreigionaldevelopmentcard = 0;
     int curruntBoardRound = 1;
@@ -64,5 +69,7 @@ void startGame(void) {
 
         roundCounter(&curruntBoardRound, &player_1, &player_2, &player_3,
                      &player_4);
+        eventChecker(curruntBoardRound, &topNationalEventCard, board,
+                     &econEventRoundCounter, &curruntActiveEconEvent);
     }
 }
