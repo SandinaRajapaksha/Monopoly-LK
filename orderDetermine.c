@@ -87,3 +87,14 @@ void finalRankAssign(player *player_X, player *player_1, player *player_2,
         *player_4 = *player_X;
     }
 }
+
+void roundCounter(int *curruntBoardRound, player *player_1, player *player_2,
+                  player *player_3, player *player_4) {
+    bool Equalitycheck =
+        (player_1->totalsteps / 39) && (player_2->totalsteps / 39) &&
+        (player_3->totalsteps / 39) && (player_4->totalsteps / 39);
+
+    if (Equalitycheck == true) {
+        *curruntBoardRound = (player_1->totalsteps / 39) + 1;
+    }
+}

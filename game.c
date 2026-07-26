@@ -1,10 +1,11 @@
 #include "types.h"
-#include <stdbool.h>
+#include <stdio.h>
 
 void startGame(void) {
     //
     int topNationalEventCard = 0;
     int topreigionaldevelopmentcard = 0;
+    int curruntBoardRound = 1;
     square board[40];
 
     srand((unsigned int)time(NULL));
@@ -42,9 +43,13 @@ void startGame(void) {
         move(&player_2, board);
         move(&player_3, board);
         move(&player_4, board);
+        printf("currunt round is : %d\n", curruntBoardRound);
         i++;
         if (i == 500) {
             break;
         }
+
+        roundCounter(&curruntBoardRound, &player_1, &player_2, &player_3,
+                     &player_4);
     }
 }

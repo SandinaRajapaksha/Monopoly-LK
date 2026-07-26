@@ -34,6 +34,7 @@ typedef struct {
     int rank;
     int diceRoll;
     int currentSquare;
+    int totalsteps;
 } player;
 typedef enum { cannotMortgage, mortgagedToBank, noMortgage } mortgageType;
 
@@ -188,5 +189,7 @@ void finalRankAssign(player *player_X, player *player_1, player *player_2,
 void ranker(player *player1, player *player2, player *player3, player *player4);
 int dice_roller();
 void move(player *player_x, square *board);
+void roundCounter(int *curruntBoardRound, player *player_1, player *player_2,
+                  player *player_3, player *player_4);
 
 #endif
