@@ -7,7 +7,7 @@ void startGame(void) {
 
     int econEventRoundCounter = 15;
     economicEventCardType curruntActiveEconEvent = -1;
-    int roundThatEventHappened = -1;
+    int roundThatEconEventHappened = -1;
 
     int topNationalEventCard = 0;
     int topreigionaldevelopmentcard = 0;
@@ -67,15 +67,14 @@ void startGame(void) {
             break;
         }
 
+        printf("\nCurrunt round is : %d \n\n", curruntBoardRound);
         roundCounter(&curruntBoardRound, &player_1, &player_2, &player_3,
                      &player_4);
 
-        printf("\ncurrunt round is : %d\n\n", curruntBoardRound);
-
         if ((curruntBoardRound % 15 == 0) &&
-            (curruntBoardRound != roundThatEventHappened)) {
-            eventChecker(&curruntBoardRound, &topNationalEventCard, board,
-                         &roundThatEventHappened, &curruntActiveEconEvent);
+            (curruntBoardRound != roundThatEconEventHappened)) {
+            econEventActivate(board, &roundThatEconEventHappened,
+                              &curruntActiveEconEvent, &curruntBoardRound);
         }
     }
 }

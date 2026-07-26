@@ -1,15 +1,7 @@
 #include "types.h"
+#include <stdio.h>
 
-void eventChecker(int *curruntBoardRound, int *topNationalEventcard,
-                  square *board, int *roundThatEventHappened,
-                  economicEventCardType *curruntActiveEconEvent) {
-    if ((*curruntBoardRound % 15 == 0) && (*curruntBoardRound != 0)) {
-        econEventActivate(board, roundThatEventHappened, curruntActiveEconEvent,
-                          curruntBoardRound);
-    }
-}
-
-void econEventActivate(square *board, int *roundThatEventHappened,
+void econEventActivate(square *board, int *roundThatEconEventHappened,
                        economicEventCardType *curruntActiveEconEvent,
                        int *curruntBoardRound) {
     // random
@@ -18,26 +10,6 @@ void econEventActivate(square *board, int *roundThatEventHappened,
         EconomicRecession, StockMarketBoom, GovernmentHousingProgramme,
         ForeignInvestment, PoliticalUnrest};
 
-    // if (*econEventRoundCounter == 0) {
-    //     if (*curruntActiveEconEvent == TourismBoom) {
-    //         printf("Tourism Boom is over...\n");
-    //     } else if (*curruntActiveEconEvent == FuelCrisis) {
-    //         printf("Fuel Crisis is over... \n");
-    //     } else if (*curruntActiveEconEvent == HeavyMonsoon) {
-    //         printf("Heavy Monsoon is over ...\n");
-    //     } else if (*curruntActiveEconEvent == EconomicRecession) {
-    //         printf("Economic Recession is over... \n");
-    //     } else if (*curruntActiveEconEvent == StockMarketBoom) {
-    //         printf("Stock Market Boom is over... \n");
-    //     } else if (*curruntActiveEconEvent == GovernmentHousingProgramme) {
-    //         printf("Government Housing Programme is over... \n");
-    //     } else if (*curruntActiveEconEvent == ForeignInvestment) {
-    //         printf("Foreign Investment is over... \n");
-    //     } else if (*curruntActiveEconEvent == PoliticalUnrest) {
-    //         printf("Political Unrest is over... \n");
-    //     }
-    // }
-    //
     if (*curruntActiveEconEvent != -1) {
         if (*curruntActiveEconEvent == TourismBoom) {
             printf("Tourism Boom is over...\n");
@@ -56,6 +28,7 @@ void econEventActivate(square *board, int *roundThatEventHappened,
         } else if (*curruntActiveEconEvent == PoliticalUnrest) {
             printf("Political Unrest is over... \n");
         }
+        printf("\n");
     }
 
     int randomEconEvent = econEvents[rand() % 8];
@@ -78,7 +51,8 @@ void econEventActivate(square *board, int *roundThatEventHappened,
     } else if (randomEconEvent == PoliticalUnrest) {
         printf("Political Unrest happens... \n");
     }
-    *roundThatEventHappened = *curruntBoardRound;
+    printf("\n");
+    *roundThatEconEventHappened = *curruntBoardRound;
 }
 
 void govRegulationsActivate(square *board) {
