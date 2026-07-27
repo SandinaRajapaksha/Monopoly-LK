@@ -11,6 +11,7 @@ void econEventActivate(square *board, int *roundThatEconEventHappened,
         ForeignInvestment, PoliticalUnrest};
 
     if (*curruntActiveEconEvent != -1) {
+        printf("\n");
         if (*curruntActiveEconEvent == TourismBoom) {
             printf("Tourism Boom is over...\n");
         } else if (*curruntActiveEconEvent == FuelCrisis) {
@@ -34,6 +35,7 @@ void econEventActivate(square *board, int *roundThatEconEventHappened,
     int randomEconEvent = econEvents[rand() % 8];
     *curruntActiveEconEvent = randomEconEvent;
 
+    printf("\nRound %d economic event happens now, \n", *curruntBoardRound);
     if (randomEconEvent == TourismBoom) {
         printf("Tourism Boom Happens...\n");
     } else if (randomEconEvent == FuelCrisis) {

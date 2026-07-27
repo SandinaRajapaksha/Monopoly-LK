@@ -59,6 +59,7 @@ void startGame(void) {
 
     // main game loop
     while (true) {
+        printf("\nCurrunt round is : %d \n\n", curruntBoardRound);
         move(&player_1, board);
         move(&player_2, board);
         move(&player_3, board);
@@ -67,7 +68,6 @@ void startGame(void) {
             break;
         }
 
-        printf("\nCurrunt round is : %d \n\n", curruntBoardRound);
         roundCounter(&curruntBoardRound, &player_1, &player_2, &player_3,
                      &player_4);
 
