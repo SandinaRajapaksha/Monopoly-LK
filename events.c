@@ -117,3 +117,16 @@ void dynamicPropertyEventActivate(square *board) { // parameters to be added
         dynamicPropertyMarketBoom, dynamicPropertyMarketDecline};
     // all the other shit
 }
+
+void inflationRateRelease(square *board, int *curruntBoardRound,
+                          int *roundThatInflationHappened,
+                          int *curruntInflation) { // parameters to be added
+    // random event after 10 rounds
+    int inflationRates[6] = {-3, 0, 2, 5, 8, 12};
+    // all the other shit
+    int randomInflation = inflationRates[rand() % 7];
+    *curruntInflation = randomInflation;
+
+    printf("\n\nInflation rate release : %d %% \n\n", *curruntInflation);
+    *roundThatInflationHappened = *curruntBoardRound;
+}

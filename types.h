@@ -193,5 +193,7 @@ void move(player *player_x, square *board);
 void roundCounter(int *curruntBoardRound, player *player_1, player *player_2,
                   player *player_3, player *player_4);
 void eventChecker(int *, int *, square *, int *, economicEventCardType *);
-
+void inflationRateRelease(square *board, int *currundBoardRound,
+                          int *roundThatInflationHappened,
+                          int *curruntInflation);
 #endif

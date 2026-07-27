@@ -5,9 +5,11 @@ void startGame(void) {
 
     // event counters
 
-    int econEventRoundCounter = 15;
     economicEventCardType curruntActiveEconEvent = -1;
     int roundThatEconEventHappened = -1;
+
+    int roundThatInflationHappened = -1;
+    int curruntInflation = 0;
 
     int topNationalEventCard = 0;
     int topreigionaldevelopmentcard = 0;
@@ -75,6 +77,13 @@ void startGame(void) {
             (curruntBoardRound != roundThatEconEventHappened)) {
             econEventActivate(board, &roundThatEconEventHappened,
                               &curruntActiveEconEvent, &curruntBoardRound);
+        }
+
+        if ((curruntBoardRound % 10 == 0) &&
+            (curruntBoardRound != roundThatInflationHappened)) {
+            inflationRateRelease(board, &curruntBoardRound,
+                                 &roundThatInflationHappened,
+                                 &curruntInflation);
         }
     }
 }
