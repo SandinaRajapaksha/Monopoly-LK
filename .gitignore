@@ -1,5 +1,6 @@
 # log file
 #
+*.swp
 *.log
 # Prerequisites
 *.d
