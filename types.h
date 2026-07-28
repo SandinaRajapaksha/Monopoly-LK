@@ -49,6 +49,12 @@ typedef enum {
     darkBlue
 } groupType;
 
+typedef enum {
+    gotoJail = 6001,
+    JailOrVisiting,
+    FreeParking
+
+} specialityType;
 typedef enum { inusured, notInsured } insurance;
 
 typedef struct sq {
@@ -88,6 +94,9 @@ typedef struct sq {
     struct {
         int taxAmount;
     } TaxSquareProperties;
+    struct {
+        specialityType specililtyOfSquare;
+    } specialityProperties;
 
 } square;
 
