@@ -35,6 +35,7 @@ typedef struct {
     int diceRoll;
     int currentSquare;
     int totalsteps;
+    int cash;
 } player;
 typedef enum { cannotMortgage, mortgagedToBank, noMortgage } mortgageType;
 

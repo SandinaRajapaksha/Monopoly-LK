@@ -31,3 +31,5 @@ void resolveSquare(player *player_x, square *board) {
         break;
     }
 }
+
+void resolveGO(player *player_x) { player_x->cash = player_x->cash + 2000; }

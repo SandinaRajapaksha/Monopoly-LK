@@ -10,4 +10,5 @@ void move(player *player_x, square *board) {
 
     printf("%s moves from Square %d to Square %d\n", player_x->name,
            tempCurrentSquare, board[player_x->currentSquare].squareID);
+    resolveSquare(player_x, board);
 }
