@@ -20,19 +20,25 @@ void initializeBoard(square *board) {
         .PropertyProperties.insuranceStatus = notInsured};
 
     board[2] = (square){.squareID = 2,
-                        .name = "Go",
-                        .type = go,
+                        .name = "Community Development Fund",
+                        .type = event,
                         .owner = noOwnner,
                         .mortgageStatus = cannotMortgage,
                         .mortgageValue = 0,
                         .curruntValue = 0};
     board[3] = (square){.squareID = 3,
-                        .name = "Colombo Fort Railway Station",
-                        .type = railway,
+                        .name = "Maradana",
+                        .type = property,
                         .owner = noOwnner,
-                        .mortgageStatus = cannotMortgage,
-                        .mortgageValue = 0,
-                        .curruntValue = 0};
+                        .mortgageStatus = noMortgage,
+                        .mortgageValue = 750,
+                        .curruntValue = 1500,
+                        .PropertyProperties.initialPrice = 1500,
+                        .PropertyProperties.propertyGroup = brown,
+                        .PropertyProperties.baseRental = 999,
+                        .PropertyProperties.houseConstructionCost = 500,
+                        .PropertyProperties.hotelConstructionCost = 2000,
+                        .PropertyProperties.insuranceStatus = notInsured};
     board[4] = (square){.squareID = 4,
                         .name = "Go",
                         .type = go,
