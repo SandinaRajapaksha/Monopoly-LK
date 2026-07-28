@@ -205,4 +205,15 @@ void eventChecker(int *, int *, square *, int *, economicEventCardType *);
 void inflationRateRelease(square *board, int *currundBoardRound,
                           int *roundThatInflationHappened,
                           int *curruntInflation);
+// resolve square according to types
+void resolveSquare(player *player_x, square *board);
+void resolveGO(player *player_x);
+void resolveSpecial(player *player_x, square *board);
+void resolveRailway(player *player_x, square *board);
+void resolveUtility(player *player_x, square *board);
+void resolveEvent(player *player_x, square *board);
+void resolveInsure(player *player_x, square *board);
+void resolveTax(player *player_x, square *board);
+void resolveBank(player *player_x, square *board);
+void resolveProperty(player *player_x, square *board);
 #endif
