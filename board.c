@@ -1,17 +1,23 @@
 #include "types.h"
 
 void initializeBoard(square *board) {
-    board[0] = (square){.squareID = 0, .name = "Go", .type = go};
+    board[0] = (square){.squareID = 0, .name = "GO", .type = go,
+                        .owner = noOwnner, .mortgageStatus = cannotMortgage,
+                        .mortgageValue = 0, .curruntValue = 0};
     board[1] = (square){
-
         .squareID = 1,
         .name = "Pettah",
         .type = property,
+        .owner = noOwnner,
         .mortgageStatus = noMortgage,
         .mortgageValue = 750,
         .curruntValue = 1500,
+        .PropertyProperties.initialPrice = 1500,
         .PropertyProperties.propertyGroup = brown,
-        .PropertyProperties.baseRental = 500};
+        .PropertyProperties.baseRental = 999,
+        .PropertyProperties.houseConstructionCost = 500,
+        .PropertyProperties.hotelConstructionCost = 2000,
+        .PropertyProperties.insuranceStatus = notInsured};
 
     board[2] = (square){.squareID = 2,
                         .name = "Go",
