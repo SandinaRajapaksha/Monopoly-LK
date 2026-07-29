@@ -63,7 +63,7 @@ typedef struct sq {
     int squareID;
     char *name;
     squareType type;
-    playerType owner;
+    player *owner;
     mortgageType mortgageStatus;
     int mortgageValue;
     int curruntValue;
