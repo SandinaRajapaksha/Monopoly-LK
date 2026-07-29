@@ -127,7 +127,7 @@ void inflationRateRelease(square *board, int *curruntBoardRound,
     int randomInflation = inflationRates[rand() % 6];
     *curruntInflation = randomInflation;
 
-    printf("\nInflations rate for round %d happens now,\nInflation rate "
+    printf("\nInflations rate for round %d releases now,\nInflation rate "
            "release : %d %% \n\n",
            *curruntBoardRound, *curruntInflation);
     *roundThatInflationHappened = *curruntBoardRound;
