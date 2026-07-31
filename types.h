@@ -37,6 +37,7 @@ typedef struct {
     int currentSquare;
     int totalsteps;
     int cash;
+    int netWorth;
     jailStatus Jail;
 } player;
 typedef enum { cannotMortgage, mortgagedToBank, noMortgage } mortgageType;
