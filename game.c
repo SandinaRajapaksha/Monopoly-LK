@@ -17,16 +17,25 @@ void startGame(void) {
     square board[40];
 
     srand((unsigned int)time(NULL));
-    player aggressiveInvesterPlayer = {1001, .name = "Aggressive Invester",
-                                       .currentSquare = 1, .cash = 30000,
+    player aggressiveInvesterPlayer = {.playerID = aggresiveInvester,
+                                       .name = "Aggressive Invester",
+                                       .currentSquare = 1,
+                                       .cash = 30000,
                                        .Jail = outside};
-    player conservativeBankerPlayer = {1002, .name = "Conservative Banker",
-                                       .currentSquare = 1, .cash = 30000,
+    player conservativeBankerPlayer = {.playerID = conservativeBanker,
+                                       .name = "Conservative Banker",
+                                       .currentSquare = 1,
+                                       .cash = 30000,
                                        .Jail = outside};
-    player riskTakerPlayer = {1003, .name = "Risk Taker", .currentSquare = 1,
-                              .cash = 30000, .Jail = outside};
-    player opportunisticTraderPlayer = {1004, .name = "Oppotunistic Trader",
-                                        .currentSquare = 1, .cash = 30000,
+    player riskTakerPlayer = {.playerID = riskTaker,
+                              .name = "Risk Taker",
+                              .currentSquare = 1,
+                              .cash = 30000,
+                              .Jail = outside};
+    player opportunisticTraderPlayer = {.playerID = opportunisticTrader,
+                                        .name = "Oppotunistic Trader",
+                                        .currentSquare = 1,
+                                        .cash = 30000,
                                         .Jail = outside};
 
     player player_1;

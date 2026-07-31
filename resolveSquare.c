@@ -60,6 +60,4 @@ void resolveEvent(player *player_x, square *board) {}
 void resolveInsure(player *player_x, square *board) {}
 void resolveTax(player *player_x, square *board) {}
 void resolveBank(player *player_x, square *board) {}
-void resolveProperty(player *player_x, square *board) {
-    :warnx("j");
-}
+void resolveProperty(player *player_x, square *board) {}
