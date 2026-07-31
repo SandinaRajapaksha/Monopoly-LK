@@ -34,15 +34,19 @@ void resolveSquare(player *player_x, square *board) {
 }
 
 void resolveGO(player *player_x) {
+
     player_x->cash = player_x->cash + 2000;
     printf("%s recieved LKR 2000 by landing on GO ...\n", player_x->name);
 }
 void resolveSpecial(player *player_x, square *board) {
+
     specialityType specialityOfSquare =
         board[player_x->currentSquare].specialityProperties.specililtyOfSquare;
+
     switch (specialityOfSquare) {
     case gotoJail:
-        player_x->currentSquare = 30; // jail square
+        player_x->currentSquare = 10; // jail square
+        player_x->Jail = inside;
         printf("%s got inside the jail ...\n", player_x->name);
         break;
     default:
