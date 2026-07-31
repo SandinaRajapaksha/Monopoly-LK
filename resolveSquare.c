@@ -60,4 +60,75 @@ void resolveEvent(player *player_x, square *board) {}
 void resolveInsure(player *player_x, square *board) {}
 void resolveTax(player *player_x, square *board) {}
 void resolveBank(player *player_x, square *board) {}
-void resolveProperty(player *player_x, square *board) {}
+
+void resolveProperty(player *player_x, square *board) {
+
+    // if property owns by bank
+    if (board[player_x->currentSquare].owner->playerID == bankOfCeylon) {
+        playerType currentPlayer = player_x->playerID;
+
+        switch (currentPlayer) {
+        case aggresiveInvester:
+
+            if ((player_x->cash >
+                 (1000 + board[player_x->currentSquare]
+                             .PropertyProperties.initialPrice)) &&
+                (board[player_x->currentSquare].owner->playerID !=
+                 aggresiveInvester)) {
+
+                player_x->cash =
+                    player_x->cash - board[player_x->currentSquare]
+                                         .PropertyProperties.initialPrice;
+                board[player_x->currentSquare].owner = player_x;
+                printf("%s buys %s\n", player_x->name,
+                       board[player_x->currentSquare].name);
+            }
+            break;
+        default:
+            break;
+            // if property isnt owned yet
+        }
+    }
+    // if property owned by another player
+    else if (board[player_x->currentSquare].owner->playerID !=
+             player_x->playerID) {
+
+        playerType currentPlayer = player_x->playerID;
+        switch (currentPlayer) {
+        case aggresiveInvester:
+
+            if ((player_x->cash >
+                 board[player_x->currentSquare]
+                     .PropertyProperties.currentRentalofProperty) &&
+                (board[player_x->currentSquare].mortgageStatus !=
+                 mortgagedToBank)) {
+
+                // player pays rent
+
+                player_x->cash =
+                    player_x->cash -
+                    board[player_x->currentSquare]
+                        .PropertyProperties.currentRentalofProperty;
+
+                // owner gets paid
+
+                board[player_x->currentSquare].owner->cash =
+                    board[player_x->currentSquare].owner->cash +
+                    board[player_x->currentSquare]
+                        .PropertyProperties.currentRentalofProperty;
+
+                printf("%s payed %d to %s as the rent of %s\n", player_x->name,
+                       board[player_x->currentSquare]
+                           .PropertyProperties.currentRentalofProperty,
+                       board[player_x->currentSquare].owner->name,
+                       board[player_x->currentSquare].name);
+
+            } else {
+                // auction logic to be implemented
+            }
+            break;
+        default:
+            break;
+        }
+    }
+}
