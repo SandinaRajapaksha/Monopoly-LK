@@ -202,7 +202,7 @@ void finalRankAssign(player *player_X, player *player_1, player *player_2,
                      player *player_3, player *player_4);
 void ranker(player *player1, player *player2, player *player3, player *player4);
 int dice_roller();
-void move(player *player_x, square *board);
+void move(player *player_x, square *board, economicEventCardType *);
 void roundCounter(int *curruntBoardRound, player *player_1, player *player_2,
                   player *player_3, player *player_4);
 void eventChecker(int *, int *, square *, int *, economicEventCardType *);
@@ -210,7 +210,7 @@ void inflationRateRelease(square *board, int *currundBoardRound,
                           int *roundThatInflationHappened,
                           int *curruntInflation);
 // resolve square according to types
-void resolveSquare(player *player_x, square *board);
+void resolveSquare(player *player_x, square *board, economicEventCardType *);
 void resolveGO(player *player_x);
 void resolveSpecial(player *player_x, square *board);
 void resolveRailway(player *player_x, square *board);
@@ -219,5 +219,5 @@ void resolveEvent(player *player_x, square *board);
 void resolveInsure(player *player_x, square *board);
 void resolveTax(player *player_x, square *board);
 void resolveBank(player *player_x, square *board);
-void resolveProperty(player *player_x, square *board);
+void resolveProperty(player *player_x, square *board, economicEventCardType *);
 #endif

@@ -1,6 +1,7 @@
 #include "types.h"
 #include <stdio.h>
-void resolveSquare(player *player_x, square *board) {
+void resolveSquare(player *player_x, square *board,
+                   economicEventCardType *currentEconEvent) {
     squareType squareToResolve = board[player_x->currentSquare].type;
     switch (squareToResolve) {
     case go:
@@ -28,7 +29,7 @@ void resolveSquare(player *player_x, square *board) {
         resolveBank(player_x, board);
         break;
     case property:
-        resolveProperty(player_x, board);
+        resolveProperty(player_x, board, currentEconEvent);
         break;
     }
 }
@@ -61,7 +62,8 @@ void resolveInsure(player *player_x, square *board) {}
 void resolveTax(player *player_x, square *board) {}
 void resolveBank(player *player_x, square *board) {}
 
-void resolveProperty(player *player_x, square *board) {
+void resolveProperty(player *player_x, square *board,
+                     economicEventCardType *currentEconEvent) {
 
     // if property owns by bank
     if (board[player_x->currentSquare].owner->playerID == bankOfCeylon) {
@@ -82,6 +84,26 @@ void resolveProperty(player *player_x, square *board) {
                 board[player_x->currentSquare].owner = player_x;
                 printf("%s buys %s\n", player_x->name,
                        board[player_x->currentSquare].name);
+            }
+            break;
+
+        case conservativeBanker:
+
+            if ((player_x->cash - (board[player_x->currentSquare]
+                                       .PropertyProperties.initialPrice) >
+                 (player_x->cash / 2)) &&
+                (*currentEconEvent != EconomicRecession) &&
+                ((board[player_x->currentSquare].owner->playerID !=
+                  conservativeBanker))) {
+
+                player_x->cash =
+                    player_x->cash - board[player_x->currentSquare]
+                                         .PropertyProperties.initialPrice;
+                board[player_x->currentSquare].owner = player_x;
+                printf("%s buys %s\n", player_x->name,
+                       board[player_x->currentSquare].name);
+            } else {
+                // auction logic to be implemented
             }
             break;
         default:
@@ -124,11 +146,44 @@ void resolveProperty(player *player_x, square *board) {
                        board[player_x->currentSquare].name);
 
             } else {
-                // auction logic to be implemented
+                //      loan logic to be implemented
+                break;
+
+            case conservativeBanker:
+
+                if ((player_x->cash >
+                     board[player_x->currentSquare]
+                         .PropertyProperties.currentRentalofProperty) &&
+                    (board[player_x->currentSquare].mortgageStatus !=
+                     mortgagedToBank)) {
+
+                    // player pays rent
+
+                    player_x->cash =
+                        player_x->cash -
+                        board[player_x->currentSquare]
+                            .PropertyProperties.currentRentalofProperty;
+
+                    // owner gets paid
+
+                    board[player_x->currentSquare].owner->cash =
+                        board[player_x->currentSquare].owner->cash +
+                        board[player_x->currentSquare]
+                            .PropertyProperties.currentRentalofProperty;
+
+                    printf("%s payed %d to %s as the rent of %s\n",
+                           player_x->name,
+                           board[player_x->currentSquare]
+                               .PropertyProperties.currentRentalofProperty,
+                           board[player_x->currentSquare].owner->name,
+                           board[player_x->currentSquare].name);
+                } else {
+                    // loan logic for rent payment to be implemented
+                }
+
+            default:
+                break;
             }
-            break;
-        default:
-            break;
         }
     }
 }
