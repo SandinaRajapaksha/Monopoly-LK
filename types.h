@@ -28,6 +28,7 @@ typedef enum {
     opportunisticTrader
 } playerType;
 
+typedef enum { inside = 401, outside } jailStatus;
 typedef struct {
     playerType playerID;
     char *name;
@@ -36,6 +37,7 @@ typedef struct {
     int currentSquare;
     int totalsteps;
     int cash;
+    jailStatus Jail;
 } player;
 typedef enum { cannotMortgage, mortgagedToBank, noMortgage } mortgageType;
 

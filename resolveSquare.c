@@ -49,6 +49,7 @@ void resolveSpecial(player *player_x, square *board) {
         break;
     }
 }
+
 void resolveRailway(player *player_x, square *board) {}
 void resolveUtility(player *player_x, square *board) {}
 void resolveEvent(player *player_x, square *board) {}
