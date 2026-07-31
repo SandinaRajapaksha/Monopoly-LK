@@ -3,13 +3,19 @@
 void move(player *player_x, square *board,
           economicEventCardType *currentEconEvent) {
 
-    int steps = dice_roller().rollValue;
+    diceRollType steps = dice_roller();
     int tempCurrentSquare = player_x->currentSquare;
+    if (player_x->Jail == inside) {
 
-    printf("%s rolls %d.\n", player_x->name, steps);
+        player_x->jailRoundCounter++;
+        jailLogic(player_x, steps.doublesRolled);
+        return;
+    }
 
-    player_x->currentSquare = (player_x->currentSquare + steps) % 39;
-    player_x->totalsteps = player_x->totalsteps + steps;
+    printf("%s rolls %d.\n", player_x->name, steps.rollValue);
+
+    player_x->currentSquare = (player_x->currentSquare + steps.rollValue) % 39;
+    player_x->totalsteps = player_x->totalsteps + steps.rollValue;
 
     printf("%s moves from Square %d to Square %d\n", player_x->name,
            tempCurrentSquare, board[player_x->currentSquare].squareID);

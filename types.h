@@ -43,6 +43,7 @@ typedef struct {
     int cash;
     int netWorth;
     jailStatus Jail;
+    int jailRoundCounter;
 } player;
 typedef enum { cannotMortgage, mortgagedToBank, noMortgage } mortgageType;
 
@@ -224,4 +225,5 @@ void resolveInsure(player *player_x, square *board);
 void resolveTax(player *player_x, square *board);
 void resolveBank(player *player_x, square *board);
 void resolveProperty(player *player_x, square *board, economicEventCardType *);
+void jailLogic(player *, bool);
 #endif

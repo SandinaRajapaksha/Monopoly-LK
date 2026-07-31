@@ -1,4 +1,5 @@
 #include "types.h"
+#include <stdbool.h>
 #include <stdio.h>
 void resolveSquare(player *player_x, square *board,
                    economicEventCardType *currentEconEvent) {
@@ -33,7 +34,37 @@ void resolveSquare(player *player_x, square *board,
         break;
     }
 }
+void jailLogic(player *player_x, bool doublesRolled) {
+    playerType tempPlayer = player_x->playerID;
 
+    switch (tempPlayer) {
+
+    case conservativeBanker:
+        if (doublesRolled == true) {
+            player_x->Jail = outside;
+            printf("%s gets out from the jail by rolling doubles\n",
+                   player_x->name);
+        } else if (player_x->jailRoundCounter == 3) {
+            player_x->Jail = outside;
+            printf("%s gets out from the jail by staying 3 turns inside jail\n",
+                   player_x->name);
+            player_x->jailRoundCounter = 0;
+        }
+        break;
+    default:
+
+        if (player_x->cash > 300) {
+            player_x->cash -= 300;
+            player_x->Jail = outside;
+            printf("%s gets out from the jail by paying a bailout of LKR 300\n",
+                   player_x->name);
+        } else {
+            // loan , mortgage logic to be implemented
+        }
+
+        break;
+    }
+}
 void resolveGO(player *player_x) {
 
     player_x->cash = player_x->cash + 2000;
