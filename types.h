@@ -6,6 +6,10 @@
 #include <string.h>
 #include <time.h>
 
+typedef struct {
+    int rollValue;
+    bool doublesRolled;
+} diceRollType;
 // square
 typedef enum {
     go,
@@ -201,7 +205,7 @@ void initializeTurnOrder(player *, player *, player *, player *, player *,
 void finalRankAssign(player *player_X, player *player_1, player *player_2,
                      player *player_3, player *player_4);
 void ranker(player *player1, player *player2, player *player3, player *player4);
-int dice_roller();
+diceRollType dice_roller();
 void move(player *player_x, square *board, economicEventCardType *);
 void roundCounter(int *curruntBoardRound, player *player_1, player *player_2,
                   player *player_3, player *player_4);

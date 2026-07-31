@@ -1,13 +1,27 @@
 #include "types.h"
+#include <stdbool.h>
 
-int dice_roller() { return rand() % (12 - 2 + 1) + 2; }
+diceRollType dice_roller() {
+    int roll1 = (rand() % 6) + 1;
+    int roll2 = (rand() % 6) + 1;
+
+    diceRollType roll;
+
+    if (roll1 == roll2) {
+        roll.doublesRolled = true;
+    } else {
+        roll.doublesRolled = false;
+    }
+    roll.rollValue = roll1 + roll2;
+    return roll;
+}
 
 void ranker(player *player1, player *player2, player *player3,
             player *player4) {
 
     player *players[4] = {player1, player2, player3, player4};
     for (int i = 0; i < 4; i++) {
-        players[i]->diceRoll = dice_roller();
+        players[i]->diceRoll = dice_roller().rollValue;
         printf("%s rolls %d\n", players[i]->name, players[i]->diceRoll);
     }
 
@@ -36,7 +50,7 @@ void ranker(player *player1, player *player2, player *player3,
             do {
                 distinct = 1;
                 for (int a = i; a <= j; a++) {
-                    players[a]->diceRoll = dice_roller();
+                    players[a]->diceRoll = dice_roller().rollValue;
                     printf("reroll (tie) %s: %d\n", players[a]->name,
                            players[a]->diceRoll);
                 }

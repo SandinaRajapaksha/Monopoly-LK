@@ -3,7 +3,7 @@
 void move(player *player_x, square *board,
           economicEventCardType *currentEconEvent) {
 
-    int steps = dice_roller();
+    int steps = dice_roller().rollValue;
     int tempCurrentSquare = player_x->currentSquare;
 
     printf("%s rolls %d.\n", player_x->name, steps);
