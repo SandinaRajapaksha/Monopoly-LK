@@ -19,7 +19,8 @@ void initializeBoard(square *board) {
                         .curruntValue = 1500,
                         .PropertyProperties.initialPrice = 1500,
                         .PropertyProperties.propertyGroup = brown,
-                        .PropertyProperties.baseRental = 100,
+                         .PropertyProperties.baseRental = 100,
+                         .PropertyProperties.currentRentalofProperty = 100,
                         .PropertyProperties.houseConstructionCost = 500,
                         .PropertyProperties.hotelConstructionCost = 2000,
                         .PropertyProperties.insuranceStatus = notInsured};
@@ -39,7 +40,8 @@ void initializeBoard(square *board) {
                         .curruntValue = 1500,
                         .PropertyProperties.initialPrice = 1800,
                         .PropertyProperties.propertyGroup = brown,
-                        .PropertyProperties.baseRental = 120,
+                         .PropertyProperties.baseRental = 120,
+                         .PropertyProperties.currentRentalofProperty = 120,
                         .PropertyProperties.houseConstructionCost = 500,
                         .PropertyProperties.hotelConstructionCost = 2000,
                         .PropertyProperties.insuranceStatus = notInsured};
@@ -67,7 +69,8 @@ void initializeBoard(square *board) {
                         .curruntValue = 2500,
                         .PropertyProperties.initialPrice = 2500,
                         .PropertyProperties.propertyGroup = lightBlue,
-                        .PropertyProperties.baseRental = 180,
+                         .PropertyProperties.baseRental = 180,
+                         .PropertyProperties.currentRentalofProperty = 180,
                         .PropertyProperties.houseConstructionCost = 750,
                         .PropertyProperties.hotelConstructionCost = 3000,
                         .PropertyProperties.insuranceStatus = notInsured};
@@ -86,7 +89,8 @@ void initializeBoard(square *board) {
                         .curruntValue = 2500,
                         .PropertyProperties.initialPrice = 2700,
                         .PropertyProperties.propertyGroup = lightBlue,
-                        .PropertyProperties.baseRental = 200,
+                         .PropertyProperties.baseRental = 200,
+                         .PropertyProperties.currentRentalofProperty = 200,
                         .PropertyProperties.houseConstructionCost = 750,
                         .PropertyProperties.hotelConstructionCost = 3000,
                         .PropertyProperties.insuranceStatus = notInsured};
@@ -99,7 +103,8 @@ void initializeBoard(square *board) {
                         .curruntValue = 2500,
                         .PropertyProperties.initialPrice = 3000,
                         .PropertyProperties.propertyGroup = lightBlue,
-                        .PropertyProperties.baseRental = 220,
+                         .PropertyProperties.baseRental = 220,
+                         .PropertyProperties.currentRentalofProperty = 220,
                         .PropertyProperties.houseConstructionCost = 750,
                         .PropertyProperties.hotelConstructionCost = 3000,
                         .PropertyProperties.insuranceStatus = notInsured};
@@ -121,6 +126,7 @@ void initializeBoard(square *board) {
                          .PropertyProperties.initialPrice = 3500,
                          .PropertyProperties.propertyGroup = pink,
                          .PropertyProperties.baseRental = 260,
+                         .PropertyProperties.currentRentalofProperty = 260,
                          .PropertyProperties.houseConstructionCost = 1000,
                          .PropertyProperties.hotelConstructionCost = 4000,
                          .PropertyProperties.insuranceStatus = notInsured};
@@ -142,6 +148,7 @@ void initializeBoard(square *board) {
                          .PropertyProperties.initialPrice = 3800,
                          .PropertyProperties.propertyGroup = pink,
                          .PropertyProperties.baseRental = 280,
+                         .PropertyProperties.currentRentalofProperty = 280,
                          .PropertyProperties.houseConstructionCost = 1000,
                          .PropertyProperties.hotelConstructionCost = 4000,
                          .PropertyProperties.insuranceStatus = notInsured};
@@ -155,6 +162,7 @@ void initializeBoard(square *board) {
                          .PropertyProperties.initialPrice = 4000,
                          .PropertyProperties.propertyGroup = pink,
                          .PropertyProperties.baseRental = 300,
+                         .PropertyProperties.currentRentalofProperty = 300,
                          .PropertyProperties.houseConstructionCost = 1000,
                          .PropertyProperties.hotelConstructionCost = 4000,
                          .PropertyProperties.insuranceStatus = notInsured};
@@ -176,6 +184,7 @@ void initializeBoard(square *board) {
                          .PropertyProperties.initialPrice = 4500,
                          .PropertyProperties.propertyGroup = orange,
                          .PropertyProperties.baseRental = 350,
+                         .PropertyProperties.currentRentalofProperty = 350,
                          .PropertyProperties.houseConstructionCost = 1250,
                          .PropertyProperties.hotelConstructionCost = 5000,
                          .PropertyProperties.insuranceStatus = notInsured};
@@ -195,6 +204,7 @@ void initializeBoard(square *board) {
                          .PropertyProperties.initialPrice = 4700,
                          .PropertyProperties.propertyGroup = orange,
                          .PropertyProperties.baseRental = 370,
+                         .PropertyProperties.currentRentalofProperty = 370,
                          .PropertyProperties.houseConstructionCost = 1250,
                          .PropertyProperties.hotelConstructionCost = 5000,
                          .PropertyProperties.insuranceStatus = notInsured};
@@ -208,6 +218,7 @@ void initializeBoard(square *board) {
                          .PropertyProperties.initialPrice = 5000,
                          .PropertyProperties.propertyGroup = orange,
                          .PropertyProperties.baseRental = 400,
+                         .PropertyProperties.currentRentalofProperty = 400,
                          .PropertyProperties.houseConstructionCost = 1250,
                          .PropertyProperties.hotelConstructionCost = 5000,
                          .PropertyProperties.insuranceStatus = notInsured};
@@ -229,6 +240,7 @@ void initializeBoard(square *board) {
                          .PropertyProperties.initialPrice = 5500,
                          .PropertyProperties.propertyGroup = red,
                          .PropertyProperties.baseRental = 450,
+                         .PropertyProperties.currentRentalofProperty = 450,
                          .PropertyProperties.houseConstructionCost = 1500,
                          .PropertyProperties.hotelConstructionCost = 6000,
                          .PropertyProperties.insuranceStatus = notInsured};
@@ -248,6 +260,7 @@ void initializeBoard(square *board) {
                          .PropertyProperties.initialPrice = 5800,
                          .PropertyProperties.propertyGroup = red,
                          .PropertyProperties.baseRental = 480,
+                         .PropertyProperties.currentRentalofProperty = 480,
                          .PropertyProperties.houseConstructionCost = 1500,
                          .PropertyProperties.hotelConstructionCost = 6000,
                          .PropertyProperties.insuranceStatus = notInsured};
@@ -261,6 +274,7 @@ void initializeBoard(square *board) {
                          .PropertyProperties.initialPrice = 6000,
                          .PropertyProperties.propertyGroup = red,
                          .PropertyProperties.baseRental = 500,
+                         .PropertyProperties.currentRentalofProperty = 500,
                          .PropertyProperties.houseConstructionCost = 1500,
                          .PropertyProperties.hotelConstructionCost = 6000,
                          .PropertyProperties.insuranceStatus = notInsured};
@@ -282,6 +296,7 @@ void initializeBoard(square *board) {
                          .PropertyProperties.initialPrice = 6500,
                          .PropertyProperties.propertyGroup = yellow,
                          .PropertyProperties.baseRental = 600,
+                         .PropertyProperties.currentRentalofProperty = 600,
                          .PropertyProperties.houseConstructionCost = 2000,
                          .PropertyProperties.hotelConstructionCost = 8000,
                          .PropertyProperties.insuranceStatus = notInsured};
@@ -295,6 +310,7 @@ void initializeBoard(square *board) {
                          .PropertyProperties.initialPrice = 6800,
                          .PropertyProperties.propertyGroup = yellow,
                          .PropertyProperties.baseRental = 620,
+                         .PropertyProperties.currentRentalofProperty = 620,
                          .PropertyProperties.houseConstructionCost = 2000,
                          .PropertyProperties.hotelConstructionCost = 8000,
                          .PropertyProperties.insuranceStatus = notInsured};
@@ -316,6 +332,7 @@ void initializeBoard(square *board) {
                          .PropertyProperties.initialPrice = 7000,
                          .PropertyProperties.propertyGroup = yellow,
                          .PropertyProperties.baseRental = 650,
+                         .PropertyProperties.currentRentalofProperty = 650,
                          .PropertyProperties.houseConstructionCost = 2000,
                          .PropertyProperties.hotelConstructionCost = 8000,
                          .PropertyProperties.insuranceStatus = notInsured};
@@ -336,6 +353,7 @@ void initializeBoard(square *board) {
                          .PropertyProperties.initialPrice = 8000,
                          .PropertyProperties.propertyGroup = green,
                          .PropertyProperties.baseRental = 750,
+                         .PropertyProperties.currentRentalofProperty = 750,
                          .PropertyProperties.houseConstructionCost = 2500,
                          .PropertyProperties.hotelConstructionCost = 10000,
                          .PropertyProperties.insuranceStatus = notInsured};
@@ -349,6 +367,7 @@ void initializeBoard(square *board) {
                          .PropertyProperties.initialPrice = 8300,
                          .PropertyProperties.propertyGroup = green,
                          .PropertyProperties.baseRental = 780,
+                         .PropertyProperties.currentRentalofProperty = 780,
                          .PropertyProperties.houseConstructionCost = 2500,
                          .PropertyProperties.hotelConstructionCost = 10000,
                          .PropertyProperties.insuranceStatus = notInsured};
@@ -368,6 +387,7 @@ void initializeBoard(square *board) {
                          .PropertyProperties.initialPrice = 8500,
                          .PropertyProperties.propertyGroup = green,
                          .PropertyProperties.baseRental = 800,
+                         .PropertyProperties.currentRentalofProperty = 800,
                          .PropertyProperties.houseConstructionCost = 2500,
                          .PropertyProperties.hotelConstructionCost = 10000,
                          .PropertyProperties.insuranceStatus = notInsured};
@@ -395,6 +415,7 @@ void initializeBoard(square *board) {
                          .PropertyProperties.initialPrice = 10000,
                          .PropertyProperties.propertyGroup = darkBlue,
                          .PropertyProperties.baseRental = 1000,
+                         .PropertyProperties.currentRentalofProperty = 1000,
                          .PropertyProperties.houseConstructionCost = 3000,
                          .PropertyProperties.hotelConstructionCost = 12000,
                          .PropertyProperties.insuranceStatus = notInsured};
@@ -414,6 +435,7 @@ void initializeBoard(square *board) {
                          .PropertyProperties.initialPrice = 12000,
                          .PropertyProperties.propertyGroup = darkBlue,
                          .PropertyProperties.baseRental = 1200,
+                         .PropertyProperties.currentRentalofProperty = 1200,
                          .PropertyProperties.houseConstructionCost = 3000,
                          .PropertyProperties.hotelConstructionCost = 12000,
                          .PropertyProperties.insuranceStatus = notInsured};
