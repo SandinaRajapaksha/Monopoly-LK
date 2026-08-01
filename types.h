@@ -230,4 +230,5 @@ void resolveTax(player *player_x, square *board);
 void resolveBank(player *player_x, square *board);
 void resolveProperty(player *player_x, square *board, economicEventCardType *, int *);
 void jailLogic(player *, bool);
+bool checkForMonopoly(player *player_x, square *board);
 #endif

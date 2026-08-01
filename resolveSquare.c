@@ -304,4 +304,35 @@ void resolveProperty(player *player_x, square *board,
             }
         }
     }
+    // if property owned by the player
+    else if (board[player_x->currentSquare].owner == player_x) {
+
+        bool eligibleForHouse = checkForMonopoly(player_x, board);
+    }
+}
+
+bool checkForMonopoly(player *player_x, square *board) {
+
+    // check if player has a monoply for this group
+    groupType CurrentGroup = board[player_x->currentSquare].PropertyProperties.propertyGroup;
+    bool ownsAMonopoly = true;
+    for (int i = 0; i < 40; i++) {
+        bool check1 = (board[i].PropertyProperties.propertyGroup == CurrentGroup) && (board[i].owner != player_x);
+        if (check1) {
+            ownsAMonopoly = false;
+        }
+    }
+
+    // check if houses evelny distrubute after a build
+    int currentNoOfHouses = board[player_x->currentSquare].PropertyProperties.noOfHouses;
+    bool HouseEligiblePerBuildingCount = true;
+    for (int i = 0; i < 40; i++) {
+        bool check2 = (board[i].PropertyProperties.propertyGroup == CurrentGroup) &&
+                      (board[i].PropertyProperties.noOfHouses < currentNoOfHouses);
+        if (check2) {
+            HouseEligiblePerBuildingCount = false;
+        }
+    }
+
+    return ownsAMonopoly && HouseEligiblePerBuildingCount;
 }
