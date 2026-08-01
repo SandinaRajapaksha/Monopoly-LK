@@ -123,7 +123,9 @@ void resolveProperty(player *player_x, square *board,
             if ((player_x->cash - (board[player_x->currentSquare]
                                        .PropertyProperties.initialPrice) >
                  (player_x->cash / 2)) &&
-                (*currentEconEvent != EconomicRecession)) {
+                (*currentEconEvent != EconomicRecession) &&
+                ((board[player_x->currentSquare].owner->playerID !=
+                  conservativeBanker))) {
 
                 player_x->cash =
                     player_x->cash - board[player_x->currentSquare]
