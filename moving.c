@@ -25,6 +25,6 @@ void move(player *player_x, square *board,
     if ((player_x->currentSquare != 10) && (player_x->currentSquare != 0) &&
         (player_x->currentSquare < tempCurrentSquare)) {
         player_x->cash = player_x->cash + 2000;
-        printf("%s received 2000 by passing GO ...\n", player_x->name);
+        printf("%s received LKR 2000 by passing GO ...\n", player_x->name);
     }
 }

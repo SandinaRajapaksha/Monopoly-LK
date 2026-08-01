@@ -1,4 +1,5 @@
 #include "types.h"
+#include <stdbool.h>
 #include <stdio.h>
 
 void startGame(void) {
@@ -22,22 +23,26 @@ void startGame(void) {
                                        .name = "Aggressive Invester",
                                        .currentSquare = 1,
                                        .cash = 30000,
-                                       .Jail = outside};
+                                       .Jail = outside,
+                                       .hasDebt = false};
     player conservativeBankerPlayer = {.playerID = conservativeBanker,
                                        .name = "Conservative Banker",
                                        .currentSquare = 1,
                                        .cash = 30000,
-                                       .Jail = outside};
+                                       .Jail = outside,
+                                       .hasDebt = false};
     player riskTakerPlayer = {.playerID = riskTaker,
                               .name = "Risk Taker",
                               .currentSquare = 1,
                               .cash = 30000,
-                              .Jail = outside};
+                              .Jail = outside,
+                              .hasDebt = false};
     player opportunisticTraderPlayer = {.playerID = opportunisticTrader,
                                         .name = "Oppotunistic Trader",
                                         .currentSquare = 1,
                                         .cash = 30000,
-                                        .Jail = outside};
+                                        .Jail = outside,
+                                        .hasDebt = false};
 
     player player_1;
     player player_2;

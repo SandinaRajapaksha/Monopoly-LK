@@ -45,7 +45,11 @@ typedef struct {
     int netWorth;
     jailStatus Jail;
     int jailRoundCounter;
+    int noOfHousesOwned;
+    int noOfHotelsOwned;
+    bool hasDebt;
 } player;
+
 typedef enum { cannotMortgage,
                mortgagedToBank,
                noMortgage } mortgageType;
@@ -231,4 +235,5 @@ void resolveBank(player *player_x, square *board);
 void resolveProperty(player *player_x, square *board, economicEventCardType *, int *);
 void jailLogic(player *, bool);
 bool checkForMonopoly(player *player_x, square *board);
+void buidBuilding(player *player_x, square *board);
 #endif
