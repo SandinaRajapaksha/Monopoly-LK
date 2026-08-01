@@ -323,6 +323,7 @@ void resolveProperty(player *player_x, square *board,
                     board[player_x->currentSquare].PropertyProperties.noOfHotels = 1;
 
                     player_x->noOfHotelsOwned = 1;
+                    player_x->noOfHousesOwned -= 4;
                     board[player_x->currentSquare].PropertyProperties.noOfHouses = 0;
                     board[player_x->currentSquare].PropertyProperties.currentRentalofProperty = 10 * board[player_x->currentSquare].PropertyProperties.baseRental;
                     printf("%s constructed a hotel at %s for %d\n", player_x->name, board[player_x->currentSquare].name, board[player_x->currentSquare].PropertyProperties.hotelConstructionCost);
@@ -369,6 +370,7 @@ void resolveProperty(player *player_x, square *board,
 
                     player_x->noOfHotelsOwned = 1;
                     board[player_x->currentSquare].PropertyProperties.noOfHouses = 0;
+                    player_x->noOfHousesOwned -= 4;
                     board[player_x->currentSquare].PropertyProperties.currentRentalofProperty = 10 * board[player_x->currentSquare].PropertyProperties.baseRental;
                     printf("%s constructed a hotel at %s for %d\n", player_x->name, board[player_x->currentSquare].name, board[player_x->currentSquare].PropertyProperties.hotelConstructionCost);
                 }
