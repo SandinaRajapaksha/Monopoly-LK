@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 void resolveSquare(player *player_x, square *board,
-                   economicEventCardType *currentEconEvent) {
+                   economicEventCardType *currentEconEvent, int *currentInflation) {
     squareType squareToResolve = board[player_x->currentSquare].type;
     switch (squareToResolve) {
     case go:
@@ -30,7 +30,7 @@ void resolveSquare(player *player_x, square *board,
         resolveBank(player_x, board);
         break;
     case property:
-        resolveProperty(player_x, board, currentEconEvent);
+        resolveProperty(player_x, board, currentEconEvent, currentInflation);
         break;
     }
 }
@@ -94,7 +94,7 @@ void resolveTax(player *player_x, square *board) {}
 void resolveBank(player *player_x, square *board) {}
 
 void resolveProperty(player *player_x, square *board,
-                     economicEventCardType *currentEconEvent) {
+                     economicEventCardType *currentEconEvent, int *currentInflation) {
 
     // if property owns by bank
     if (board[player_x->currentSquare].owner->playerID == bankOfCeylon) {
@@ -138,6 +138,18 @@ void resolveProperty(player *player_x, square *board,
         case riskTaker:
 
             if (player_x->cash > board[player_x->currentSquare].PropertyProperties.initialPrice) {
+                player_x->cash -= board[player_x->currentSquare].PropertyProperties.initialPrice;
+                board[player_x->currentSquare].owner = player_x;
+                printf("%s buys %s\n", player_x->name,
+                       board[player_x->currentSquare].name);
+            } else {
+                // auction logic
+            }
+            break;
+
+        case opportunisticTrader:
+            if ((player_x->cash > board[player_x->currentSquare].PropertyProperties.initialPrice) && (*currentEconEvent != EconomicRecession) && (*currentInflation > 0)) {
+
                 player_x->cash -= board[player_x->currentSquare].PropertyProperties.initialPrice;
                 board[player_x->currentSquare].owner = player_x;
                 printf("%s buys %s\n", player_x->name,
@@ -251,6 +263,40 @@ void resolveProperty(player *player_x, square *board,
                 } else {
                     // loan logic for rent payment to be implemented
                 }
+                break;
+
+            case opportunisticTrader:
+
+                if ((player_x->cash >
+                     board[player_x->currentSquare]
+                         .PropertyProperties.currentRentalofProperty) &&
+                    (board[player_x->currentSquare].mortgageStatus !=
+                     mortgagedToBank)) {
+
+                    // player pays rent
+
+                    player_x->cash =
+                        player_x->cash -
+                        board[player_x->currentSquare]
+                            .PropertyProperties.currentRentalofProperty;
+
+                    // owner gets paid
+
+                    board[player_x->currentSquare].owner->cash =
+                        board[player_x->currentSquare].owner->cash +
+                        board[player_x->currentSquare]
+                            .PropertyProperties.currentRentalofProperty;
+
+                    printf("%s payed %d to %s as the rent of %s\n",
+                           player_x->name,
+                           board[player_x->currentSquare]
+                               .PropertyProperties.currentRentalofProperty,
+                           board[player_x->currentSquare].owner->name,
+                           board[player_x->currentSquare].name);
+                } else {
+                    // loan logic for rent payment to be implemented
+                }
+                break;
 
             default:
                 break;

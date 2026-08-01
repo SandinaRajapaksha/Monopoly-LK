@@ -76,10 +76,10 @@ void startGame(void) {
     // main game loop
     while (true) {
         printf("\nCurrunt round is : %d \n\n", curruntBoardRound);
-        move(&player_1, board, &curruntActiveEconEvent);
-        move(&player_2, board, &curruntActiveEconEvent);
-        move(&player_3, board, &curruntActiveEconEvent);
-        move(&player_4, board, &curruntActiveEconEvent);
+        move(&player_1, board, &curruntActiveEconEvent, &curruntInflation);
+        move(&player_2, board, &curruntActiveEconEvent, &curruntInflation);
+        move(&player_3, board, &curruntActiveEconEvent, &curruntInflation);
+        move(&player_4, board, &curruntActiveEconEvent, &curruntInflation);
         if (curruntBoardRound == 500) {
             break;
         }
