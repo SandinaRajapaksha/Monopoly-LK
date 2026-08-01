@@ -120,12 +120,9 @@ void resolveProperty(player *player_x, square *board,
 
         case conservativeBanker:
 
-            if ((player_x->cash - (board[player_x->currentSquare]
-                                       .PropertyProperties.initialPrice) >
+            if ((player_x->cash - (board[player_x->currentSquare].PropertyProperties.initialPrice) >
                  (player_x->cash / 2)) &&
-                (*currentEconEvent != EconomicRecession) &&
-                ((board[player_x->currentSquare].owner->playerID !=
-                  conservativeBanker))) {
+                (*currentEconEvent != EconomicRecession)) {
 
                 player_x->cash =
                     player_x->cash - board[player_x->currentSquare]
@@ -137,9 +134,21 @@ void resolveProperty(player *player_x, square *board,
                 // auction logic to be implemented
             }
             break;
+
+        case riskTaker:
+
+            if (player_x->cash > board[player_x->currentSquare].PropertyProperties.initialPrice) {
+                player_x->cash -= board[player_x->currentSquare].PropertyProperties.initialPrice;
+                board[player_x->currentSquare].owner = player_x;
+                printf("%s buys %s\n", player_x->name,
+                       board[player_x->currentSquare].name);
+            } else {
+                // auction logic
+            }
+            break;
+
         default:
             break;
-            // if property isnt owned yet
         }
     }
     // if property owned by another player
@@ -181,6 +190,37 @@ void resolveProperty(player *player_x, square *board,
                 break;
 
             case conservativeBanker:
+
+                if ((player_x->cash >
+                     board[player_x->currentSquare]
+                         .PropertyProperties.currentRentalofProperty) &&
+                    (board[player_x->currentSquare].mortgageStatus !=
+                     mortgagedToBank)) {
+
+                    // player pays rent
+
+                    player_x->cash =
+                        player_x->cash -
+                        board[player_x->currentSquare]
+                            .PropertyProperties.currentRentalofProperty;
+
+                    // owner gets paid
+
+                    board[player_x->currentSquare].owner->cash =
+                        board[player_x->currentSquare].owner->cash +
+                        board[player_x->currentSquare]
+                            .PropertyProperties.currentRentalofProperty;
+
+                    printf("%s payed %d to %s as the rent of %s\n",
+                           player_x->name,
+                           board[player_x->currentSquare]
+                               .PropertyProperties.currentRentalofProperty,
+                           board[player_x->currentSquare].owner->name,
+                           board[player_x->currentSquare].name);
+                } else {
+                    // loan logic for rent payment to be implemented
+                }
+            case riskTaker:
 
                 if ((player_x->cash >
                      board[player_x->currentSquare]
