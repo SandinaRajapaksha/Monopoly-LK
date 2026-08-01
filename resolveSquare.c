@@ -317,9 +317,22 @@ void resolveProperty(player *player_x, square *board,
 
             if (eligibleForHouse && (board[player_x->currentSquare].PropertyProperties.houseConstructionCost <= player_x->cash)) {
                 // build house
-                player_x->cash -= board[player_x->currentSquare].PropertyProperties.houseConstructionCost;
-                board[player_x->currentSquare].PropertyProperties.noOfHouses++;
-                printf("%s constructed a house at %s for %d\n", player_x->name, board[player_x->currentSquare].name, board[player_x->currentSquare].PropertyProperties.houseConstructionCost);
+                if (board[player_x->currentSquare].PropertyProperties.noOfHouses >= 4 && player_x->cash >= board[player_x->currentSquare].PropertyProperties.hotelConstructionCost) {
+
+                    player_x->cash -= board[player_x->currentSquare].PropertyProperties.hotelConstructionCost;
+                    board[player_x->currentSquare].PropertyProperties.noOfHotels = 1;
+
+                    board[player_x->currentSquare].PropertyProperties.noOfHouses = 0;
+                    board[player_x->currentSquare].PropertyProperties.currentRentalofProperty = 10 * board[player_x->currentSquare].PropertyProperties.baseRental;
+                    printf("%s constructed a hotel at %s for %d\n", player_x->name, board[player_x->currentSquare].name, board[player_x->currentSquare].PropertyProperties.hotelConstructionCost);
+                }
+
+                if (board[player_x->currentSquare].PropertyProperties.noOfHouses < 4 && board[player_x->currentSquare].PropertyProperties.noOfHotels == 0) {
+
+                    board[player_x->currentSquare].PropertyProperties.noOfHouses++;
+                    player_x->cash -= board[player_x->currentSquare].PropertyProperties.houseConstructionCost;
+                    printf("%s constructed a house at %s for %d\n", player_x->name, board[player_x->currentSquare].name, board[player_x->currentSquare].PropertyProperties.houseConstructionCost);
+                }
 
                 switch (board[player_x->currentSquare].PropertyProperties.noOfHouses) {
                 case 1:

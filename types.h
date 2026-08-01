@@ -51,7 +51,7 @@ typedef enum { cannotMortgage,
                noMortgage } mortgageType;
 
 typedef enum {
-    brown,
+    brown = 8001,
     lightBlue,
     pink,
     orange,
