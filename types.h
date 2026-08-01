@@ -48,6 +48,8 @@ typedef struct {
     int noOfHousesOwned;
     int noOfHotelsOwned;
     bool hasDebt;
+    int noOfProperties;
+    int outStandingLoan;
 } player;
 
 typedef enum { cannotMortgage,

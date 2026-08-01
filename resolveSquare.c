@@ -115,6 +115,7 @@ void resolveProperty(player *player_x, square *board,
                 board[player_x->currentSquare].owner = player_x;
                 printf("%s buys %s\n", player_x->name,
                        board[player_x->currentSquare].name);
+                player_x->noOfProperties++;
             }
             break;
 
@@ -130,6 +131,8 @@ void resolveProperty(player *player_x, square *board,
                 board[player_x->currentSquare].owner = player_x;
                 printf("%s buys %s\n", player_x->name,
                        board[player_x->currentSquare].name);
+
+                player_x->noOfProperties++;
             } else {
                 // auction logic to be implemented
             }
@@ -142,6 +145,8 @@ void resolveProperty(player *player_x, square *board,
                 board[player_x->currentSquare].owner = player_x;
                 printf("%s buys %s\n", player_x->name,
                        board[player_x->currentSquare].name);
+
+                player_x->noOfProperties++;
             } else {
                 // auction logic
             }
@@ -154,6 +159,8 @@ void resolveProperty(player *player_x, square *board,
                 board[player_x->currentSquare].owner = player_x;
                 printf("%s buys %s\n", player_x->name,
                        board[player_x->currentSquare].name);
+
+                player_x->noOfProperties++;
             } else {
                 // auction logic
             }
