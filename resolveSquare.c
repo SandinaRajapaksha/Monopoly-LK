@@ -308,6 +308,40 @@ void resolveProperty(player *player_x, square *board,
     else if (board[player_x->currentSquare].owner == player_x) {
 
         bool eligibleForHouse = checkForMonopoly(player_x, board);
+
+        playerType currentPlayer = player_x->playerID;
+
+        switch (currentPlayer) {
+
+        case aggresiveInvester:
+
+            if (eligibleForHouse && (board[player_x->currentSquare].PropertyProperties.houseConstructionCost <= player_x->cash)) {
+                // build house
+                player_x->cash -= board[player_x->currentSquare].PropertyProperties.houseConstructionCost;
+                board[player_x->currentSquare].PropertyProperties.noOfHouses++;
+                printf("%s constructed a house at %s for %d\n", player_x->name, board[player_x->currentSquare].name, board[player_x->currentSquare].PropertyProperties.houseConstructionCost);
+
+                switch (board[player_x->currentSquare].PropertyProperties.noOfHouses) {
+                case 1:
+                    board[player_x->currentSquare].PropertyProperties.currentRentalofProperty = 2 * board[player_x->currentSquare].PropertyProperties.baseRental;
+                    break;
+                case 2:
+                    board[player_x->currentSquare].PropertyProperties.currentRentalofProperty = 3 * board[player_x->currentSquare].PropertyProperties.baseRental;
+                    break;
+                case 3:
+                    board[player_x->currentSquare].PropertyProperties.currentRentalofProperty = 5 * board[player_x->currentSquare].PropertyProperties.baseRental;
+                    break;
+                case 4:
+                    board[player_x->currentSquare].PropertyProperties.currentRentalofProperty = 7 * board[player_x->currentSquare].PropertyProperties.baseRental;
+                    break;
+                default:
+                    break;
+                }
+            }
+            break;
+        default:
+            break;
+        }
     }
 }
 
@@ -333,6 +367,5 @@ bool checkForMonopoly(player *player_x, square *board) {
             HouseEligiblePerBuildingCount = false;
         }
     }
-
     return ownsAMonopoly && HouseEligiblePerBuildingCount;
 }
