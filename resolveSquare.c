@@ -44,7 +44,7 @@ void jailLogic(player *player_x, bool doublesRolled) {
             player_x->Jail = outside;
             printf("%s gets out from the jail by rolling doubles\n",
                    player_x->name);
-        } else if (player_x->jailRoundCounter == 3) {
+        } else if (player_x->jailRoundCounter > 3) {
             player_x->Jail = outside;
             printf("%s gets out from the jail by staying 3 turns inside jail\n",
                    player_x->name);
@@ -232,6 +232,7 @@ void resolveProperty(player *player_x, square *board,
                 } else {
                     // loan logic for rent payment to be implemented
                 }
+                break;
             case riskTaker:
 
                 if ((player_x->cash >
