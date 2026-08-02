@@ -105,45 +105,54 @@ void finalRankAssign(player *player_X, player *player_1, player *player_2,
 
 void roundCounter(int *curruntBoardRound, player *player_1, player *player_2,
                   player *player_3, player *player_4) {
-    bool Equalitycheck =
-        (player_1->totalsteps / 39) && (player_2->totalsteps / 39) &&
-        (player_3->totalsteps / 39) && (player_4->totalsteps / 39);
+    int laps1 = player_1->totalsteps / 40;
+    int laps2 = player_2->totalsteps / 40;
+    int laps3 = player_3->totalsteps / 40;
+    int laps4 = player_4->totalsteps / 40;
 
-    int tempCurrentRound = *curruntBoardRound;
-    if (Equalitycheck == true) {
-        *curruntBoardRound = (player_1->totalsteps / 39) + 1;
-        if (*curruntBoardRound != tempCurrentRound) {
+    int completedLaps = laps1;
+    if (laps2 < completedLaps) {
+        completedLaps = laps2;
+    }
+    if (laps3 < completedLaps) {
+        completedLaps = laps3;
+    }
+    if (laps4 < completedLaps) {
+        completedLaps = laps4;
+    }
 
-            printf("\n==================================================================\n Round %d Summary \n", tempCurrentRound);
-            printf("==================================================================\n\n");
-            printf("%s\n\n", player_1->name);
-            printf("Cash : %d \n\n", player_1->cash);
-            printf("Networth : %d \n\n", player_1->netWorth);
-            printf("Properties : %d \n\n", player_1->noOfProperties);
-            printf("Hotels : %d \n\n", player_1->noOfHotelsOwned);
-            printf("Outstanding Loan : %d \n\n", player_1->outStandingLoan);
-            printf("------------------------------------------------------------------\n\n");
-            printf("%s\n\n", player_2->name);
-            printf("Cash : %d \n\n", player_2->cash);
-            printf("Networth : %d \n\n", player_2->netWorth);
-            printf("Properties : %d \n\n", player_2->noOfProperties);
-            printf("Hotels : %d \n\n", player_2->noOfHotelsOwned);
-            printf("Outstanding Loan : %d \n\n", player_2->outStandingLoan);
-            printf("------------------------------------------------------------------\n\n");
-            printf("%s\n\n", player_3->name);
-            printf("Cash : %d \n\n", player_3->cash);
-            printf("Networth : %d \n\n", player_3->netWorth);
-            printf("Properties : %d \n\n", player_3->noOfProperties);
-            printf("Hotels : %d \n\n", player_3->noOfHotelsOwned);
-            printf("Outstanding Loan : %d \n\n", player_3->outStandingLoan);
-            printf("------------------------------------------------------------------\n\n");
-            printf("%s\n\n", player_4->name);
-            printf("Cash : %d \n\n", player_4->cash);
-            printf("Networth : %d \n\n", player_4->netWorth);
-            printf("Properties : %d \n\n", player_4->noOfProperties);
-            printf("Hotels : %d \n\n", player_4->noOfHotelsOwned);
-            printf("Outstanding Loan : %d \n\n", player_4->outStandingLoan);
-            printf("------------------------------------------------------------------\n\n");
-        }
+    if (completedLaps + 1 > *curruntBoardRound) {
+        *curruntBoardRound = completedLaps + 1;
+
+        printf("\n==================================================================\n Round %d Summary \n", completedLaps);
+        printf("==================================================================\n\n");
+        printf("%s\n\n", player_1->name);
+        printf("Cash : %d \n\n", player_1->cash);
+        printf("Networth : %d \n\n", player_1->netWorth);
+        printf("Properties : %d \n\n", player_1->noOfProperties);
+        printf("Hotels : %d \n\n", player_1->noOfHotelsOwned);
+        printf("Outstanding Loan : %d \n\n", player_1->outStandingLoan);
+        printf("------------------------------------------------------------------\n\n");
+        printf("%s\n\n", player_2->name);
+        printf("Cash : %d \n\n", player_2->cash);
+        printf("Networth : %d \n\n", player_2->netWorth);
+        printf("Properties : %d \n\n", player_2->noOfProperties);
+        printf("Hotels : %d \n\n", player_2->noOfHotelsOwned);
+        printf("Outstanding Loan : %d \n\n", player_2->outStandingLoan);
+        printf("------------------------------------------------------------------\n\n");
+        printf("%s\n\n", player_3->name);
+        printf("Cash : %d \n\n", player_3->cash);
+        printf("Networth : %d \n\n", player_3->netWorth);
+        printf("Properties : %d \n\n", player_3->noOfProperties);
+        printf("Hotels : %d \n\n", player_3->noOfHotelsOwned);
+        printf("Outstanding Loan : %d \n\n", player_3->outStandingLoan);
+        printf("------------------------------------------------------------------\n\n");
+        printf("%s\n\n", player_4->name);
+        printf("Cash : %d \n\n", player_4->cash);
+        printf("Networth : %d \n\n", player_4->netWorth);
+        printf("Properties : %d \n\n", player_4->noOfProperties);
+        printf("Hotels : %d \n\n", player_4->noOfHotelsOwned);
+        printf("Outstanding Loan : %d \n\n", player_4->outStandingLoan);
+        printf("------------------------------------------------------------------\n\n");
     }
 }
