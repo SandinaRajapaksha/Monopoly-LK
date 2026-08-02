@@ -238,4 +238,5 @@ void resolveProperty(player *player_x, square *board, economicEventCardType *, i
 void jailLogic(player *, bool);
 bool checkForMonopoly(player *player_x, square *board);
 void buidBuilding(player *player_x, square *board);
+void networthEvaluate(player *player_1, player *player_2, player *player_3, player *player_4, square *board);
 #endif

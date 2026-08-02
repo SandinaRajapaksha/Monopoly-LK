@@ -89,6 +89,8 @@ void startGame(void) {
         move(&player_3, board, &curruntActiveEconEvent, &curruntInflation);
         move(&player_4, board, &curruntActiveEconEvent, &curruntInflation);
 
+        networthEvaluate(&player_1, &player_2, &player_3, &player_4, board);
+
         roundCounter(&curruntBoardRound, &player_1, &player_2, &player_3,
                      &player_4);
 
