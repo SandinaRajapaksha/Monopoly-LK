@@ -26,7 +26,7 @@ void ranker(player *player1, player *player2, player *player3,
         printf("%s rolls %d\n", players[i]->name, players[i]->diceRoll);
     }
 
-    // sort dice values of players, highest first (rank 1 = highest roll)
+    // order players by dice, highest gets rank 1
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3 - i; j++) {
             if (players[j + 1]->diceRoll > players[j]->diceRoll) {
@@ -38,8 +38,7 @@ void ranker(player *player1, player *player2, player *player3,
             }
         }
     }
-    // duplicate resolve -- only tied players re-roll to settle their rank
-    // within their tie group; distinct first-roll players keep their rank
+    // if its a tie, re-roll just the tied players until someone wins
 
     for (int i = 0; i < 4;) {
         int j = i;
@@ -47,7 +46,7 @@ void ranker(player *player1, player *player2, player *player3,
             j++;
         }
         if (j > i) {
-            // group: re-roll only these tied players until all distinct
+            // re-roll the tied bunch
             int distinct;
             do {
                 distinct = 1;
@@ -85,7 +84,7 @@ void ranker(player *player1, player *player2, player *player3,
     }
 }
 
-// final player ranker
+// give the ranked players their final spots
 
 void finalRankAssign(player *player_X, player *player_1, player *player_2,
                      player *player_3, player *player_4) {

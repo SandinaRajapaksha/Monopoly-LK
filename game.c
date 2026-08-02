@@ -94,7 +94,7 @@ void startGame(void) {
         roundCounter(&curruntBoardRound, &player_1, &player_2, &player_3,
                      &player_4);
 
-        // random events that happens after constant number of rounds
+        // trigger events after a set number of rounds
         if ((curruntBoardRound % 15 == 0) &&
             (curruntBoardRound != roundThatEconEventHappened)) {
             econEventActivate(board, &roundThatEconEventHappened,

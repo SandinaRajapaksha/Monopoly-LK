@@ -467,7 +467,7 @@ void resolveProperty(player *player_x, square *board,
 
 bool checkForMonopoly(player *player_x, square *board) {
 
-    // check if player has a monoply for this group
+    // does the player own the full group?
     groupType CurrentGroup = board[player_x->currentSquare].PropertyProperties.propertyGroup;
     bool ownsAMonopoly = true;
     for (int i = 0; i < 40; i++) {
@@ -477,7 +477,7 @@ bool checkForMonopoly(player *player_x, square *board) {
         }
     }
 
-    // check if houses evelny distrubute after a build
+    // houses must be evenly spread before the next build
     int currentNoOfHouses = board[player_x->currentSquare].PropertyProperties.noOfHouses;
     bool HouseEligiblePerBuildingCount = true;
     for (int i = 0; i < 40; i++) {
