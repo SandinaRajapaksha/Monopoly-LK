@@ -42,6 +42,7 @@ void jailLogic(player *player_x, bool doublesRolled) {
     case conservativeBanker:
         if (doublesRolled == true) {
             player_x->Jail = outside;
+            player_x->jailRoundCounter = 0;
             printf("%s gets out from the jail by rolling doubles\n",
                    player_x->name);
         } else if (player_x->jailRoundCounter > 3) {
@@ -83,6 +84,7 @@ void resolveSpecial(player *player_x, square *board) {
     case gotoJail:
         player_x->currentSquare = 10; // jail square
         player_x->Jail = inside;
+        player_x->jailRoundCounter = 0;
         printf("%s got inside the jail ...\n", player_x->name);
         break;
     default:
