@@ -458,6 +458,48 @@ void resolveProperty(player *player_x, square *board,
                 }
             }
             break;
+        case opportunisticTrader:
+            if (eligibleForHouse && (board[player_x->currentSquare].PropertyProperties.houseConstructionCost <= player_x->cash)) {
+                // build house
+                if (board[player_x->currentSquare].PropertyProperties.noOfHouses >= 4 &&
+                    ((player_x->cash - board[player_x->currentSquare].PropertyProperties.hotelConstructionCost) > player_x->cash / 2)) {
+
+                    player_x->cash -= board[player_x->currentSquare].PropertyProperties.hotelConstructionCost;
+                    board[player_x->currentSquare].PropertyProperties.noOfHotels = 1;
+
+                    player_x->noOfHotelsOwned = 1;
+                    board[player_x->currentSquare].PropertyProperties.noOfHouses = 0;
+                    player_x->noOfHousesOwned -= 4;
+                    board[player_x->currentSquare].PropertyProperties.currentRentalofProperty = 10 * board[player_x->currentSquare].PropertyProperties.baseRental;
+                    printf("%s constructed a hotel at %s for %d\n", player_x->name, board[player_x->currentSquare].name, board[player_x->currentSquare].PropertyProperties.hotelConstructionCost);
+                }
+
+                if (board[player_x->currentSquare].PropertyProperties.noOfHouses < 4 && board[player_x->currentSquare].PropertyProperties.noOfHotels == 0) {
+
+                    board[player_x->currentSquare].PropertyProperties.noOfHouses++;
+                    player_x->noOfHousesOwned++;
+                    player_x->cash -= board[player_x->currentSquare].PropertyProperties.houseConstructionCost;
+                    printf("%s constructed a house at %s for %d\n", player_x->name, board[player_x->currentSquare].name, board[player_x->currentSquare].PropertyProperties.houseConstructionCost);
+                }
+
+                switch (board[player_x->currentSquare].PropertyProperties.noOfHouses) {
+                case 1:
+                    board[player_x->currentSquare].PropertyProperties.currentRentalofProperty = 2 * board[player_x->currentSquare].PropertyProperties.baseRental;
+                    break;
+                case 2:
+                    board[player_x->currentSquare].PropertyProperties.currentRentalofProperty = 3 * board[player_x->currentSquare].PropertyProperties.baseRental;
+                    break;
+                case 3:
+                    board[player_x->currentSquare].PropertyProperties.currentRentalofProperty = 5 * board[player_x->currentSquare].PropertyProperties.baseRental;
+                    break;
+                case 4:
+                    board[player_x->currentSquare].PropertyProperties.currentRentalofProperty = 7 * board[player_x->currentSquare].PropertyProperties.baseRental;
+                    break;
+                default:
+                    break;
+                }
+            }
+            break;
 
         default:
             break;
