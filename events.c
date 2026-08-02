@@ -6,7 +6,7 @@ void econEventActivate(square *board, int *roundThatEconEventHappened,
                        int *curruntBoardRound) {
     // random
     economicEventCardType econEvents[8] = {
-        TourismBoom,       FuelCrisis,      HeavyMonsoon,
+        TourismBoom, FuelCrisis, HeavyMonsoon,
         EconomicRecession, StockMarketBoom, GovernmentHousingProgramme,
         ForeignInvestment, PoliticalUnrest};
 
@@ -60,19 +60,19 @@ void econEventActivate(square *board, int *roundThatEconEventHappened,
 void govRegulationsActivate(square *board) {
     // random
     govRegulationsType govRegulations[8] = {
-        IncreasePropertyTax, ReduceLoanInterest,   HousingSubsidy,
-        LuxaryPropertyTax,   RailwayModernization, ElectricityTariffRevision,
+        IncreasePropertyTax, ReduceLoanInterest, HousingSubsidy,
+        LuxaryPropertyTax, RailwayModernization, ElectricityTariffRevision,
         InsuranceRegulation, AntiSpeculantAct};
 }
 
 void nationalEventActivate(int *topNationalEventcard, square *board) {
     // deck
     NationalEventType NationalEventCards[19] = {
-        TourismHype,         FuelShortage,         PoliticalRally,
-        StockMarketRise,     EconomicDowntime,     HousingSubsidy_NationalEvent,
-        InterestRateCut,     InterestRateIncrease, TaxAmnesty,
-        PowerFailure,        ForeignFunding,       PortExpansion,
-        FestivalSeason,      LabourStrike,         InsuranceDiscount,
+        TourismHype, FuelShortage, PoliticalRally,
+        StockMarketRise, EconomicDowntime, HousingSubsidy_NationalEvent,
+        InterestRateCut, InterestRateIncrease, TaxAmnesty,
+        PowerFailure, ForeignFunding, PortExpansion,
+        FestivalSeason, LabourStrike, InsuranceDiscount,
         PropertyRevaluation, CurrencyDepreciation, GovernmentGrant,
         NationalDisaster};
 
@@ -130,5 +130,13 @@ void inflationRateRelease(square *board, int *curruntBoardRound,
     printf("\nInflations rate for round %d releases now,\nInflation rate "
            "release : %d %% \n\n",
            *curruntBoardRound, *curruntInflation);
+
+    for (int i = 0; i <= 39; i++) {
+
+        board[i].curruntValue = board[i].curruntValue * (1 + (double)*curruntInflation / (double)100);
+        board[i].PropertyProperties.currentRentalofProperty = board[i].PropertyProperties.currentRentalofProperty * (1 + (double)*curruntInflation / (double)100);
+        board[i].PropertyProperties.initialPrice = board[i].PropertyProperties.initialPrice * (1 + (double)*curruntInflation / (double)100);
+        // other affecting proerties to be added
+    }
     *roundThatInflationHappened = *curruntBoardRound;
 }
