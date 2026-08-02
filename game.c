@@ -88,10 +88,22 @@ void startGame(void) {
             break;
         }
         printf("\nCurrunt round is : %d \n\n", curruntBoardRound);
-        move(&player_1, board, &curruntActiveEconEvent, &curruntInflation);
-        move(&player_2, board, &curruntActiveEconEvent, &curruntInflation);
-        move(&player_3, board, &curruntActiveEconEvent, &curruntInflation);
-        move(&player_4, board, &curruntActiveEconEvent, &curruntInflation);
+        if (player_1.isBankrupt == false) {
+
+            move(&player_1, board, &curruntActiveEconEvent, &curruntInflation);
+        }
+        if (player_2.isBankrupt == false) {
+
+            move(&player_2, board, &curruntActiveEconEvent, &curruntInflation);
+        }
+        if (player_3.isBankrupt == false) {
+
+            move(&player_3, board, &curruntActiveEconEvent, &curruntInflation);
+        }
+        if (player_4.isBankrupt == false) {
+
+            move(&player_4, board, &curruntActiveEconEvent, &curruntInflation);
+        }
 
         networthEvaluate(&player_1, &player_2, &player_3, &player_4, board);
 
