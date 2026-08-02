@@ -211,112 +211,113 @@ void resolveProperty(player *player_x, square *board,
                        board[player_x->currentSquare].name);
 
             } else {
-                //      loan logic to be implemented
-                break;
-
-            case conservativeBanker:
-
-                if ((player_x->cash >
-                     board[player_x->currentSquare]
-                         .PropertyProperties.currentRentalofProperty) &&
-                    (board[player_x->currentSquare].mortgageStatus !=
-                     mortgagedToBank)) {
-
-                    // player pays rent
-
-                    player_x->cash =
-                        player_x->cash -
-                        board[player_x->currentSquare]
-                            .PropertyProperties.currentRentalofProperty;
-
-                    // owner gets paid
-
-                    board[player_x->currentSquare].owner->cash =
-                        board[player_x->currentSquare].owner->cash +
-                        board[player_x->currentSquare]
-                            .PropertyProperties.currentRentalofProperty;
-
-                    printf("%s payed %d to %s as the rent of %s\n",
-                           player_x->name,
-                           board[player_x->currentSquare]
-                               .PropertyProperties.currentRentalofProperty,
-                           board[player_x->currentSquare].owner->name,
-                           board[player_x->currentSquare].name);
-                } else {
-                    // loan logic for rent payment to be implemented
-                }
-                break;
-            case riskTaker:
-
-                if ((player_x->cash >
-                     board[player_x->currentSquare]
-                         .PropertyProperties.currentRentalofProperty) &&
-                    (board[player_x->currentSquare].mortgageStatus !=
-                     mortgagedToBank)) {
-
-                    // player pays rent
-
-                    player_x->cash =
-                        player_x->cash -
-                        board[player_x->currentSquare]
-                            .PropertyProperties.currentRentalofProperty;
-
-                    // owner gets paid
-
-                    board[player_x->currentSquare].owner->cash =
-                        board[player_x->currentSquare].owner->cash +
-                        board[player_x->currentSquare]
-                            .PropertyProperties.currentRentalofProperty;
-
-                    printf("%s payed %d to %s as the rent of %s\n",
-                           player_x->name,
-                           board[player_x->currentSquare]
-                               .PropertyProperties.currentRentalofProperty,
-                           board[player_x->currentSquare].owner->name,
-                           board[player_x->currentSquare].name);
-                } else {
-                    // loan logic for rent payment to be implemented
-                }
-                break;
-
-            case opportunisticTrader:
-
-                if ((player_x->cash >
-                     board[player_x->currentSquare]
-                         .PropertyProperties.currentRentalofProperty) &&
-                    (board[player_x->currentSquare].mortgageStatus !=
-                     mortgagedToBank)) {
-
-                    // player pays rent
-
-                    player_x->cash =
-                        player_x->cash -
-                        board[player_x->currentSquare]
-                            .PropertyProperties.currentRentalofProperty;
-
-                    // owner gets paid
-
-                    board[player_x->currentSquare].owner->cash =
-                        board[player_x->currentSquare].owner->cash +
-                        board[player_x->currentSquare]
-                            .PropertyProperties.currentRentalofProperty;
-
-                    printf("%s payed %d to %s as the rent of %s\n",
-                           player_x->name,
-                           board[player_x->currentSquare]
-                               .PropertyProperties.currentRentalofProperty,
-                           board[player_x->currentSquare].owner->name,
-                           board[player_x->currentSquare].name);
-                } else {
-                    // loan logic for rent payment to be implemented
-                }
-                break;
-
-            default:
-                break;
             }
+            //      loan logic to be implemented
+            break;
+
+        case conservativeBanker:
+
+            if ((player_x->cash >
+                 board[player_x->currentSquare]
+                     .PropertyProperties.currentRentalofProperty) &&
+                (board[player_x->currentSquare].mortgageStatus !=
+                 mortgagedToBank)) {
+
+                // player pays rent
+
+                player_x->cash =
+                    player_x->cash -
+                    board[player_x->currentSquare]
+                        .PropertyProperties.currentRentalofProperty;
+
+                // owner gets paid
+
+                board[player_x->currentSquare].owner->cash =
+                    board[player_x->currentSquare].owner->cash +
+                    board[player_x->currentSquare]
+                        .PropertyProperties.currentRentalofProperty;
+
+                printf("%s payed %d to %s as the rent of %s\n",
+                       player_x->name,
+                       board[player_x->currentSquare]
+                           .PropertyProperties.currentRentalofProperty,
+                       board[player_x->currentSquare].owner->name,
+                       board[player_x->currentSquare].name);
+            } else {
+                // loan logic for rent payment to be implemented
+            }
+            break;
+        case riskTaker:
+
+            if ((player_x->cash >
+                 board[player_x->currentSquare]
+                     .PropertyProperties.currentRentalofProperty) &&
+                (board[player_x->currentSquare].mortgageStatus !=
+                 mortgagedToBank)) {
+
+                // player pays rent
+
+                player_x->cash =
+                    player_x->cash -
+                    board[player_x->currentSquare]
+                        .PropertyProperties.currentRentalofProperty;
+
+                // owner gets paid
+
+                board[player_x->currentSquare].owner->cash =
+                    board[player_x->currentSquare].owner->cash +
+                    board[player_x->currentSquare]
+                        .PropertyProperties.currentRentalofProperty;
+
+                printf("%s payed %d to %s as the rent of %s\n",
+                       player_x->name,
+                       board[player_x->currentSquare]
+                           .PropertyProperties.currentRentalofProperty,
+                       board[player_x->currentSquare].owner->name,
+                       board[player_x->currentSquare].name);
+            } else {
+                // loan logic for rent payment to be implemented
+            }
+            break;
+
+        case opportunisticTrader:
+
+            if ((player_x->cash >
+                 board[player_x->currentSquare]
+                     .PropertyProperties.currentRentalofProperty) &&
+                (board[player_x->currentSquare].mortgageStatus !=
+                 mortgagedToBank)) {
+
+                // player pays rent
+
+                player_x->cash =
+                    player_x->cash -
+                    board[player_x->currentSquare]
+                        .PropertyProperties.currentRentalofProperty;
+
+                // owner gets paid
+
+                board[player_x->currentSquare].owner->cash =
+                    board[player_x->currentSquare].owner->cash +
+                    board[player_x->currentSquare]
+                        .PropertyProperties.currentRentalofProperty;
+
+                printf("%s payed %d to %s as the rent of %s\n",
+                       player_x->name,
+                       board[player_x->currentSquare]
+                           .PropertyProperties.currentRentalofProperty,
+                       board[player_x->currentSquare].owner->name,
+                       board[player_x->currentSquare].name);
+            } else {
+                // loan logic for rent payment to be implemented
+            }
+            break;
+
+        default:
+            break;
         }
     }
+
     // if property owned by the player
     else if (board[player_x->currentSquare].owner == player_x) {
 
