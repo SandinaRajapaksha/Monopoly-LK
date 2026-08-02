@@ -24,25 +24,29 @@ void startGame(void) {
                                        .currentSquare = 1,
                                        .cash = 30000,
                                        .Jail = outside,
-                                       .hasDebt = false};
+                                       .hasDebt = false,
+                                       .isBankrupt = false};
     player conservativeBankerPlayer = {.playerID = conservativeBanker,
                                        .name = "Conservative Banker",
                                        .currentSquare = 1,
                                        .cash = 30000,
                                        .Jail = outside,
-                                       .hasDebt = false};
+                                       .hasDebt = false,
+                                       .isBankrupt = false};
     player riskTakerPlayer = {.playerID = riskTaker,
                               .name = "Risk Taker",
                               .currentSquare = 1,
                               .cash = 30000,
                               .Jail = outside,
-                              .hasDebt = false};
+                              .hasDebt = false,
+                              .isBankrupt = false};
     player opportunisticTraderPlayer = {.playerID = opportunisticTrader,
                                         .name = "Oppotunistic Trader",
                                         .currentSquare = 1,
                                         .cash = 30000,
                                         .Jail = outside,
-                                        .hasDebt = false};
+                                        .hasDebt = false,
+                                        .isBankrupt = false};
 
     player player_1;
     player player_2;

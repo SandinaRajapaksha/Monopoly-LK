@@ -459,7 +459,7 @@ void resolveProperty(player *player_x, square *board,
             }
             break;
         case opportunisticTrader:
-            if (eligibleForHouse && (board[player_x->currentSquare].PropertyProperties.houseConstructionCost <= player_x->cash)) {
+            if (eligibleForHouse && (board[player_x->currentSquare].PropertyProperties.houseConstructionCost <= player_x->cash) && (*currentInflation <= 0)) {
                 // build house
                 if (board[player_x->currentSquare].PropertyProperties.noOfHouses >= 4 &&
                     ((player_x->cash - board[player_x->currentSquare].PropertyProperties.hotelConstructionCost) > player_x->cash / 2)) {
