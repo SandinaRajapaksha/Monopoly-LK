@@ -114,7 +114,7 @@ void roundCounter(int *curruntBoardRound, player *player_1, player *player_2,
         *curruntBoardRound = (player_1->totalsteps / 39) + 1;
         if (*curruntBoardRound != tempCurrentRound) {
 
-            printf("==================================================================\n Round %d Summary \n", tempCurrentRound);
+            printf("\n==================================================================\n Round %d Summary \n", tempCurrentRound);
             printf("==================================================================\n\n");
             printf("%s\n\n", player_1->name);
             printf("Cash : %d \n\n", player_1->cash);
