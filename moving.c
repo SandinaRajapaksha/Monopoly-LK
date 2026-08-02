@@ -14,7 +14,7 @@ void move(player *player_x, square *board,
 
     printf("%s rolls %d.\n", player_x->name, steps.rollValue);
 
-    player_x->currentSquare = (player_x->currentSquare + steps.rollValue) % 39;
+    player_x->currentSquare = (player_x->currentSquare + steps.rollValue) % 40;
     player_x->totalsteps = player_x->totalsteps + steps.rollValue;
 
     printf("%s moves from Square %d to Square %d\n", player_x->name,
