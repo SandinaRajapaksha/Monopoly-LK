@@ -26,10 +26,10 @@ void ranker(player *player1, player *player2, player *player3,
         printf("%s rolls %d\n", players[i]->name, players[i]->diceRoll);
     }
 
-    // sort dice values of players
+    // sort dice values of players, highest first (rank 1 = highest roll)
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3 - i; j++) {
-            if (players[j + 1]->diceRoll < players[j]->diceRoll) {
+            if (players[j + 1]->diceRoll > players[j]->diceRoll) {
 
                 // sort the array
                 player *tempPointer = players[j];
@@ -38,7 +38,8 @@ void ranker(player *player1, player *player2, player *player3,
             }
         }
     }
-    // dupicate resolve --
+    // duplicate resolve -- only tied players re-roll to settle their rank
+    // within their tie group; distinct first-roll players keep their rank
 
     for (int i = 0; i < 4;) {
         int j = i;
@@ -46,7 +47,7 @@ void ranker(player *player1, player *player2, player *player3,
             j++;
         }
         if (j > i) {
-            // group
+            // group: re-roll only these tied players until all distinct
             int distinct;
             do {
                 distinct = 1;
@@ -66,7 +67,7 @@ void ranker(player *player1, player *player2, player *player3,
             } while (!distinct);
             for (int a = i; a < j; a++) {
                 for (int b = i; b < j - (a - i); b++) {
-                    if (players[b + 1]->diceRoll < players[b]->diceRoll) {
+                    if (players[b + 1]->diceRoll > players[b]->diceRoll) {
                         player *tempPointer = players[b];
                         players[b] = players[b + 1];
                         players[b + 1] = tempPointer;
