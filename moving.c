@@ -22,7 +22,7 @@ void move(player *player_x, square *board,
     resolveSquare(player_x, board, currentEconEvent, currentinflation);
     // passed go check
 
-    if ((player_x->currentSquare != 10) && (player_x->currentSquare != 0) &&
+    if ((player_x->currentSquare != 30) && (player_x->currentSquare != 0) &&
         (player_x->currentSquare < tempCurrentSquare)) {
         player_x->cash = player_x->cash + 2000;
         printf("%s received LKR 2000 by passing GO ...\n", player_x->name);
