@@ -236,10 +236,11 @@ void resolveUtility(player *player_x, square *board);
 void resolveEvent(player *player_x, square *board);
 void resolveInsure(player *player_x, square *board);
 void resolveTax(player *player_x, square *board);
-void resolveBank(player *player_x, square *board);
+void resolveBank(player *player_x, square *board, economicEventCardType *);
 void resolveProperty(player *player_x, square *board, economicEventCardType *, int *);
 void jailLogic(player *, bool);
 bool checkForMonopoly(player *player_x, square *board);
 void buidBuilding(player *player_x, square *board);
 void networthEvaluate(player *player_1, player *player_2, player *player_3, player *player_4, square *board);
+bool playerHasaMonopoly(player *player_x, square *board);
 #endif

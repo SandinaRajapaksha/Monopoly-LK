@@ -27,7 +27,7 @@ void resolveSquare(player *player_x, square *board,
         resolveTax(player_x, board);
         break;
     case bank:
-        resolveBank(player_x, board);
+        resolveBank(player_x, board, currentEconEvent);
         break;
     case property:
         resolveProperty(player_x, board, currentEconEvent, currentInflation);

@@ -23,7 +23,7 @@ void networthEvaluate(player *player_1, player *player_2, player *player_3, play
         totalPropertyValuesofPlayer = 0;
     }
 }
-void resolveBank(player *player_x, square *board) {
+void resolveBank(player *player_x, square *board, economicEventCardType *currentEconEvent) {
 
     playerType tempPlayer = player_x->playerID;
 
@@ -32,8 +32,22 @@ void resolveBank(player *player_x, square *board) {
         switch (tempPlayer) {
 
         case aggresiveInvester:
+            // if player has monopoly and cannot afford buildings in cash , he gest a loan.
+
+            if (playerHasaMonopoly(player_x, board) && player_x->cash <= 5000) {
+                player_x->hasDebt = true;
+                player_x->cash += player_x->MaxElegibleLoanAmount;
+                printf("%s borrowed a loan of LKR %d from the Bank of Ceylon\n", player_x->name, player_x->MaxElegibleLoanAmount);
+                break;
+            }
             break;
         case conservativeBanker:
+            if (player_x->netWorth < 5000) {
+                player_x->hasDebt = true;
+                player_x->cash += player_x->MaxElegibleLoanAmount;
+                printf("%s borrowed a loan of LKR %d from the Bank of Ceylon\n", player_x->name, player_x->MaxElegibleLoanAmount);
+                break;
+            }
             break;
         case riskTaker:
             player_x->hasDebt = true;
@@ -41,6 +55,12 @@ void resolveBank(player *player_x, square *board) {
             printf("%s borrowed a loan of LKR %d from the Bank of Ceylon\n", player_x->name, player_x->MaxElegibleLoanAmount);
             break;
         case opportunisticTrader:
+            if (*currentEconEvent == GovernmentHousingProgramme || *currentEconEvent == StockMarketBoom) {
+                player_x->hasDebt = true;
+                player_x->cash += player_x->MaxElegibleLoanAmount;
+                printf("%s borrowed a loan of LKR %d from the Bank of Ceylon\n", player_x->name, player_x->MaxElegibleLoanAmount);
+                break;
+            }
             break;
         default:
             break;
@@ -48,4 +68,70 @@ void resolveBank(player *player_x, square *board) {
     } else {
         // paying loans
     }
+}
+
+bool playerHasaMonopoly(player *player_x, square *board) {
+
+    bool hasMonopolyOnBrown = true;
+    bool hasMonopolyOnLightBlue = true;
+    bool hasMonopolyOnPink = true;
+    bool hasMonopolyOnOrange = true;
+    bool hasMonopolyOnRed = true;
+    bool hasMonopolyOnYellow = true;
+    bool hasMonopolyOnGreen = true;
+    bool hasMonopolyOnDarkBlue = true;
+
+    for (int i = 0; i <= 39; i++) {
+
+        if (board[i].PropertyProperties.propertyGroup == brown) {
+            if (board[i].owner != player_x) {
+                hasMonopolyOnBrown = false;
+            }
+        }
+        if (board[i].PropertyProperties.propertyGroup == lightBlue) {
+            if (board[i].owner != player_x) {
+                hasMonopolyOnLightBlue = false;
+            }
+        }
+        if (board[i].PropertyProperties.propertyGroup == pink) {
+            if (board[i].owner != player_x) {
+                hasMonopolyOnPink = false;
+            }
+        }
+        if (board[i].PropertyProperties.propertyGroup == orange) {
+            if (board[i].owner != player_x) {
+                hasMonopolyOnOrange = false;
+            }
+        }
+        if (board[i].PropertyProperties.propertyGroup == red) {
+            if (board[i].owner != player_x) {
+                hasMonopolyOnRed = false;
+            }
+        }
+        if (board[i].PropertyProperties.propertyGroup == yellow) {
+            if (board[i].owner != player_x) {
+                hasMonopolyOnYellow = false;
+            }
+        }
+        if (board[i].PropertyProperties.propertyGroup == green) {
+            if (board[i].owner != player_x) {
+                hasMonopolyOnGreen = false;
+            }
+        }
+        if (board[i].PropertyProperties.propertyGroup == darkBlue) {
+            if (board[i].owner != player_x) {
+                hasMonopolyOnDarkBlue = false;
+            }
+        }
+    }
+    bool returnBool = hasMonopolyOnBrown ||
+                      hasMonopolyOnLightBlue ||
+                      hasMonopolyOnPink ||
+                      hasMonopolyOnOrange ||
+                      hasMonopolyOnRed ||
+                      hasMonopolyOnYellow ||
+                      hasMonopolyOnGreen ||
+                      hasMonopolyOnDarkBlue;
+
+    return returnBool;
 }
