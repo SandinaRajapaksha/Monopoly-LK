@@ -1,8 +1,8 @@
 #include "types.h"
 #include <stdbool.h>
 #include <stdio.h>
-void resolveSquare(player *player_x, square *board,
-                   economicEventCardType *currentEconEvent, int *currentInflation) {
+
+void resolveSquare(player *player_x, square *board, context *contextOfGame) {
     squareType squareToResolve = board[player_x->currentSquare].type;
     switch (squareToResolve) {
     case go:

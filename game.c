@@ -7,15 +7,16 @@ void startGame(void) {
 
     // event counters
 
-    economicEventCardType curruntActiveEconEvent = -1;
+    context contextOfTheGame;
+    contextOfTheGame.currentActiveEconEvent = -1;
     int roundThatEconEventHappened = -1;
 
     int roundThatInflationHappened = -1;
-    int curruntInflation = 0;
+    contextOfTheGame.currentInflation = 0;
 
     int topNationalEventCard = 0;
     int topreigionaldevelopmentcard = 0;
-    int curruntBoardRound = 1;
+    contextOfTheGame.currentBoardRound = 1;
     square board[40];
 
     srand((unsigned int)time(NULL));
@@ -84,25 +85,25 @@ void startGame(void) {
 
     // main game loop
     while (true) {
-        if (curruntBoardRound > 500) {
+        if (contextOfTheGame.currentBoardRound > 500) {
             break;
         }
-        printf("\nCurrunt round is : %d \n\n", curruntBoardRound);
+        printf("\nCurrunt round is : %d \n\n", contextOfTheGame.currentBoardRound);
         if (player_1.isBankrupt == false) {
 
-            move(&player_1, board, &curruntActiveEconEvent, &curruntInflation);
+            move(&player_1, board, &contextOfTheGame);
         }
         if (player_2.isBankrupt == false) {
 
-            move(&player_2, board, &curruntActiveEconEvent, &curruntInflation);
+            move(&player_1, board, &contextOfTheGame);
         }
         if (player_3.isBankrupt == false) {
 
-            move(&player_3, board, &curruntActiveEconEvent, &curruntInflation);
+            move(&player_1, board, &contextOfTheGame);
         }
         if (player_4.isBankrupt == false) {
 
-            move(&player_4, board, &curruntActiveEconEvent, &curruntInflation);
+            move(&player_1, board, &contextOfTheGame);
         }
 
         networthEvaluate(&player_1, &player_2, &player_3, &player_4, board);
@@ -111,7 +112,7 @@ void startGame(void) {
                      &player_4);
 
         // trigger events after a set number of rounds
-        if ((curruntBoardRound % 15 == 0) &&
+        if ((contextOfTheGame.currentBoardRound % 15 == 0) &&
             (curruntBoardRound != roundThatEconEventHappened)) {
             econEventActivate(board, &roundThatEconEventHappened,
                               &curruntActiveEconEvent, &curruntBoardRound);

@@ -204,6 +204,13 @@ typedef enum {
 
 } dynamicPropertyMarketEventType;
 
+typedef struct {
+    int currentInflation;
+    economicEventCardType currentActiveEconEvent;
+    int currentBoardRound;
+    int currentInterestRate;
+} context;
+
 // function Prototypes
 
 void startGame(void);
@@ -222,7 +229,7 @@ void finalRankAssign(player *player_X, player *player_1, player *player_2,
                      player *player_3, player *player_4);
 void ranker(player *player1, player *player2, player *player3, player *player4);
 diceRollType dice_roller();
-void move(player *player_x, square *board, economicEventCardType *, int *);
+void move(player *player_x, square *board, context *contextOfTheGame);
 void roundCounter(int *curruntBoardRound, player *player_1, player *player_2,
                   player *player_3, player *player_4);
 void eventChecker(int *, int *, square *, int *, economicEventCardType *);
@@ -230,7 +237,8 @@ void inflationRateRelease(square *board, int *currundBoardRound,
                           int *roundThatInflationHappened,
                           int *curruntInflation);
 // resolve square according to types
-void resolveSquare(player *player_x, square *board, economicEventCardType *, int *);
+
+void resolveSquare(player *player_x, square *board, context *contextOfGame);
 void resolveGO(player *player_x);
 void resolveSpecial(player *player_x, square *board);
 void resolveRailway(player *player_x, square *board);
