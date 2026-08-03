@@ -97,29 +97,6 @@ void resolveUtility(player *player_x, square *board) {}
 void resolveEvent(player *player_x, square *board) {}
 void resolveInsure(player *player_x, square *board) {}
 void resolveTax(player *player_x, square *board) {}
-void resolveBank(player *player_x, square *board) {
-
-    playerType tempPlayer = player_x->playerID;
-
-    // taking loans
-    if (player_x->hasDebt == false) {
-        switch (tempPlayer) {
-
-        case aggresiveInvester:
-            break;
-        case conservativeBanker:
-            break;
-        case riskTaker:
-            break;
-        case opportunisticTrader:
-            break;
-        default:
-            break;
-        }
-    } else {
-        // paying loans
-    }
-}
 
 void resolveProperty(player *player_x, square *board,
                      economicEventCardType *currentEconEvent, int *currentInflation) {
