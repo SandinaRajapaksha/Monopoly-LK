@@ -122,6 +122,8 @@ void startGame(void) {
             inflationRateRelease(board, &curruntBoardRound,
                                  &roundThatInflationHappened,
                                  &curruntInflation);
+            // print markket conditions
+            printMarketConditions(&curruntInflation, &curruntActiveEconEvent, &curruntBoardRound);
         }
     }
 }
