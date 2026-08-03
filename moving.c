@@ -27,4 +27,6 @@ void move(player *player_x, square *board,
         player_x->cash = player_x->cash + 2000;
         printf("%s received LKR 2000 by passing GO ...\n", player_x->name);
     }
+
+    player_x->laps = player_x->totalsteps / 40;
 }

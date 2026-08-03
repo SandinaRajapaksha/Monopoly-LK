@@ -37,6 +37,7 @@ void resolveBank(player *player_x, square *board, economicEventCardType *current
             if (playerHasaMonopoly(player_x, board) && player_x->cash <= 5000) {
                 player_x->hasDebt = true;
                 player_x->cash += player_x->MaxElegibleLoanAmount;
+                player_x->outStandingLoan = player_x->MaxElegibleLoanAmount;
                 printf("%s borrowed a loan of LKR %d from the Bank of Ceylon\n", player_x->name, player_x->MaxElegibleLoanAmount);
                 break;
             }
@@ -45,6 +46,7 @@ void resolveBank(player *player_x, square *board, economicEventCardType *current
             if (player_x->netWorth < 5000) {
                 player_x->hasDebt = true;
                 player_x->cash += player_x->MaxElegibleLoanAmount;
+                player_x->outStandingLoan = player_x->MaxElegibleLoanAmount;
                 printf("%s borrowed a loan of LKR %d from the Bank of Ceylon\n", player_x->name, player_x->MaxElegibleLoanAmount);
                 break;
             }
@@ -52,12 +54,14 @@ void resolveBank(player *player_x, square *board, economicEventCardType *current
         case riskTaker:
             player_x->hasDebt = true;
             player_x->cash += player_x->MaxElegibleLoanAmount;
+            player_x->outStandingLoan = player_x->MaxElegibleLoanAmount;
             printf("%s borrowed a loan of LKR %d from the Bank of Ceylon\n", player_x->name, player_x->MaxElegibleLoanAmount);
             break;
         case opportunisticTrader:
             if (*currentEconEvent == GovernmentHousingProgramme || *currentEconEvent == StockMarketBoom) {
                 player_x->hasDebt = true;
                 player_x->cash += player_x->MaxElegibleLoanAmount;
+                player_x->outStandingLoan = player_x->MaxElegibleLoanAmount;
                 printf("%s borrowed a loan of LKR %d from the Bank of Ceylon\n", player_x->name, player_x->MaxElegibleLoanAmount);
                 break;
             }
@@ -66,7 +70,32 @@ void resolveBank(player *player_x, square *board, economicEventCardType *current
             break;
         }
     } else {
+
         // paying loans
+        playerType tempPlayer = player_x->playerID;
+        switch (tempPlayer) {
+
+            if ((player_x->laps - player_x->loantakigLap > 20) && (player_x->hasDebt == true)) {
+
+                // properties transfer to bank and auctiones
+            }
+        case aggresiveInvester:
+            if (player_x->cash > 2 * player_x->outStandingLoan) {
+                player_x->cash -= player_x->outStandingLoan;
+                player_x->hasDebt = false;
+                printf("%s fully repaid the loan of %d to the Bank of Ceylon\n", player_x->name, player_x->outStandingLoan);
+                player_x->outStandingLoan = 0;
+            }
+            break;
+        case riskTaker:
+            if (player_x->cash > 2 * player_x->outStandingLoan) {
+                player_x->cash -= player_x->outStandingLoan;
+                player_x->hasDebt = false;
+                printf("%s fully repaid the loan of %d to the Bank of Ceylon\n", player_x->name, player_x->outStandingLoan);
+                player_x->outStandingLoan = 0;
+            }
+            break;
+        }
     }
 }
 
