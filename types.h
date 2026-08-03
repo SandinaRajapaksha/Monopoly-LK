@@ -52,6 +52,7 @@ typedef struct {
     int outStandingLoan;
     bool isBankrupt;
     int MaxElegibleLoanAmount;
+    int loanRepaymentRoundCount;
 } player;
 
 typedef enum { cannotMortgage,
