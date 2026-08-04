@@ -164,8 +164,20 @@ bool playerHasaMonopoly(player *player_x, square *board) {
 
     return returnBool;
 }
+void printWinner(player *winner, int HighestBid, square *auctionedItem) {
 
+    printf("%s Won the auction !\n", winner->name);
+    printf("Bought %s for %d\n\n", winner->name, HighestBid);
+    printf("============================================================\n\n");
+};
 void sellingAuction(player *player_x, player *player_1, player *player_2, player *player_3, player *player_4, square *board, context *contextOfGame, square *auctionItem) {
+
+    printf("============================================================\n\n");
+    printf("Auction\n\n");
+    printf("============================================================\n\n");
+
+    printf("Auctioned item : %s\n", auctionItem->name);
+    printf("Current Owner : %s\n\n", player_x->name);
 
     player *candidates[4] = {player_1, player_2, player_3, player_4};
     player *bidders[3];
@@ -197,6 +209,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                     auctionItem->PropertyProperties.noOfHouses = 0;
                     auctionItem->PropertyProperties.noOfHotels = 0;
                     auctionItem->owner = bidders[i];
+                    printWinner(bidders[i], HighestBid, auctionItem);
                     return;
                 }
                 bool conditionAggr = (bidders[i]->cash >= HighestBid) && (HighestBid < auctionItem->curruntValue * 1.2);
@@ -212,6 +225,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                     auctionItem->PropertyProperties.noOfHouses = 0;
                     auctionItem->PropertyProperties.noOfHotels = 0;
                     auctionItem->owner = bidders[i];
+                    printWinner(bidders[i], HighestBid, auctionItem);
                     return;
                 }
                 bool conditionRiskTkr = bidders[i]->cash >= startingPrice;
@@ -227,6 +241,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                     auctionItem->PropertyProperties.noOfHouses = 0;
                     auctionItem->PropertyProperties.noOfHotels = 0;
                     auctionItem->owner = bidders[i];
+                    printWinner(bidders[i], HighestBid, auctionItem);
                     return;
                 }
                 bool conditionConserBanker = ((bidders[i]->cash - HighestBid) > bidders[i]->cash / 2) && (HighestBid < auctionItem->curruntValue / (0.75));
@@ -242,6 +257,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                     auctionItem->PropertyProperties.noOfHouses = 0;
                     auctionItem->PropertyProperties.noOfHotels = 0;
                     auctionItem->owner = bidders[i];
+                    printWinner(bidders[i], HighestBid, auctionItem);
                     return;
                 }
                 bool conditionOppotTrader = (bidders[i]->cash > HighestBid); // to be implemented
