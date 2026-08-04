@@ -13,8 +13,9 @@ void printMarketConditions(context *contextofgame) {
     } else {
         printf("\nInflation\n-------------------------------------------------\n(-%d%%)\n\n", contextofgame->currentInflation);
     }
-    printf("--------------------------------------------------------------");
-    printf("\nEconomic Event\n-------------------------------------------------\nround remaining : %d\n", roundsLeftEconEvent);
+
+    // econ event
+    printf("\nEconomic Event\n------------------------------------------------------\n");
 
     switch (contextofgame->currentActiveEconEvent) {
     case TourismBoom:
@@ -45,4 +46,6 @@ void printMarketConditions(context *contextofgame) {
         printf("No economic event active\n");
         break;
     }
+    printf("Rounds remaining : %d\n", roundsLeftEconEvent);
+    printf("==============================================================\n\n\n\n");
 };

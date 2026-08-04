@@ -164,3 +164,7 @@ bool playerHasaMonopoly(player *player_x, square *board) {
 
     return returnBool;
 }
+
+void sellingAuction(player *player_x, player *player_1, player *player_2, player *player_3, player *player_4, square *board, context *contextOfGame) {
+
+};
