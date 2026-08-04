@@ -165,6 +165,94 @@ bool playerHasaMonopoly(player *player_x, square *board) {
     return returnBool;
 }
 
-void sellingAuction(player *player_x, player *player_1, player *player_2, player *player_3, player *player_4, square *board, context *contextOfGame) {
+void sellingAuction(player *player_x, player *player_1, player *player_2, player *player_3, player *player_4, square *board, context *contextOfGame, square *auctionItem) {
 
+    player *candidates[4] = {player_1, player_2, player_3, player_4};
+    player *bidders[3];
+    for (int i = 0, j = 0; i <= 3; i++) {
+        if (player_x != candidates[i]) {
+            bidders[j] = candidates[i];
+            j++;
+        }
+    }
+
+    int startingPrice = auctionItem->curruntValue / 2;
+    int HighestBid = startingPrice;
+
+    int aggrHighestBid;
+    int riskTakerHighestBid;
+    int conserBankerHighestBid;
+    int opportTraderHighestBid;
+
+    playerType HighestBidder = player_x->playerID;
+
+    while (true) {
+        // placing bids
+        for (int i = 0; i <= 2; i++) {
+            switch (bidders[i]->playerID) {
+
+            case aggresiveInvester:
+                if (HighestBidder == aggresiveInvester) {
+                    // buys and win
+                    auctionItem->PropertyProperties.noOfHouses = 0;
+                    auctionItem->PropertyProperties.noOfHotels = 0;
+                    auctionItem->owner = bidders[i];
+                    return;
+                }
+                bool conditionAggr = (bidders[i]->cash >= HighestBid) && (HighestBid < auctionItem->curruntValue * 1.2);
+                if (conditionAggr) {
+                    aggrHighestBid = HighestBid + 250;
+                    HighestBid = aggrHighestBid;
+                }
+                break;
+
+            case riskTaker:
+                if (HighestBidder == riskTaker) {
+                    // buys and win
+                    auctionItem->PropertyProperties.noOfHouses = 0;
+                    auctionItem->PropertyProperties.noOfHotels = 0;
+                    auctionItem->owner = bidders[i];
+                    return;
+                }
+                bool conditionRiskTkr = bidders[i]->cash >= startingPrice;
+                if (conditionRiskTkr) {
+                    riskTakerHighestBid = HighestBid + 250;
+                    HighestBid = riskTakerHighestBid;
+                }
+                break;
+
+            case conservativeBanker:
+                if (HighestBidder == conservativeBanker) {
+                    // buys and win
+                    auctionItem->PropertyProperties.noOfHouses = 0;
+                    auctionItem->PropertyProperties.noOfHotels = 0;
+                    auctionItem->owner = bidders[i];
+                    return;
+                }
+                bool conditionConserBanker = ((bidders[i]->cash - HighestBid) > bidders[i]->cash / 2) && (HighestBid < auctionItem->curruntValue / (0.75));
+                if (conditionConserBanker) {
+                    conserBankerHighestBid = HighestBid + 250;
+                    HighestBid = conserBankerHighestBid;
+                }
+                break;
+
+            case opportunisticTrader:
+                if (HighestBidder == conservativeBanker) {
+                    // buys and win
+                    auctionItem->PropertyProperties.noOfHouses = 0;
+                    auctionItem->PropertyProperties.noOfHotels = 0;
+                    auctionItem->owner = bidders[i];
+                    return;
+                }
+                bool conditionOppotTrader = (bidders[i]->cash > HighestBid); // to be implemented
+                if (conditionOppotTrader) {
+                    opportTraderHighestBid = HighestBid + 250;
+                    HighestBid = opportTraderHighestBid;
+                }
+                break;
+            default:
+                break;
+            }
+        }
+    }
 };
