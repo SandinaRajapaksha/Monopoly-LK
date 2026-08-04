@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 
-void resolveSquare(player *player_x, square *board, context *contextOfGame) {
+void resolveSquare(player *player_x, square *board, context *contextOfGame, playerPointers *playerObject) {
     squareType squareToResolve = board[player_x->currentSquare].type;
     switch (squareToResolve) {
     case go:
@@ -30,7 +30,7 @@ void resolveSquare(player *player_x, square *board, context *contextOfGame) {
         resolveBank(player_x, board, contextOfGame);
         break;
     case property:
-        resolveProperty(player_x, board, contextOfGame);
+        resolveProperty(player_x, board, contextOfGame, playerObject);
         break;
     }
 }
@@ -99,7 +99,7 @@ void resolveInsure(player *player_x, square *board) {}
 void resolveTax(player *player_x, square *board) {}
 
 void resolveProperty(player *player_x, square *board,
-                     context *contextOfTheGame) {
+                     context *contextOfTheGame, playerPointers *playerObject) {
 
     // if property owns by bank
     if (board[player_x->currentSquare].owner->playerID == bankOfCeylon) {
@@ -327,6 +327,10 @@ void resolveProperty(player *player_x, square *board,
         switch (currentPlayer) {
 
         case aggresiveInvester:
+            // test case
+
+            sellingAuction(player_x, playerObject->player_1, playerObject->player_2,
+                           playerObject->player_3, playerObject->player_4, board, contextOfTheGame, &board[player_x->currentSquare]);
 
             if (eligibleForHouse && (board[player_x->currentSquare].PropertyProperties.houseConstructionCost <= player_x->cash)) {
                 // build house

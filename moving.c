@@ -1,6 +1,6 @@
 #include "types.h"
 #include <stdio.h>
-void move(player *player_x, square *board, context *contextOfTheGame) {
+void move(player *player_x, square *board, context *contextOfTheGame, playerPointers *playerObject) {
 
     diceRollType steps = dice_roller();
     int tempCurrentSquare = player_x->currentSquare;
@@ -18,7 +18,7 @@ void move(player *player_x, square *board, context *contextOfTheGame) {
 
     printf("%s moves from Square %d to Square %d\n", player_x->name,
            tempCurrentSquare, board[player_x->currentSquare].squareID);
-    resolveSquare(player_x, board, contextOfTheGame);
+    resolveSquare(player_x, board, contextOfTheGame, playerObject);
     // did he pass go?
 
     if ((player_x->currentSquare != 10) && (player_x->currentSquare != 0) &&

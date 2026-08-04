@@ -55,6 +55,12 @@ void startGame(void) {
     player player_3;
     player player_4;
 
+    playerPointers playerPointerObject = {
+        .player_1 = &player_1,
+        .player_2 = &player_2,
+        .player_3 = &player_3,
+        .player_4 = &player_4};
+
     printf("MONOPOLY-LK Simulation\n\n");
     printf("Player 1 : %s\n", aggressiveInvesterPlayer.name);
     printf("Player 2 : %s\n", conservativeBankerPlayer.name);
@@ -92,19 +98,19 @@ void startGame(void) {
         printf("\nCurrunt round is : %d \n\n", contextOfTheGame.currentBoardRound);
         if (player_1.isBankrupt == false) {
 
-            move(&player_1, board, &contextOfTheGame);
+            move(&player_1, board, &contextOfTheGame, &playerPointerObject);
         }
         if (player_2.isBankrupt == false) {
 
-            move(&player_2, board, &contextOfTheGame);
+            move(&player_2, board, &contextOfTheGame, &playerPointerObject);
         }
         if (player_3.isBankrupt == false) {
 
-            move(&player_3, board, &contextOfTheGame);
+            move(&player_3, board, &contextOfTheGame, &playerPointerObject);
         }
         if (player_4.isBankrupt == false) {
 
-            move(&player_4, board, &contextOfTheGame);
+            move(&player_4, board, &contextOfTheGame, &playerPointerObject);
         }
 
         networthEvaluate(&player_1, &player_2, &player_3, &player_4, board);

@@ -212,6 +212,14 @@ typedef struct {
     int roundThatInflationHappened;
     int roundThatEconEventHappened;
 } context;
+
+typedef struct {
+    player *player_1;
+    player *player_2;
+    player *player_3;
+    player *player_4;
+
+} playerPointers;
 // function Prototypes
 
 void startGame(void);
@@ -229,13 +237,13 @@ void initializeTurnOrder(player *, player *, player *, player *, player *,
 void finalRankAssign(player *, player *, player *, player *, player *);
 void ranker(player *, player *, player *, player *);
 diceRollType dice_roller();
-void move(player *, square *, context *);
+void move(player *, square *, context *, playerPointers *);
 void roundCounter(context *, player *, player *, player *, player *);
 void eventChecker(int *, int *, square *, int *, economicEventCardType *);
 void inflationRateRelease(square *, context *);
 // resolve square according to types
 
-void resolveSquare(player *, square *, context *);
+void resolveSquare(player *, square *, context *, playerPointers *);
 void resolveGO(player *);
 void resolveSpecial(player *, square *);
 void resolveRailway(player *, square *);
@@ -244,7 +252,7 @@ void resolveEvent(player *, square *);
 void resolveInsure(player *, square *);
 void resolveTax(player *, square *);
 void resolveBank(player *, square *, context *);
-void resolveProperty(player *, square *, context *);
+void resolveProperty(player *, square *, context *, playerPointers *);
 void jailLogic(player *, bool);
 bool checkForMonopoly(player *, square *);
 void buidBuilding(player *, square *);
