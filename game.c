@@ -121,8 +121,6 @@ void startGame(void) {
         if ((contextOfTheGame.currentBoardRound % 10 == 0) &&
             (contextOfTheGame.currentBoardRound != contextOfTheGame.roundThatInflationHappened)) {
             inflationRateRelease(board, &contextOfTheGame);
-            // print markket conditions
-            printMarketConditions(&contextOfTheGame);
         }
     }
 }
