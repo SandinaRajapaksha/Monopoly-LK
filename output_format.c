@@ -14,10 +14,35 @@ void printMarketConditions(context *contextofgame) {
         printf("\nInflation\n-------------------------------------------------\n(-%d%%)\n\n", contextofgame->currentInflation);
     }
     printf("--------------------------------------------------------------");
-    printf("\nEconomic Event\n-------------------------------------------------\n(+%d%%)\nround remaining : %d\n", contextofgame->currentInflation, roundsLeftInflation);
+    printf("\nEconomic Event\n-------------------------------------------------\nround remaining : %d\n", roundsLeftEconEvent);
 
     switch (contextofgame->currentActiveEconEvent) {
     case TourismBoom:
-        printf("Tourism Boom (+15%%)\n");
+        printf("Tourism Boom: hotel rents double, Yellow group value +15%%\n");
+        break;
+    case FuelCrisis:
+        printf("Fuel Crisis: railway rents double, build costs +20%%\n");
+        break;
+    case HeavyMonsoon:
+        printf("Heavy Monsoon: Yellow group value -10%%\n");
+        break;
+    case EconomicRecession:
+        printf("Economic Recession: property value -15%%, rents -10%%\n");
+        break;
+    case StockMarketBoom:
+        printf("Stock Market Boom: property value +10%%\n");
+        break;
+    case GovernmentHousingProgramme:
+        printf("Government Housing Programme: house build cost -25%%\n");
+        break;
+    case ForeignInvestment:
+        printf("Foreign Investment: Orange & Red group value +20%%\n");
+        break;
+    case PoliticalUnrest:
+        printf("Political Unrest: hotel rents -50%%\n");
+        break;
+    default:
+        printf("No economic event active\n");
+        break;
     }
 };
