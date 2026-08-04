@@ -1,9 +1,7 @@
 #include "types.h"
 #include <stdio.h>
 
-void econEventActivate(square *board, int *roundThatEconEventHappened,
-                       economicEventCardType *curruntActiveEconEvent,
-                       int *curruntBoardRound) {
+void econEventActivate(square *board, context *contextOfTheGame) {
     // random
     economicEventCardType econEvents[8] = {
         TourismBoom, FuelCrisis, HeavyMonsoon,
@@ -118,25 +116,23 @@ void dynamicPropertyEventActivate(square *board) { // parameters to be added
     // all the other shit
 }
 
-void inflationRateRelease(square *board, int *curruntBoardRound,
-                          int *roundThatInflationHappened,
-                          int *curruntInflation) { // parameters to be added
+void inflationRateRelease(square *board, context *contextofgame) { // parameters to be added
     // random event after 10 rounds
     int inflationRates[6] = {-3, 0, 2, 5, 8, 12};
     // all the other shit
     int randomInflation = inflationRates[rand() % 6];
-    *curruntInflation = randomInflation;
+    contextofgame->currentInflation = randomInflation;
 
     printf("\nInflations rate for round %d releases now,\nInflation rate "
            "release : %d %% \n\n",
-           *curruntBoardRound, *curruntInflation);
+           contextofgame->currentBoardRound, contextofgame->currentInflation);
 
     for (int i = 0; i <= 39; i++) {
 
-        board[i].curruntValue = board[i].curruntValue * (1 + (double)*curruntInflation / (double)100);
-        board[i].PropertyProperties.currentRentalofProperty = board[i].PropertyProperties.currentRentalofProperty * (1 + (double)*curruntInflation / (double)100);
-        board[i].PropertyProperties.initialPrice = board[i].PropertyProperties.initialPrice * (1 + (double)*curruntInflation / (double)100);
+        board[i].curruntValue = board[i].curruntValue * (1 + (double)contextofgame->currentInflation / (double)100);
+        board[i].PropertyProperties.currentRentalofProperty = board[i].PropertyProperties.currentRentalofProperty * (1 + (double)contextofgame->currentInflation / (double)100);
+        board[i].PropertyProperties.initialPrice = board[i].PropertyProperties.initialPrice * (1 + (double)contextofgame->currentInflation / (double)100);
         // other affecting proerties to be added
     }
-    *roundThatInflationHappened = *curruntBoardRound;
+    contextofgame->roundThatInflationHappened = contextofgame->currentBoardRound;
 }

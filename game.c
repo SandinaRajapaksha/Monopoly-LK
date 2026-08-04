@@ -9,9 +9,9 @@ void startGame(void) {
 
     context contextOfTheGame;
     contextOfTheGame.currentActiveEconEvent = -1;
-    int roundThatEconEventHappened = -1;
+    contextOfTheGame.roundThatEconEventHappened = -1;
 
-    int roundThatInflationHappened = -1;
+    contextOfTheGame.roundThatInflationHappened = -1;
     contextOfTheGame.currentInflation = 0;
 
     int topNationalEventCard = 0;
@@ -108,23 +108,20 @@ void startGame(void) {
 
         networthEvaluate(&player_1, &player_2, &player_3, &player_4, board);
 
-        roundCounter(&curruntBoardRound, &player_1, &player_2, &player_3,
+        roundCounter(&contextOfTheGame, &player_1, &player_2, &player_3,
                      &player_4);
 
         // trigger events after a set number of rounds
         if ((contextOfTheGame.currentBoardRound % 15 == 0) &&
-            (curruntBoardRound != roundThatEconEventHappened)) {
-            econEventActivate(board, &roundThatEconEventHappened,
-                              &curruntActiveEconEvent, &curruntBoardRound);
+            (contextOfTheGame.currentBoardRound != contextOfTheGame.roundThatEconEventHappened)) {
+            econEventActivate(board, &contextOfTheGame);
         }
 
-        if ((curruntBoardRound % 10 == 0) &&
-            (curruntBoardRound != roundThatInflationHappened)) {
-            inflationRateRelease(board, &curruntBoardRound,
-                                 &roundThatInflationHappened,
-                                 &curruntInflation);
+        if ((contextOfTheGame.currentBoardRound % 10 == 0) &&
+            (contextOfTheGame.currentBoardRound != contextOfTheGame.roundThatInflationHappened)) {
+            inflationRateRelease(board, &contextOfTheGame);
             // print markket conditions
-            printMarketConditions(&curruntInflation, &curruntActiveEconEvent, &curruntBoardRound);
+            printMarketConditions(&contextOfTheGame);
         }
     }
 }

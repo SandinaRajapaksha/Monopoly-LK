@@ -209,6 +209,8 @@ typedef struct {
     economicEventCardType currentActiveEconEvent;
     int currentBoardRound;
     int currentInterestRate;
+    int roundThatInflationHappened;
+    int roundThatEconEventHappened;
 } context;
 
 // function Prototypes
@@ -216,7 +218,7 @@ typedef struct {
 void startGame(void);
 void initializeBoard(square *);
 //  randomly choosen after round count
-void econEventActivate(square *, int *, economicEventCardType *, int *);
+void econEventActivate(square *, context *);
 void govRegulationsActivate(square *);
 void dynamicPropertyEventActivate(square *);
 // card decks and draws
@@ -230,12 +232,10 @@ void finalRankAssign(player *player_X, player *player_1, player *player_2,
 void ranker(player *player1, player *player2, player *player3, player *player4);
 diceRollType dice_roller();
 void move(player *player_x, square *board, context *contextOfTheGame);
-void roundCounter(int *curruntBoardRound, player *player_1, player *player_2,
+void roundCounter(context *contextofGame, player *player_1, player *player_2,
                   player *player_3, player *player_4);
 void eventChecker(int *, int *, square *, int *, economicEventCardType *);
-void inflationRateRelease(square *board, int *currundBoardRound,
-                          int *roundThatInflationHappened,
-                          int *curruntInflation);
+void inflationRateRelease(square *board, context *);
 // resolve square according to types
 
 void resolveSquare(player *player_x, square *board, context *contextOfGame);
@@ -253,5 +253,5 @@ bool checkForMonopoly(player *player_x, square *board);
 void buidBuilding(player *player_x, square *board);
 void networthEvaluate(player *player_1, player *player_2, player *player_3, player *player_4, square *board);
 bool playerHasaMonopoly(player *player_x, square *board);
-void printMarketConditions(int *, economicEventCardType *, int *);
+void printMarketConditions(context *contextOfTheGame);
 #endif
