@@ -279,3 +279,30 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
         }
     }
 };
+bool payRent(player *player_x, square *board) {
+
+    // player pays rent
+    if (player_x->cash < board[player_x->currentSquare].PropertyProperties.currentRentalofProperty) {
+        return false;
+    }
+
+    player_x->cash =
+        player_x->cash -
+        board[player_x->currentSquare]
+            .PropertyProperties.currentRentalofProperty;
+
+    // owner gets paid
+
+    board[player_x->currentSquare].owner->cash =
+        board[player_x->currentSquare].owner->cash +
+        board[player_x->currentSquare]
+            .PropertyProperties.currentRentalofProperty;
+
+    printf("%s payed %d to %s as the rent of %s\n", player_x->name,
+           board[player_x->currentSquare]
+               .PropertyProperties.currentRentalofProperty,
+           board[player_x->currentSquare].owner->name,
+           board[player_x->currentSquare].name);
+
+    return true;
+}

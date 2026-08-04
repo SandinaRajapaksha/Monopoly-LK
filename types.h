@@ -278,4 +278,6 @@ void PoliticalUnrestActivate(square *);
 void PoliticalUnrest_deActivate(square *);
 void sellingAuction(player *player_x, player *player_1, player *player_2, player *player_3, player *player_4, square *board, context *contextOfGame, square *);
 void printWinner(player *winner, int HighestBid, square *auctionedItem);
+bool payRent(player *player_x, square *board);
+void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerObject, context *contextOfTheGame);
 #endif

@@ -65,6 +65,10 @@ void jailLogic(player *player_x, bool doublesRolled) {
             player_x->jailRoundCounter = 0;
             printf("%s gets out from the jail by staying 3 turns inside jail\n",
                    player_x->name);
+        } else if (doublesRolled == true) {
+            player_x->Jail = outside;
+            player_x->jailRoundCounter = 0;
+            printf("%s gets out from the jail by rolling doubles\n", player_x->name);
         }
 
         break;
@@ -189,29 +193,13 @@ void resolveProperty(player *player_x, square *board,
                 (board[player_x->currentSquare].mortgageStatus !=
                  mortgagedToBank)) {
 
-                // player pays rent
+                payRent(player_x, board);
 
-                player_x->cash =
-                    player_x->cash -
-                    board[player_x->currentSquare]
-                        .PropertyProperties.currentRentalofProperty;
-
-                // owner gets paid
-
-                board[player_x->currentSquare].owner->cash =
-                    board[player_x->currentSquare].owner->cash +
-                    board[player_x->currentSquare]
-                        .PropertyProperties.currentRentalofProperty;
-
-                printf("%s payed %d to %s as the rent of %s\n", player_x->name,
-                       board[player_x->currentSquare]
-                           .PropertyProperties.currentRentalofProperty,
-                       board[player_x->currentSquare].owner->name,
-                       board[player_x->currentSquare].name);
-
-            } else {
+            } else if (player_x->cash <
+                       board[player_x->currentSquare].PropertyProperties.currentRentalofProperty) {
+                AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
             }
-            //      loan logic to be implemented
+
             break;
 
         case conservativeBanker:
@@ -222,26 +210,8 @@ void resolveProperty(player *player_x, square *board,
                 (board[player_x->currentSquare].mortgageStatus !=
                  mortgagedToBank)) {
 
-                // player pays rent
+                payRent(player_x, board);
 
-                player_x->cash =
-                    player_x->cash -
-                    board[player_x->currentSquare]
-                        .PropertyProperties.currentRentalofProperty;
-
-                // owner gets paid
-
-                board[player_x->currentSquare].owner->cash =
-                    board[player_x->currentSquare].owner->cash +
-                    board[player_x->currentSquare]
-                        .PropertyProperties.currentRentalofProperty;
-
-                printf("%s payed %d to %s as the rent of %s\n",
-                       player_x->name,
-                       board[player_x->currentSquare]
-                           .PropertyProperties.currentRentalofProperty,
-                       board[player_x->currentSquare].owner->name,
-                       board[player_x->currentSquare].name);
             } else {
                 // loan logic for rent payment to be implemented
             }
@@ -254,26 +224,8 @@ void resolveProperty(player *player_x, square *board,
                 (board[player_x->currentSquare].mortgageStatus !=
                  mortgagedToBank)) {
 
-                // player pays rent
+                payRent(player_x, board);
 
-                player_x->cash =
-                    player_x->cash -
-                    board[player_x->currentSquare]
-                        .PropertyProperties.currentRentalofProperty;
-
-                // owner gets paid
-
-                board[player_x->currentSquare].owner->cash =
-                    board[player_x->currentSquare].owner->cash +
-                    board[player_x->currentSquare]
-                        .PropertyProperties.currentRentalofProperty;
-
-                printf("%s payed %d to %s as the rent of %s\n",
-                       player_x->name,
-                       board[player_x->currentSquare]
-                           .PropertyProperties.currentRentalofProperty,
-                       board[player_x->currentSquare].owner->name,
-                       board[player_x->currentSquare].name);
             } else {
                 // loan logic for rent payment to be implemented
             }
@@ -287,26 +239,8 @@ void resolveProperty(player *player_x, square *board,
                 (board[player_x->currentSquare].mortgageStatus !=
                  mortgagedToBank)) {
 
-                // player pays rent
+                payRent(player_x, board);
 
-                player_x->cash =
-                    player_x->cash -
-                    board[player_x->currentSquare]
-                        .PropertyProperties.currentRentalofProperty;
-
-                // owner gets paid
-
-                board[player_x->currentSquare].owner->cash =
-                    board[player_x->currentSquare].owner->cash +
-                    board[player_x->currentSquare]
-                        .PropertyProperties.currentRentalofProperty;
-
-                printf("%s payed %d to %s as the rent of %s\n",
-                       player_x->name,
-                       board[player_x->currentSquare]
-                           .PropertyProperties.currentRentalofProperty,
-                       board[player_x->currentSquare].owner->name,
-                       board[player_x->currentSquare].name);
             } else {
                 // loan logic for rent payment to be implemented
             }
@@ -329,8 +263,8 @@ void resolveProperty(player *player_x, square *board,
         case aggresiveInvester:
             // test case
 
-            sellingAuction(player_x, playerObject->player_1, playerObject->player_2,
-                           playerObject->player_3, playerObject->player_4, board, contextOfTheGame, &board[player_x->currentSquare]);
+            // sellingAuction(player_x, playerObject->player_1, playerObject->player_2,
+            //                playerObject->player_3, playerObject->player_4, board, contextOfTheGame, &board[player_x->currentSquare]);
 
             if (eligibleForHouse && (board[player_x->currentSquare].PropertyProperties.houseConstructionCost <= player_x->cash)) {
                 // build house
