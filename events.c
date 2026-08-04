@@ -8,32 +8,33 @@ void econEventActivate(square *board, context *contextOfTheGame) {
         EconomicRecession, StockMarketBoom, GovernmentHousingProgramme,
         ForeignInvestment, PoliticalUnrest};
 
-    if (*curruntActiveEconEvent != -1) {
+    if (contextOfTheGame->currentActiveEconEvent != -1) {
         printf("\n");
-        if (*curruntActiveEconEvent == TourismBoom) {
+        if (contextOfTheGame->currentActiveEconEvent == TourismBoom) {
             printf("Tourism Boom is over...\n");
-        } else if (*curruntActiveEconEvent == FuelCrisis) {
+        } else if (contextOfTheGame->currentActiveEconEvent == FuelCrisis) {
             printf("Fuel Crisis is over ... \n");
-        } else if (*curruntActiveEconEvent == HeavyMonsoon) {
+        } else if (contextOfTheGame->currentActiveEconEvent == HeavyMonsoon) {
             printf("Heavy Monsoon is over ...\n");
-        } else if (*curruntActiveEconEvent == EconomicRecession) {
+        } else if (contextOfTheGame->currentActiveEconEvent == EconomicRecession) {
             printf("Economic Recession is over... \n");
-        } else if (*curruntActiveEconEvent == StockMarketBoom) {
+        } else if (contextOfTheGame->currentActiveEconEvent == StockMarketBoom) {
             printf("Stock Market Boom is over... \n");
-        } else if (*curruntActiveEconEvent == GovernmentHousingProgramme) {
+        } else if (contextOfTheGame->currentActiveEconEvent == GovernmentHousingProgramme) {
             printf("Government Housing Programme is over... \n");
-        } else if (*curruntActiveEconEvent == ForeignInvestment) {
+        } else if (contextOfTheGame->currentActiveEconEvent == ForeignInvestment) {
             printf("Foreign Investment is over... \n");
-        } else if (*curruntActiveEconEvent == PoliticalUnrest) {
+        } else if (contextOfTheGame->currentActiveEconEvent == PoliticalUnrest) {
             printf("Political Unrest is over... \n");
         }
         printf("\n");
     }
 
     int randomEconEvent = econEvents[rand() % 8];
-    *curruntActiveEconEvent = randomEconEvent;
+    contextOfTheGame->currentActiveEconEvent = randomEconEvent;
 
-    printf("\nRound %d economic event happens now, \n", *curruntBoardRound);
+    printf("\nRound %d economic event happens now, \n",
+           contextOfTheGame->currentBoardRound);
     if (randomEconEvent == TourismBoom) {
         printf("Tourism Boom Happens...(+15%%)\n");
     } else if (randomEconEvent == FuelCrisis) {
@@ -52,7 +53,8 @@ void econEventActivate(square *board, context *contextOfTheGame) {
         printf("Political Unrest happens... \n");
     }
     printf("\n");
-    *roundThatEconEventHappened = *curruntBoardRound;
+    contextOfTheGame->roundThatEconEventHappened =
+        contextOfTheGame->currentBoardRound;
 }
 
 void govRegulationsActivate(square *board) {
