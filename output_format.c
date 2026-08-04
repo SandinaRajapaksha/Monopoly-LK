@@ -3,7 +3,11 @@
 
 void printMarketConditions(context *contextofgame) {
     printf("==============================================================\n");
-    printf("Current Market Condition");
+    printf("Current Market Condition\n");
     printf("==============================================================\n\n");
-    printf("Inlflation\n-------------------------------------------------\n(%d%%)\n\n", contextofgame->currentInflation);
+    if (contextofgame->currentInflation >= 0) {
+        printf("\nInflation\n-------------------------------------------------\n(+%d%%)\n\n", contextofgame->currentInflation);
+    } else {
+        printf("\nInflation\n-------------------------------------------------\n(-%d%%)\n\n", contextofgame->currentInflation);
+    }
 };

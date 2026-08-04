@@ -154,5 +154,7 @@ void roundCounter(context *contextofGame, player *player_1, player *player_2,
         printf("Hotels : %d \n\n", player_4->noOfHotelsOwned);
         printf("Outstanding Loan : %d \n\n", player_4->outStandingLoan);
         printf("------------------------------------------------------------------\n\n");
+
+        printMarketConditions(contextofGame);
     }
 }
