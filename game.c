@@ -95,15 +95,15 @@ void startGame(void) {
         }
         if (player_2.isBankrupt == false) {
 
-            move(&player_1, board, &contextOfTheGame);
+            move(&player_2, board, &contextOfTheGame);
         }
         if (player_3.isBankrupt == false) {
 
-            move(&player_1, board, &contextOfTheGame);
+            move(&player_3, board, &contextOfTheGame);
         }
         if (player_4.isBankrupt == false) {
 
-            move(&player_1, board, &contextOfTheGame);
+            move(&player_4, board, &contextOfTheGame);
         }
 
         networthEvaluate(&player_1, &player_2, &player_3, &player_4, board);

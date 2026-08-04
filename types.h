@@ -254,4 +254,21 @@ void buidBuilding(player *player_x, square *board);
 void networthEvaluate(player *player_1, player *player_2, player *player_3, player *player_4, square *board);
 bool playerHasaMonopoly(player *player_x, square *board);
 void printMarketConditions(context *contextOfTheGame);
+// econ event functions
+void tourismBoomActivate(square *);
+void tourismBoom_Deactivate(square *);
+void FuelCrisisActivate(square *);
+void FuelCrisis_Deactivate(square *);
+void HeavyMonsoonActivate(square *);
+void HeavyMonsoon_deActivate(square *);
+void recessionActivate(square *);
+void recession_deActivate(square *);
+void StockMarketBoomActivate(square *);
+void StockMarketBoom_deActivate(square *);
+void GovernmentHousingProgrammeActivate(square *);
+void GovernmentHousingProgramme_deActivate(square *);
+void ForeignInvestmentActivate(square *);
+void ForeignInvestment_deActivate(square *);
+void PoliticalUnrestActivate(square *);
+void PoliticalUnrest_deActivate(square *);
 #endif
