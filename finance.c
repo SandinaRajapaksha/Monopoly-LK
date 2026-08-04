@@ -212,7 +212,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                     printWinner(bidders[i], HighestBid, auctionItem);
                     return;
                 }
-                bool conditionAggr = (bidders[i]->cash >= HighestBid) && (HighestBid < auctionItem->curruntValue * 1.2);
+                bool conditionAggr = (bidders[i]->cash >= HighestBid + 250) && (HighestBid < auctionItem->curruntValue * 1.2);
                 if (conditionAggr) {
                     aggrHighestBid = HighestBid + 250;
                     HighestBid = aggrHighestBid;
@@ -229,7 +229,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                     printWinner(bidders[i], HighestBid, auctionItem);
                     return;
                 }
-                bool conditionRiskTkr = bidders[i]->cash >= startingPrice;
+                bool conditionRiskTkr = bidders[i]->cash >= HighestBid + 250;
                 if (conditionRiskTkr) {
                     riskTakerHighestBid = HighestBid + 250;
                     HighestBid = riskTakerHighestBid;
@@ -246,7 +246,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                     printWinner(bidders[i], HighestBid, auctionItem);
                     return;
                 }
-                bool conditionConserBanker = ((bidders[i]->cash - HighestBid) > bidders[i]->cash / 2) && (HighestBid < auctionItem->curruntValue / (0.75));
+                bool conditionConserBanker = ((bidders[i]->cash - HighestBid + 250) > bidders[i]->cash / 2) && (HighestBid < auctionItem->curruntValue / (0.75));
                 if (conditionConserBanker) {
                     conserBankerHighestBid = HighestBid + 250;
                     HighestBid = conserBankerHighestBid;
@@ -263,7 +263,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                     printWinner(bidders[i], HighestBid, auctionItem);
                     return;
                 }
-                bool conditionOppotTrader = (bidders[i]->cash > HighestBid); // to be implemented
+                bool conditionOppotTrader = ((bidders[i]->cash > HighestBid + 250) && (HighestBid < 4000)); // to be implemented
                 if (conditionOppotTrader) {
                     opportTraderHighestBid = HighestBid + 250;
                     HighestBid = opportTraderHighestBid;
