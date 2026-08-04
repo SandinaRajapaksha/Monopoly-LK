@@ -13,6 +13,7 @@ void startGame(void) {
 
     contextOfTheGame.roundThatInflationHappened = -1;
     contextOfTheGame.currentInflation = 0;
+    contextOfTheGame.currentInterestRate = 0;
 
     int topNationalEventCard = 0;
     int topreigionaldevelopmentcard = 0;

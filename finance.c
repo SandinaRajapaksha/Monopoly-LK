@@ -23,7 +23,7 @@ void networthEvaluate(player *player_1, player *player_2, player *player_3, play
         totalPropertyValuesofPlayer = 0;
     }
 }
-void resolveBank(player *player_x, square *board, economicEventCardType *currentEconEvent) {
+void resolveBank(player *player_x, square *board, context *contextOfTheGame) {
 
     playerType tempPlayer = player_x->playerID;
 
@@ -58,7 +58,7 @@ void resolveBank(player *player_x, square *board, economicEventCardType *current
             printf("%s borrowed a loan of LKR %d from the Bank of Ceylon\n", player_x->name, player_x->MaxElegibleLoanAmount);
             break;
         case opportunisticTrader:
-            if (*currentEconEvent == GovernmentHousingProgramme || *currentEconEvent == StockMarketBoom) {
+            if (contextOfTheGame->currentActiveEconEvent == GovernmentHousingProgramme || contextOfTheGame->currentActiveEconEvent == StockMarketBoom) {
                 player_x->hasDebt = true;
                 player_x->cash += player_x->MaxElegibleLoanAmount;
                 player_x->outStandingLoan = player_x->MaxElegibleLoanAmount;

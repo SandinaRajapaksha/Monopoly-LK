@@ -103,7 +103,7 @@ void finalRankAssign(player *player_X, player *player_1, player *player_2,
     }
 }
 
-void roundCounter(int *curruntBoardRound, player *player_1, player *player_2,
+void roundCounter(context *contextofGame, player *player_1, player *player_2,
                   player *player_3, player *player_4) {
     int laps1 = player_1->totalsteps / 40;
     int laps2 = player_2->totalsteps / 40;
@@ -121,8 +121,8 @@ void roundCounter(int *curruntBoardRound, player *player_1, player *player_2,
         completedLaps = laps4;
     }
 
-    if (completedLaps + 1 > *curruntBoardRound) {
-        *curruntBoardRound = completedLaps + 1;
+    if (completedLaps + 1 > contextofGame->currentBoardRound) {
+        contextofGame->currentBoardRound = completedLaps + 1;
 
         printf("\n==================================================================\n Round %d Summary \n", completedLaps);
         printf("==================================================================\n\n");

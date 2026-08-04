@@ -27,10 +27,10 @@ void resolveSquare(player *player_x, square *board, context *contextOfGame) {
         resolveTax(player_x, board);
         break;
     case bank:
-        resolveBank(player_x, board, currentEconEvent);
+        resolveBank(player_x, board, contextOfGame);
         break;
     case property:
-        resolveProperty(player_x, board, currentEconEvent, currentInflation);
+        resolveProperty(player_x, board, contextOfGame);
         break;
     }
 }
@@ -99,7 +99,7 @@ void resolveInsure(player *player_x, square *board) {}
 void resolveTax(player *player_x, square *board) {}
 
 void resolveProperty(player *player_x, square *board,
-                     economicEventCardType *currentEconEvent, int *currentInflation) {
+                     context *contextOfTheGame) {
 
     // if property owns by bank
     if (board[player_x->currentSquare].owner->playerID == bankOfCeylon) {
@@ -128,7 +128,7 @@ void resolveProperty(player *player_x, square *board,
 
             if ((player_x->cash - (board[player_x->currentSquare].PropertyProperties.initialPrice) >
                  (player_x->cash / 2)) &&
-                (*currentEconEvent != EconomicRecession)) {
+                (contextOfTheGame->currentActiveEconEvent != EconomicRecession)) {
 
                 player_x->cash =
                     player_x->cash - board[player_x->currentSquare]
@@ -158,7 +158,7 @@ void resolveProperty(player *player_x, square *board,
             break;
 
         case opportunisticTrader:
-            if ((player_x->cash > board[player_x->currentSquare].PropertyProperties.initialPrice) && (*currentEconEvent != EconomicRecession) && (*currentInflation > 0)) {
+            if ((player_x->cash > board[player_x->currentSquare].PropertyProperties.initialPrice) && (contextOfTheGame->currentActiveEconEvent != EconomicRecession) && (contextOfTheGame->currentInflation > 0)) {
 
                 player_x->cash -= board[player_x->currentSquare].PropertyProperties.initialPrice;
                 board[player_x->currentSquare].owner = player_x;
@@ -372,7 +372,7 @@ void resolveProperty(player *player_x, square *board,
         case conservativeBanker:
 
             if (eligibleForHouse && ((player_x->cash - board[player_x->currentSquare].PropertyProperties.houseConstructionCost) > player_x->cash / 2) &&
-                (*currentEconEvent != EconomicRecession)) {
+                (contextOfTheGame->currentActiveEconEvent != EconomicRecession)) {
                 // build house
                 if (board[player_x->currentSquare].PropertyProperties.noOfHouses >= 4 &&
                     ((player_x->cash - board[player_x->currentSquare].PropertyProperties.hotelConstructionCost) > player_x->cash / 2) &&
@@ -458,7 +458,7 @@ void resolveProperty(player *player_x, square *board,
             }
             break;
         case opportunisticTrader:
-            if (eligibleForHouse && (board[player_x->currentSquare].PropertyProperties.houseConstructionCost <= player_x->cash) && (*currentInflation <= 0)) {
+            if (eligibleForHouse && (board[player_x->currentSquare].PropertyProperties.houseConstructionCost <= player_x->cash) && (contextOfTheGame->currentInflation <= 0)) {
                 // build house
                 if (board[player_x->currentSquare].PropertyProperties.noOfHouses >= 4 &&
                     ((player_x->cash - board[player_x->currentSquare].PropertyProperties.hotelConstructionCost) > player_x->cash / 2)) {
