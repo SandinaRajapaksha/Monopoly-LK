@@ -519,14 +519,37 @@ bool checkForMonopoly(player *player_x, square *board) {
     }
 
     // houses must be evenly spread before the next build
-    int currentNoOfHouses = board[player_x->currentSquare].PropertyProperties.noOfHouses;
+    int currentNoOfHouses;
+    if (board[player_x->currentSquare].PropertyProperties.noOfHotels == 1) {
+        currentNoOfHouses = 5;
+    } else {
+        currentNoOfHouses = board[player_x->currentSquare].PropertyProperties.noOfHouses;
+    }
+
     bool HouseEligiblePerBuildingCount = true;
     for (int i = 0; i < 40; i++) {
-        bool check2 = (board[i].PropertyProperties.propertyGroup == CurrentGroup) &&
-                      (board[i].PropertyProperties.noOfHouses < currentNoOfHouses);
-        if (check2) {
+        if (board[i].PropertyProperties.propertyGroup != CurrentGroup) {
+            continue;
+        }
+        int otherEffective;
+        if (board[i].PropertyProperties.noOfHotels == 1) {
+            otherEffective = 5;
+        } else {
+            otherEffective = board[i].PropertyProperties.noOfHouses;
+        }
+        if (otherEffective < currentNoOfHouses) {
             HouseEligiblePerBuildingCount = false;
+            break;
         }
     }
-    return ownsAMonopoly && HouseEligiblePerBuildingCount;
+
+    bool groupHasMortgage = false;
+    for (int i = 0; i < 40; i++) {
+        if (board[i].PropertyProperties.propertyGroup == CurrentGroup &&
+            board[i].mortgageStatus == mortgagedToBank) {
+            groupHasMortgage = true;
+            break;
+        }
+    }
+    return ownsAMonopoly && HouseEligiblePerBuildingCount && !groupHasMortgage;
 }
