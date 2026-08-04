@@ -212,7 +212,6 @@ typedef struct {
     int roundThatInflationHappened;
     int roundThatEconEventHappened;
 } context;
-
 // function Prototypes
 
 void startGame(void);

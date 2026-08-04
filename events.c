@@ -44,7 +44,7 @@ void econEventActivate(square *board, context *contextOfTheGame) {
     printf("\nRound %d economic event happens now, \n",
            contextOfTheGame->currentBoardRound);
     if (randomEconEvent == TourismBoom) {
-        printf("Tourism Boom Happens...(+15%%)\n");
+        printf("Tourism Boom Happens...\n");
         tourismBoomActivate(board);
 
     } else if (randomEconEvent == FuelCrisis) {
