@@ -196,7 +196,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
     int conserBankerHighestBid;
     int opportTraderHighestBid;
 
-    playerType HighestBidder = player_x->playerID;
+    player *HighestBidder = player_x;
 
     while (true) {
         // placing bids
@@ -204,7 +204,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
             switch (bidders[i]->playerID) {
 
             case aggresiveInvester:
-                if (HighestBidder == aggresiveInvester) {
+                if (HighestBidder->playerID == aggresiveInvester) {
                     // buys and win
                     auctionItem->PropertyProperties.noOfHouses = 0;
                     auctionItem->PropertyProperties.noOfHotels = 0;
@@ -216,11 +216,12 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                 if (conditionAggr) {
                     aggrHighestBid = HighestBid + 250;
                     HighestBid = aggrHighestBid;
+                    HighestBidder = bidders[i];
                 }
                 break;
 
             case riskTaker:
-                if (HighestBidder == riskTaker) {
+                if (HighestBidder->playerID == riskTaker) {
                     // buys and win
                     auctionItem->PropertyProperties.noOfHouses = 0;
                     auctionItem->PropertyProperties.noOfHotels = 0;
@@ -232,11 +233,12 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                 if (conditionRiskTkr) {
                     riskTakerHighestBid = HighestBid + 250;
                     HighestBid = riskTakerHighestBid;
+                    HighestBidder = bidders[i];
                 }
                 break;
 
             case conservativeBanker:
-                if (HighestBidder == conservativeBanker) {
+                if (HighestBidder->playerID == conservativeBanker) {
                     // buys and win
                     auctionItem->PropertyProperties.noOfHouses = 0;
                     auctionItem->PropertyProperties.noOfHotels = 0;
@@ -248,11 +250,12 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                 if (conditionConserBanker) {
                     conserBankerHighestBid = HighestBid + 250;
                     HighestBid = conserBankerHighestBid;
+                    HighestBidder = bidders[i];
                 }
                 break;
 
             case opportunisticTrader:
-                if (HighestBidder == conservativeBanker) {
+                if (HighestBidder->playerID == opportunisticTrader) {
                     // buys and win
                     auctionItem->PropertyProperties.noOfHouses = 0;
                     auctionItem->PropertyProperties.noOfHotels = 0;
@@ -264,11 +267,15 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                 if (conditionOppotTrader) {
                     opportTraderHighestBid = HighestBid + 250;
                     HighestBid = opportTraderHighestBid;
+                    HighestBidder = bidders[i];
                 }
                 break;
             default:
                 break;
             }
+        }
+        if (HighestBidder == player_x) {
+            return;
         }
     }
 };
