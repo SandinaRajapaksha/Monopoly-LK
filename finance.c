@@ -228,11 +228,12 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                     auctionItem->PropertyProperties.noOfHotels = 0;
                     // transfer funds to the owner
                     auctionItem->owner->cash += HighestBid;
-                    auctionItem->owner->noOfProperties++;
+                    auctionItem->owner->noOfProperties--;
 
                     // pay the bid and get ownership
                     auctionItem->owner = bidders[i];
                     bidders[i]->cash -= HighestBid;
+                    bidders[i]->noOfProperties++;
 
                     printWinner(bidders[i], HighestBid, auctionItem);
                     return;
@@ -253,11 +254,12 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                     auctionItem->PropertyProperties.noOfHotels = 0;
                     // transfer funds to the owner
                     auctionItem->owner->cash += HighestBid;
-                    auctionItem->owner->noOfProperties++;
+                    auctionItem->owner->noOfProperties--;
 
                     // pay the bid and get ownership
                     auctionItem->owner = bidders[i];
                     bidders[i]->cash -= HighestBid;
+                    bidders[i]->noOfProperties++;
 
                     printWinner(bidders[i], HighestBid, auctionItem);
                     return;
@@ -277,11 +279,12 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                     auctionItem->PropertyProperties.noOfHotels = 0;
                     // transfer funds to the owner
                     auctionItem->owner->cash += HighestBid;
-                    auctionItem->owner->noOfProperties++;
+                    auctionItem->owner->noOfProperties--;
 
                     // pay the bid and get ownership
                     auctionItem->owner = bidders[i];
                     bidders[i]->cash -= HighestBid;
+                    bidders[i]->noOfProperties++;
 
                     printWinner(bidders[i], HighestBid, auctionItem);
                     return;
@@ -301,11 +304,12 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                     auctionItem->PropertyProperties.noOfHotels = 0;
                     // transfer funds to the owner
                     auctionItem->owner->cash += HighestBid;
-                    auctionItem->owner->noOfProperties++;
+                    auctionItem->owner->noOfProperties--;
 
                     // pay the bid and get ownership
                     auctionItem->owner = bidders[i];
                     bidders[i]->cash -= HighestBid;
+                    bidders[i]->noOfProperties++;
 
                     printWinner(bidders[i], HighestBid, auctionItem);
                     return;
