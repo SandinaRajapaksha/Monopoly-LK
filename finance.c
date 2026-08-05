@@ -86,12 +86,12 @@ void resolveBank(player *player_x, square *board, context *contextOfTheGame) {
 
         // paying loans
         playerType tempPlayer = player_x->playerID;
+        if ((player_x->laps - player_x->loantakigLap > 20) && (player_x->hasDebt == true)) {
+
+            // properties transfer to bank and auctiones
+        }
         switch (tempPlayer) {
 
-            if ((player_x->laps - player_x->loantakigLap > 20) && (player_x->hasDebt == true)) {
-
-                // properties transfer to bank and auctiones
-            }
         case aggresiveInvester:
             if (player_x->cash > 2 * player_x->outStandingLoan) {
                 player_x->cash -= player_x->outStandingLoan;
@@ -180,7 +180,7 @@ bool playerHasaMonopoly(player *player_x, square *board) {
 void printWinner(player *winner, int HighestBid, square *auctionedItem) {
 
     printf("%s Won the auction !\n", winner->name);
-    printf("Bought %s for %d\n\n", winner->name, HighestBid);
+    printf("\nBought %s for %d\n\n", auctionedItem->name, HighestBid);
     printf("============================================================\n\n");
 };
 void sellingAuction(player *player_x, player *player_1, player *player_2, player *player_3, player *player_4, square *board, context *contextOfGame, square *auctionItem) {
@@ -244,6 +244,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                     aggrHighestBid = HighestBid + 250;
                     HighestBid = aggrHighestBid;
                     HighestBidder = bidders[i];
+                    printf("%s bids LKR %d\n", HighestBidder->name, HighestBid);
                 }
                 break;
 
@@ -269,6 +270,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                     riskTakerHighestBid = HighestBid + 250;
                     HighestBid = riskTakerHighestBid;
                     HighestBidder = bidders[i];
+                    printf("%s bids LKR %d\n", HighestBidder->name, HighestBid);
                 }
                 break;
 
@@ -294,6 +296,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                     conserBankerHighestBid = HighestBid + 250;
                     HighestBid = conserBankerHighestBid;
                     HighestBidder = bidders[i];
+                    printf("%s bids LKR %d\n", HighestBidder->name, HighestBid);
                 }
                 break;
 
@@ -319,6 +322,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                     opportTraderHighestBid = HighestBid + 250;
                     HighestBid = opportTraderHighestBid;
                     HighestBidder = bidders[i];
+                    printf("%s bids LKR %d\n", HighestBidder->name, HighestBid);
                 }
                 break;
             default:

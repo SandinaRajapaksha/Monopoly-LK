@@ -3,6 +3,10 @@
 
 void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerObject, context *contextOfTheGame) {
     do {
+        if (player_x->noOfProperties == 0) {
+            player_x->isBankrupt = true;
+            return;
+        }
 
         networthEvaluate(playerObject->player_1,
                          playerObject->player_2,

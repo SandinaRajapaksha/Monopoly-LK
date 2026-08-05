@@ -3,6 +3,20 @@
 #include <stdio.h>
 
 void resolveSquare(player *player_x, square *board, context *contextOfGame, playerPointers *playerObject) {
+
+    if ((player_x->laps - player_x->loantakigLap > 20) && (player_x->hasDebt == true)) {
+        // properties transfer to bank and auctiones
+
+        for (int i = 0; i <= 39; i++) {
+            if (board[i].owner == player_x) {
+                if (board[i].owner > 0) {
+                    board[i].owner->noOfProperties--;
+                }
+                board->owner = NULL;
+            }
+        }
+    }
+
     squareType squareToResolve = board[player_x->currentSquare].type;
     switch (squareToResolve) {
     case go:
