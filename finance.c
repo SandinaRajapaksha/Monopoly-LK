@@ -86,12 +86,11 @@ void resolveBank(player *player_x, square *board, context *contextOfTheGame) {
 
         // paying loans
         playerType tempPlayer = player_x->playerID;
+        if (player_x->hasDebt == true && player_x->MaxElegibleLoanAmount > player_x->cash) {
+            // auction
+        }
         switch (tempPlayer) {
 
-            if ((player_x->laps - player_x->loantakigLap > 20) && (player_x->hasDebt == true)) {
-
-                // properties transfer to bank and auctiones
-            }
         case aggresiveInvester:
             if (player_x->cash > 2 * player_x->outStandingLoan) {
                 player_x->cash -= player_x->outStandingLoan;

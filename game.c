@@ -56,12 +56,14 @@ void startGame(void) {
     player player_2;
     player player_3;
     player player_4;
+    player playerBANK = {.playerID = bankOfCeylon};
 
     playerPointers playerPointerObject = {
         .player_1 = &player_1,
         .player_2 = &player_2,
         .player_3 = &player_3,
-        .player_4 = &player_4};
+        .player_4 = &player_4,
+        .player_BANK = &playerBANK};
 
     printf("MONOPOLY-LK Simulation\n\n");
     printf("Player 1 : %s\n", aggressiveInvesterPlayer.name);

@@ -218,6 +218,7 @@ typedef struct {
     player *player_2;
     player *player_3;
     player *player_4;
+    player *player_BANK;
 
 } playerPointers;
 // function Prototypes

@@ -3,6 +3,18 @@
 #include <stdio.h>
 
 void resolveSquare(player *player_x, square *board, context *contextOfGame, playerPointers *playerObject) {
+
+    if (player_x->loantakigLap + 20 < contextOfGame->currentBoardRound && player_x->hasDebt == true) {
+        printf("\n%s failed to replay debt. All assets transfered to the Bank.\n", player_x->name);
+        for (int i = 0; i <= 39; i++) {
+            if (board[i].owner == player_x) {
+                player_x->noOfProperties--;
+                board[i].owner = playerObject->player_BANK;
+            }
+        }
+        player_x->hasDebt = false;
+    }
+
     squareType squareToResolve = board[player_x->currentSquare].type;
     switch (squareToResolve) {
     case go:
@@ -195,11 +207,14 @@ void resolveProperty(player *player_x, square *board,
 
                 payRent(player_x, board);
 
-            } else if (player_x->cash <
-                       board[player_x->currentSquare].PropertyProperties.currentRentalofProperty) {
+            } else if (player_x->cash < board[player_x->currentSquare].PropertyProperties.currentRentalofProperty && player_x->noOfProperties == 0) {
+                printf("\n%s went Bankrupt \n", player_x->name);
+                player_x->isBankrupt = true;
+                return;
+
+            } else if (player_x->cash < board[player_x->currentSquare].PropertyProperties.currentRentalofProperty) {
                 AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
             }
-
             break;
 
         case conservativeBanker:
@@ -212,10 +227,13 @@ void resolveProperty(player *player_x, square *board,
 
                 payRent(player_x, board);
 
-            } else {
+            } else if (player_x->cash < board[player_x->currentSquare].PropertyProperties.currentRentalofProperty && player_x->noOfProperties == 0) {
+                printf("\n%s went Bankrupt \n", player_x->name);
+                player_x->isBankrupt = true;
+                return;
 
+            } else if (player_x->cash < board[player_x->currentSquare].PropertyProperties.currentRentalofProperty) {
                 AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
-                // loan logic for rent payment to be implemented
             }
             break;
         case riskTaker:
@@ -228,10 +246,13 @@ void resolveProperty(player *player_x, square *board,
 
                 payRent(player_x, board);
 
-            } else {
+            } else if (player_x->cash < board[player_x->currentSquare].PropertyProperties.currentRentalofProperty && player_x->noOfProperties == 0) {
+                printf("\n%s went Bankrupt \n", player_x->name);
+                player_x->isBankrupt = true;
+                return;
 
+            } else if (player_x->cash < board[player_x->currentSquare].PropertyProperties.currentRentalofProperty) {
                 AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
-                // loan logic for rent payment to be implemented
             }
             break;
 
@@ -245,10 +266,13 @@ void resolveProperty(player *player_x, square *board,
 
                 payRent(player_x, board);
 
-            } else {
+            } else if (player_x->cash < board[player_x->currentSquare].PropertyProperties.currentRentalofProperty && player_x->noOfProperties == 0) {
+                printf("\n%s went Bankrupt \n", player_x->name);
+                player_x->isBankrupt = true;
+                return;
 
+            } else if (player_x->cash < board[player_x->currentSquare].PropertyProperties.currentRentalofProperty) {
                 AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
-                // loan logic for rent payment to be implemented
             }
             break;
 
