@@ -6,21 +6,34 @@ void networthEvaluate(player *player_1, player *player_2, player *player_3, play
     player *players[4] = {player_1, player_2, player_3, player_4};
 
     for (int i = 0; i <= 3; i++) {
-        int totalPropertyValuesofPlayer = 0;
-
+        int totalAssetValue = 0;
         int totalMortgageValuesofPlayer = 0;
+
         for (int j = 0; j <= 39; j++) {
-            if (board[j].type == property && board[j].owner == players[i]) {
-                totalPropertyValuesofPlayer += board[j].curruntValue;
-                totalMortgageValuesofPlayer += board[j].mortgageValue;
+            if (board[j].owner == players[i]) {
+                if (board[j].type == property) {
+                    int propertyValue = board[j].curruntValue;
+                    if (board[j].mortgageStatus == mortgagedToBank) {
+                        propertyValue = board[j].mortgageValue;
+                    } else {
+                        propertyValue += board[j].PropertyProperties.noOfHouses * board[j].PropertyProperties.houseConstructionCost;
+                        propertyValue += board[j].PropertyProperties.noOfHotels * board[j].PropertyProperties.hotelConstructionCost;
+                    }
+                    totalAssetValue += propertyValue;
+                    totalMortgageValuesofPlayer += board[j].mortgageValue;
+                } else if (board[j].type == railway || board[j].type == utility) {
+                    int assetValue = board[j].curruntValue;
+                    if (board[j].mortgageStatus == mortgagedToBank) {
+                        assetValue = board[j].mortgageValue;
+                    }
+                    totalAssetValue += assetValue;
+                    totalMortgageValuesofPlayer += board[j].mortgageValue;
+                }
             }
         }
 
-        players[i]->netWorth = players[i]->cash + totalPropertyValuesofPlayer;
+        players[i]->netWorth = players[i]->cash + totalAssetValue - players[i]->outStandingLoan;
         players[i]->MaxElegibleLoanAmount = totalMortgageValuesofPlayer * 0.75;
-
-        totalMortgageValuesofPlayer = 0;
-        totalPropertyValuesofPlayer = 0;
     }
 }
 void resolveBank(player *player_x, square *board, context *contextOfTheGame) {

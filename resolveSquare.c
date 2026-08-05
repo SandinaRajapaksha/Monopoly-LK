@@ -213,6 +213,8 @@ void resolveProperty(player *player_x, square *board,
                 payRent(player_x, board);
 
             } else {
+
+                AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
                 // loan logic for rent payment to be implemented
             }
             break;
@@ -227,6 +229,8 @@ void resolveProperty(player *player_x, square *board,
                 payRent(player_x, board);
 
             } else {
+
+                AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
                 // loan logic for rent payment to be implemented
             }
             break;
@@ -242,6 +246,8 @@ void resolveProperty(player *player_x, square *board,
                 payRent(player_x, board);
 
             } else {
+
+                AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
                 // loan logic for rent payment to be implemented
             }
             break;
