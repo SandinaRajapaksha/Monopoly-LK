@@ -210,6 +210,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                     auctionItem->PropertyProperties.noOfHotels = 0;
                     // transfer funds to the owner
                     auctionItem->owner->cash += HighestBid;
+                    auctionItem->owner->noOfProperties++;
 
                     // pay the bid and get ownership
                     auctionItem->owner = bidders[i];
@@ -234,6 +235,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                     auctionItem->PropertyProperties.noOfHotels = 0;
                     // transfer funds to the owner
                     auctionItem->owner->cash += HighestBid;
+                    auctionItem->owner->noOfProperties++;
 
                     // pay the bid and get ownership
                     auctionItem->owner = bidders[i];
@@ -257,6 +259,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                     auctionItem->PropertyProperties.noOfHotels = 0;
                     // transfer funds to the owner
                     auctionItem->owner->cash += HighestBid;
+                    auctionItem->owner->noOfProperties++;
 
                     // pay the bid and get ownership
                     auctionItem->owner = bidders[i];
@@ -280,6 +283,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                     auctionItem->PropertyProperties.noOfHotels = 0;
                     // transfer funds to the owner
                     auctionItem->owner->cash += HighestBid;
+                    auctionItem->owner->noOfProperties++;
 
                     // pay the bid and get ownership
                     auctionItem->owner = bidders[i];
