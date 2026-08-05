@@ -304,6 +304,14 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
             }
         }
         if (HighestBidder == player_x) {
+            // sell to the bank at mortgage price
+
+            player_x->cash += auctionItem->mortgageValue;
+            auctionItem->owner = NULL;
+            player_x->noOfProperties--;
+            printf("No one bought item in the auction.\n");
+            printf("Sold to the bank for LKR %d\n\n", auctionItem->mortgageValue);
+            printf("============================================================\n\n");
             return;
         }
     }
