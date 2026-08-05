@@ -19,6 +19,8 @@ void startGame(void) {
     int topNationalEventCard = 0;
     int topreigionaldevelopmentcard = 0;
     contextOfTheGame.currentBoardRound = 1;
+
+    int noOfBankruptPlayer = 0;
     square board[40];
 
     srand((unsigned int)time(NULL));
@@ -119,6 +121,10 @@ void startGame(void) {
 
         networthEvaluate(&player_1, &player_2, &player_3, &player_4, board);
 
+        bankruptCheck(&playerPointerObject, &noOfBankruptPlayer);
+        if (noOfBankruptPlayer == 3) {
+            break;
+        }
         roundCounter(&contextOfTheGame, &player_1, &player_2, &player_3,
                      &player_4);
 
@@ -132,5 +138,29 @@ void startGame(void) {
             (contextOfTheGame.currentBoardRound != contextOfTheGame.roundThatInflationHappened)) {
             inflationRateRelease(board, &contextOfTheGame);
         }
+    }
+
+    player *players[4] = {&player_1, &player_2, &player_3, &player_4};
+    player *winner = NULL;
+
+    if (noOfBankruptPlayer == 3) {
+        for (int i = 0; i < 4; i++) {
+            if (!players[i]->isBankrupt) {
+                winner = players[i];
+                break;
+            }
+        }
+    } else {
+        int maxNetWorth = -1;
+        for (int i = 0; i < 4; i++) {
+            if (players[i]->netWorth > maxNetWorth) {
+                maxNetWorth = players[i]->netWorth;
+                winner = players[i];
+            }
+        }
+    }
+
+    if (winner) {
+        printf("\nWinner: %s with net worth LKR %d\n", winner->name, winner->netWorth);
     }
 }

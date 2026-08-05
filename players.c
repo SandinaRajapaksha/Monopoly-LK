@@ -110,5 +110,6 @@ void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerOb
     while (player_x->netWorth >
            board[player_x->currentSquare].PropertyProperties.currentRentalofProperty);
 
+    printf("\nplayer %s got bankrupt\n", player_x->name);
     player_x->isBankrupt = true;
 }

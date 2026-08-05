@@ -364,3 +364,15 @@ bool payRent(player *player_x, square *board) {
 
     return true;
 }
+void bankruptCheck(playerPointers *playerObject, int *noOfBankruptPlayers) {
+    *noOfBankruptPlayers = 0;
+    player *players[4] = {playerObject->player_1, playerObject->player_2, playerObject->player_3, playerObject->player_4};
+    *noOfBankruptPlayers = 0;
+    for (int i = 0; i <= 3; i++) {
+        if (players[i]->netWorth <= 0) {
+            players[i]->isBankrupt = true;
+            (*noOfBankruptPlayers)++;
+            printf("\n%s went Bankrupt\n", players[i]->name);
+        }
+    }
+}
