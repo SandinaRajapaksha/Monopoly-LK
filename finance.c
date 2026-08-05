@@ -314,6 +314,10 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
             printf("============================================================\n\n");
             return;
         }
+        if (player_x->noOfProperties == 0) {
+            printf("\n%s went Bankrupt\n", player_x->name);
+            player_x->isBankrupt = true;
+        }
     }
 };
 bool payRent(player *player_x, square *board) {
