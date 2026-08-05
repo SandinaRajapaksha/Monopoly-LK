@@ -92,21 +92,23 @@ void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerOb
                     return;
                 }
             }
-            for (int i = 0; i <= 39; i++) {
-                if (board[i].PropertyProperties.propertyGroup == darkBlue && board[i].owner == player_x) {
-                    sellingAuction(player_x, playerObject->player_1,
-                                   playerObject->player_2,
-                                   playerObject->player_3,
-                                   playerObject->player_4, board, contextOfTheGame, &board[i]);
-                    bool payed = payRent(player_x, board);
-                    if (payed == true) {
-                        return;
-                    }
+        }
+        for (int i = 0; i <= 39; i++) {
+            if (board[i].PropertyProperties.propertyGroup == darkBlue && board[i].owner == player_x) {
+                sellingAuction(player_x, playerObject->player_1,
+                               playerObject->player_2,
+                               playerObject->player_3,
+                               playerObject->player_4, board, contextOfTheGame, &board[i]);
+                bool payed = payRent(player_x, board);
+                if (payed == true) {
+                    return;
                 }
             }
         }
-    } while (player_x->netWorth >
-             board[player_x->currentSquare].PropertyProperties.currentRentalofProperty);
+    }
+
+    while (player_x->netWorth >
+           board[player_x->currentSquare].PropertyProperties.currentRentalofProperty);
 
     player_x->isBankrupt = true;
 }
