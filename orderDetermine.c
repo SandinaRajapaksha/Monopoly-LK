@@ -105,20 +105,27 @@ void finalRankAssign(player *player_X, player *player_1, player *player_2,
 
 void roundCounter(context *contextofGame, player *player_1, player *player_2,
                   player *player_3, player *player_4) {
-    int laps1 = player_1->totalsteps / 40;
-    int laps2 = player_2->totalsteps / 40;
-    int laps3 = player_3->totalsteps / 40;
-    int laps4 = player_4->totalsteps / 40;
+    player *players[4] = {player_1, player_2, player_3, player_4};
 
-    int completedLaps = laps1;
-    if (laps2 < completedLaps) {
-        completedLaps = laps2;
+    int activeCount = 0;
+    int completedLaps = 0;
+    bool first = true;
+    for (int i = 0; i < 4; i++) {
+        if (players[i]->isBankrupt) {
+            continue;
+        }
+        int laps = players[i]->totalsteps / 40;
+        if (first) {
+            completedLaps = laps;
+            first = false;
+        } else if (laps < completedLaps) {
+            completedLaps = laps;
+        }
+        activeCount++;
     }
-    if (laps3 < completedLaps) {
-        completedLaps = laps3;
-    }
-    if (laps4 < completedLaps) {
-        completedLaps = laps4;
+
+    if (activeCount == 0) {
+        return;
     }
 
     if (completedLaps + 1 > contextofGame->currentBoardRound) {

@@ -1,6 +1,7 @@
 #include "types.h"
 #include <stdbool.h>
 #include <stdio.h>
+#define INITIAL_PRICE 30000
 
 void startGame(void) {
     //
@@ -21,31 +22,32 @@ void startGame(void) {
     square board[40];
 
     srand((unsigned int)time(NULL));
+    // srand(2);
     player aggressiveInvesterPlayer = {.playerID = aggresiveInvester,
                                        .name = "Aggressive Invester",
                                        .currentSquare = 1,
-                                       .cash = 30000,
+                                       .cash = INITIAL_PRICE,
                                        .Jail = outside,
                                        .hasDebt = false,
                                        .isBankrupt = false};
     player conservativeBankerPlayer = {.playerID = conservativeBanker,
                                        .name = "Conservative Banker",
                                        .currentSquare = 1,
-                                       .cash = 30000,
+                                       .cash = INITIAL_PRICE,
                                        .Jail = outside,
                                        .hasDebt = false,
                                        .isBankrupt = false};
     player riskTakerPlayer = {.playerID = riskTaker,
                               .name = "Risk Taker",
                               .currentSquare = 1,
-                              .cash = 30000,
+                              .cash = INITIAL_PRICE,
                               .Jail = outside,
                               .hasDebt = false,
                               .isBankrupt = false};
     player opportunisticTraderPlayer = {.playerID = opportunisticTrader,
                                         .name = "Oppotunistic Trader",
                                         .currentSquare = 1,
-                                        .cash = 30000,
+                                        .cash = INITIAL_PRICE,
                                         .Jail = outside,
                                         .hasDebt = false,
                                         .isBankrupt = false};
@@ -67,7 +69,7 @@ void startGame(void) {
     printf("Player 3 : %s\n", riskTakerPlayer.name);
     printf("Player 4 : %s\n\n", opportunisticTraderPlayer.name);
 
-    printf("Each player begins with LKR 30,000.\n\n");
+    printf("Each player begins with LKR %d.\n\n", INITIAL_PRICE);
 
     ranker(&aggressiveInvesterPlayer, &conservativeBankerPlayer,
            &riskTakerPlayer, &opportunisticTraderPlayer);
