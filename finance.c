@@ -199,6 +199,11 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
     player *HighestBidder = player_x;
 
     while (true) {
+        if (player_x->noOfProperties == 0) {
+            printf("\n%s went Bankrupt\n", player_x->name);
+            player_x->isBankrupt = true;
+            return;
+        }
         // placing bids
         for (int i = 0; i <= 2; i++) {
             switch (bidders[i]->playerID) {
@@ -313,10 +318,6 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
             printf("Sold to the bank for LKR %d\n\n", auctionItem->mortgageValue);
             printf("============================================================\n\n");
             return;
-        }
-        if (player_x->noOfProperties == 0) {
-            printf("\n%s went Bankrupt\n", player_x->name);
-            player_x->isBankrupt = true;
         }
     }
 };
