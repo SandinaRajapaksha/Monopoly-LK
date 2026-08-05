@@ -161,6 +161,8 @@ void startGame(void) {
     }
 
     if (winner) {
+        printf("====================================================================\n\n");
         printf("\nWinner: %s with net worth LKR %d\n", winner->name, winner->netWorth);
+        printf("\n====================================================================\n");
     }
 }

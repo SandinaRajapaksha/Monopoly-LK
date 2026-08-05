@@ -213,6 +213,7 @@ void resolveProperty(player *player_x, square *board,
 
             } else if (player_x->cash < board[player_x->currentSquare].PropertyProperties.currentRentalofProperty) {
                 AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
+                return;
             }
             break;
 
@@ -233,6 +234,7 @@ void resolveProperty(player *player_x, square *board,
 
             } else if (player_x->cash < board[player_x->currentSquare].PropertyProperties.currentRentalofProperty) {
                 AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
+                return;
             }
             break;
         case riskTaker:
@@ -252,6 +254,7 @@ void resolveProperty(player *player_x, square *board,
 
             } else if (player_x->cash < board[player_x->currentSquare].PropertyProperties.currentRentalofProperty) {
                 AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
+                return;
             }
             break;
 
@@ -272,6 +275,7 @@ void resolveProperty(player *player_x, square *board,
 
             } else if (player_x->cash < board[player_x->currentSquare].PropertyProperties.currentRentalofProperty) {
                 AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
+                return;
             }
             break;
 

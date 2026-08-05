@@ -370,9 +370,13 @@ void bankruptCheck(playerPointers *playerObject, int *noOfBankruptPlayers) {
     *noOfBankruptPlayers = 0;
     for (int i = 0; i <= 3; i++) {
         if (players[i]->netWorth <= 0) {
+            if (!players[i]->isBankrupt) {
+                printf("\n%s went Bankrupt\n", players[i]->name);
+            }
             players[i]->isBankrupt = true;
+        }
+        if (players[i]->isBankrupt) {
             (*noOfBankruptPlayers)++;
-            printf("\n%s went Bankrupt\n", players[i]->name);
         }
     }
 }
