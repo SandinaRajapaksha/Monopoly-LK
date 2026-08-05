@@ -3,7 +3,9 @@
 #include <stdio.h>
 
 void resolveSquare(player *player_x, square *board, context *contextOfGame, playerPointers *playerObject) {
-
+    if (player_x->netWorth <= 0) {
+        player_x->isBankrupt = true;
+    }
     if (player_x->loantakigLap + 20 < contextOfGame->currentBoardRound && player_x->hasDebt == true) {
         printf("\n%s failed to replay debt. All assets transfered to the Bank.\n", player_x->name);
         for (int i = 0; i <= 39; i++) {
