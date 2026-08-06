@@ -4,11 +4,10 @@
 
 void resolveSquare(player *player_x, square *board, context *contextOfGame, playerPointers *playerObject) {
     if (player_x->loantakigLap + 20 < contextOfGame->currentBoardRound && player_x->hasDebt == true) {
-        printf("\n%s failed to replay debt. All assets transfered to the Bank.\n", player_x->name);
+        printf("\n%s failed to replay debt. All assets transfered to the Bank...\nAuction starts now ...\n", player_x->name);
         for (int i = 0; i <= 39; i++) {
             if (board[i].owner == player_x) {
-                player_x->noOfProperties--;
-                board[i].owner = playerObject->player_BANK;
+                bankruptAuction(player_x, board, contextOfGame, &board[i], playerObject);
             }
         }
         player_x->hasDebt = false;

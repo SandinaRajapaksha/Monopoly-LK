@@ -282,4 +282,6 @@ void printWinner(player *winner, int HighestBid, square *auctionedItem);
 bool payRent(player *player_x, square *board);
 void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerObject, context *contextOfTheGame);
 void bankruptCheck(playerPointers *playerObject, int *);
+void bankruptAuction(player *player_x, square *board,
+                     context *contextOfGame, square *auctionItem, playerPointers *playerPointerObject);
 #endif
