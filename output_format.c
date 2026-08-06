@@ -46,6 +46,6 @@ void printMarketConditions(context *contextofgame) {
         printf("No economic event active\n");
         break;
     }
-    printf("Rounds remaining : %d\n", roundsLeftEconEvent);
+    printf("Rounds remaining : %d\n", roundsLeftEconEvent + 1);
     printf("==============================================================\n\n\n\n");
 };
