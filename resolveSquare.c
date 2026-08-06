@@ -22,7 +22,7 @@ void resolveSquare(player *player_x, square *board, context *contextOfGame, play
         resolveSpecial(player_x, board);
         break;
     case railway:
-        resolveRailway(player_x, board);
+        resolveRailway(player_x, board, playerObject);
         break;
     case utility:
         resolveUtility(player_x, board);
@@ -106,12 +106,42 @@ void resolveSpecial(player *player_x, square *board) {
     }
 }
 
-void resolveRailway(player *player_x, square *board) {}
 void resolveUtility(player *player_x, square *board) {}
 void resolveEvent(player *player_x, square *board) {}
 void resolveInsure(player *player_x, square *board) {}
 void resolveTax(player *player_x, square *board) {}
 
+void resolveRailway(player *player_x, square *board, playerPointers *playerObject) {
+    // if ownwed by bank
+    switch (player_x->playerID) {
+    case aggresiveInvester:
+        if (aggrRailwayBuyCondition()) {
+            board[player_x->currentSquare].owner = player_x;
+            player_x->noOfProperties++;
+        }
+        break;
+    case riskTaker:
+        if (riskTkrRailwayBuyCondition()) {
+            board[player_x->currentSquare].owner = player_x;
+            player_x->noOfProperties++;
+        }
+        break;
+    case conservativeBanker:
+        if (consBankerRailwayBuyCondition()) {
+            board[player_x->currentSquare].owner = player_x;
+            player_x->noOfProperties++;
+        }
+        break;
+    case opportunisticTrader:
+        if (opprtTrdrRailwayBuyCondition()) {
+            board[player_x->currentSquare].owner = player_x;
+            player_x->noOfProperties++;
+        }
+        break;
+    default:
+        break;
+    }
+}
 void resolveProperty(player *player_x, square *board,
                      context *contextOfTheGame, playerPointers *playerObject) {
 

@@ -115,3 +115,5 @@ void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerOb
         player_x->isBankrupt = true;
     }
 }
+
+// railway buy behavour

@@ -55,6 +55,7 @@ typedef struct {
     int loanRepaymentRoundCount;
     int laps;
     int loantakigLap;
+    int noOfRailways;
 } player;
 
 typedef enum { cannotMortgage,
@@ -98,9 +99,7 @@ typedef struct sq {
     } utilityproperties;
 
     struct {
-        int noOfRailwaysOwnedByOwner;
         int baseRentOfRailway;
-        int currentRentOfRailway; // calculated using other two properties
     } railwayProperties;
 
     struct {
@@ -247,7 +246,11 @@ void inflationRateRelease(square *, context *);
 void resolveSquare(player *, square *, context *, playerPointers *);
 void resolveGO(player *);
 void resolveSpecial(player *, square *);
-void resolveRailway(player *, square *);
+void resolveRailway(player *, square *, playerPointers *);
+bool aggrRailwayBuyCondition(void);
+bool riskTkrRailwayBuyCondition(void);
+bool consBankerRailwayBuyCondition(void);
+bool opprtTrdrRailwayBuyCondition(void);
 void resolveUtility(player *, square *);
 void resolveEvent(player *, square *);
 void resolveInsure(player *, square *);
