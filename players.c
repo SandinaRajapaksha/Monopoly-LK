@@ -117,3 +117,29 @@ void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerOb
 }
 
 // railway buy behavour
+bool aggrRailwayBuyCondition(player *player_x, square *board) {
+
+    if (player_x->cash - board[player_x->currentSquare].curruntValue >= 2000) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool riskTkrRailwayBuyCondition(player *player_x, square *board) {
+
+    if (player_x->cash >= board[player_x->currentSquare].curruntValue) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool opprtTrdrRailwayBuyCondition(player *player_x, square *board) {
+
+    if (player_x->cash >= board[player_x->currentSquare].curruntValue) {
+        return true;
+    } else {
+        return false;
+    }
+}

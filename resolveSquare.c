@@ -115,25 +115,25 @@ void resolveRailway(player *player_x, square *board, playerPointers *playerObjec
     // if ownwed by bank
     switch (player_x->playerID) {
     case aggresiveInvester:
-        if (aggrRailwayBuyCondition()) {
+        if (aggrRailwayBuyCondition(player_x, board)) {
             board[player_x->currentSquare].owner = player_x;
             player_x->noOfProperties++;
         }
         break;
     case riskTaker:
-        if (riskTkrRailwayBuyCondition()) {
+        if (riskTkrRailwayBuyCondition(player_x, board)) {
             board[player_x->currentSquare].owner = player_x;
             player_x->noOfProperties++;
         }
         break;
     case conservativeBanker:
-        if (consBankerRailwayBuyCondition()) {
+        if (consBankerRailwayBuyCondition(player_x, board)) {
             board[player_x->currentSquare].owner = player_x;
             player_x->noOfProperties++;
         }
         break;
     case opportunisticTrader:
-        if (opprtTrdrRailwayBuyCondition()) {
+        if (opprtTrdrRailwayBuyCondition(player_x, board)) {
             board[player_x->currentSquare].owner = player_x;
             player_x->noOfProperties++;
         }

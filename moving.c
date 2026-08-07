@@ -1,4 +1,5 @@
 #include "types.h"
+#include <stdbool.h>
 #include <stdio.h>
 void move(player *player_x, square *board, context *contextOfTheGame, playerPointers *playerObject) {
 
@@ -22,7 +23,7 @@ void move(player *player_x, square *board, context *contextOfTheGame, playerPoin
     // did he pass go?
 
     if ((player_x->currentSquare != 10) && (player_x->currentSquare != 0) &&
-        (player_x->currentSquare < tempCurrentSquare)) {
+        (player_x->currentSquare < tempCurrentSquare) && (player_x->hasDebt == false)) {
         player_x->cash = player_x->cash + 2000;
         printf("%s received LKR 2000 by passing GO ...\n", player_x->name);
     }
