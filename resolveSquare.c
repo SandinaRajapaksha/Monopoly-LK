@@ -147,18 +147,22 @@ void resolveRailway(player *player_x, square *board, playerPointers *playerObjec
         case 1:
             player_x->cash -= board[player_x->currentSquare].railwayProperties.baseRentOfRailway;
             board[player_x->currentSquare].owner->cash += board[player_x->currentSquare].railwayProperties.baseRentOfRailway;
+            printf("%s payed LKR %d as the rent of %s", player_x->name, board[player_x->currentSquare].curruntValue, board[player_x->currentSquare].name);
             break;
         case 2:
             player_x->cash -= board[player_x->currentSquare].railwayProperties.baseRentOfRailway_2_owned;
             board[player_x->currentSquare].owner->cash += board[player_x->currentSquare].railwayProperties.baseRentOfRailway_2_owned;
+            printf("%s payed LKR %d as the rent of %s", player_x->name, board[player_x->currentSquare].curruntValue, board[player_x->currentSquare].name);
             break;
         case 3:
             player_x->cash -= board[player_x->currentSquare].railwayProperties.baseRentOfRailway_3_owned;
             board[player_x->currentSquare].owner->cash += board[player_x->currentSquare].railwayProperties.baseRentOfRailway_3_owned;
+            printf("%s payed LKR %d as the rent of %s", player_x->name, board[player_x->currentSquare].curruntValue, board[player_x->currentSquare].name);
             break;
         case 4:
             player_x->cash -= board[player_x->currentSquare].railwayProperties.baseRentOfRailway_4_owned;
             board[player_x->currentSquare].owner->cash += board[player_x->currentSquare].railwayProperties.baseRentOfRailway_4_owned;
+            printf("%s payed LKR %d as the rent of %s", player_x->name, board[player_x->currentSquare].curruntValue, board[player_x->currentSquare].name);
             break;
         default:
             break;
