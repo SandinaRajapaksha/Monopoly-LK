@@ -143,3 +143,11 @@ bool opprtTrdrRailwayBuyCondition(player *player_x, square *board) {
         return false;
     }
 }
+bool consBankerRailwayBuyCondition(player *player_x, square *board) {
+
+    if (player_x->cash - board[player_x->currentSquare].curruntValue >= player_x->cash * 0.3) {
+        return true;
+    } else {
+        return false;
+    }
+}

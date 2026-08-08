@@ -24,7 +24,6 @@ void tourismBoom_Deactivate(square *board) {
 void FuelCrisisActivate(square *board) {
     for (int i = 0; i <= 39; i++) {
         if (board[i].type == railway) {
-            board[i].railwayProperties.currentRentOfRailway *= 2;
             board[i].railwayProperties.baseRentOfRailway *= 2;
         }
         if (board[i].type == property) {
@@ -36,7 +35,6 @@ void FuelCrisisActivate(square *board) {
 void FuelCrisis_Deactivate(square *board) {
     for (int i = 0; i <= 39; i++) {
         if (board[i].type == railway) {
-            board[i].railwayProperties.currentRentOfRailway /= 2;
             board[i].railwayProperties.baseRentOfRailway /= 2;
         }
         if (board[i].type == property) {
