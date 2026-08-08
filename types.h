@@ -100,6 +100,9 @@ typedef struct sq {
 
     struct {
         int baseRentOfRailway;
+        int baseRentOfRailway_2_owned;
+        int baseRentOfRailway_3_owned;
+        int baseRentOfRailway_4_owned;
     } railwayProperties;
 
     struct {
@@ -246,11 +249,11 @@ void inflationRateRelease(square *, context *);
 void resolveSquare(player *, square *, context *, playerPointers *);
 void resolveGO(player *);
 void resolveSpecial(player *, square *);
-void resolveRailway(player *, square *, playerPointers *);
+void resolveRailway(player *, square *, playerPointers *, context *);
 bool aggrRailwayBuyCondition(player *, square *);
 bool riskTkrRailwayBuyCondition(player *, square *);
 bool consBankerRailwayBuyCondition(player *, square *);
-bool opprtTrdrRailwayBuyCondition(player *, square *);
+bool opprtTrdrRailwayBuyCondition(player *, square *, context *);
 void resolveUtility(player *, square *);
 void resolveEvent(player *, square *);
 void resolveInsure(player *, square *);

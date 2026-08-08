@@ -135,9 +135,9 @@ bool riskTkrRailwayBuyCondition(player *player_x, square *board) {
     }
 }
 
-bool opprtTrdrRailwayBuyCondition(player *player_x, square *board) {
+bool opprtTrdrRailwayBuyCondition(player *player_x, square *board, context *contextOfTheGame) {
 
-    if (player_x->cash >= board[player_x->currentSquare].curruntValue) {
+    if (player_x->cash >= board[player_x->currentSquare].curruntValue && contextOfTheGame->currentActiveEconEvent != EconomicRecession) {
         return true;
     } else {
         return false;
