@@ -146,15 +146,19 @@ void resolveRailway(player *player_x, square *board, playerPointers *playerObjec
         switch (board[player_x->currentSquare].owner->noOfRailways) {
         case 1:
             player_x->cash -= board[player_x->currentSquare].railwayProperties.baseRentOfRailway;
+            board[player_x->currentSquare].owner->cash += board[player_x->currentSquare].railwayProperties.baseRentOfRailway;
             break;
         case 2:
             player_x->cash -= board[player_x->currentSquare].railwayProperties.baseRentOfRailway_2_owned;
+            board[player_x->currentSquare].owner->cash += board[player_x->currentSquare].railwayProperties.baseRentOfRailway_2_owned;
             break;
         case 3:
             player_x->cash -= board[player_x->currentSquare].railwayProperties.baseRentOfRailway_3_owned;
+            board[player_x->currentSquare].owner->cash += board[player_x->currentSquare].railwayProperties.baseRentOfRailway_3_owned;
             break;
         case 4:
             player_x->cash -= board[player_x->currentSquare].railwayProperties.baseRentOfRailway_4_owned;
+            board[player_x->currentSquare].owner->cash += board[player_x->currentSquare].railwayProperties.baseRentOfRailway_4_owned;
             break;
         default:
             break;
