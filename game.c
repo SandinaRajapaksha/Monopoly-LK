@@ -54,11 +54,14 @@ void startGame(void) {
                                         .hasDebt = false,
                                         .isBankrupt = false};
 
+    player bankOfCeylonInstitution = {.playerID = bankOfCeylon,
+                                      .name = "Bank of Ceylon"};
+
     player player_1;
     player player_2;
     player player_3;
     player player_4;
-    player playerBANK = {.playerID = bankOfCeylon};
+    player playerBANK = bankOfCeylonInstitution;
 
     playerPointers playerPointerObject = {
         .player_1 = &player_1,
@@ -87,7 +90,7 @@ void startGame(void) {
     finalRankAssign(&opportunisticTraderPlayer, &player_1, &player_2, &player_3,
                     &player_4);
 
-    initializeBoard(board);
+    initializeBoard(board, &playerPointerObject);
 
     printf("%s will begin the game.\n\n", player_1.name);
     printf("Turn order : \n");

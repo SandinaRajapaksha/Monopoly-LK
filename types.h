@@ -56,6 +56,7 @@ typedef struct {
     int laps;
     int loantakigLap;
     int noOfRailways;
+    int noOfUtilities;
 } player;
 
 typedef enum { cannotMortgage,
@@ -91,12 +92,6 @@ typedef struct sq {
     mortgageType mortgageStatus;
     int mortgageValue;
     int curruntValue;
-
-    struct {
-        int BaseRentalOfUtility;
-        int noOfUtiliesOwnedByOwner;
-        int currentRentOfUtility; // based on dice role
-    } utilityproperties;
 
     struct {
         int baseRentOfRailway;
@@ -226,7 +221,7 @@ typedef struct {
 // function Prototypes
 
 void startGame(void);
-void initializeBoard(square *);
+void initializeBoard(square *, playerPointers *);
 //  randomly choosen after round count
 void econEventActivate(square *, context *);
 void govRegulationsActivate(square *);
@@ -254,7 +249,7 @@ bool aggrRailwayBuyCondition(player *, square *);
 bool riskTkrRailwayBuyCondition(player *, square *);
 bool consBankerRailwayBuyCondition(player *, square *);
 bool opprtTrdrRailwayBuyCondition(player *, square *, context *);
-void resolveUtility(player *, square *);
+void resolveUtility(player *, square *, context *, playerPointers *);
 void resolveEvent(player *, square *);
 void resolveInsure(player *, square *);
 void resolveTax(player *, square *);

@@ -245,12 +245,28 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                     auctionItem->PropertyProperties.noOfHotels = 0;
                     // transfer funds to the owner
                     auctionItem->owner->cash += HighestBid;
-                    auctionItem->owner->noOfProperties--;
-
+                    if (auctionItem->type == property) {
+                        auctionItem->owner->noOfProperties--;
+                    }
+                    if (auctionItem->type == railway) {
+                        auctionItem->owner->noOfRailways--;
+                    }
+                    if (auctionItem->type == utility) {
+                        auctionItem->owner->noOfUtilities--;
+                    }
                     // pay the bid and get ownership
                     auctionItem->owner = bidders[i];
                     bidders[i]->cash -= HighestBid;
-                    bidders[i]->noOfProperties++;
+
+                    if (auctionItem->type == property) {
+                        bidders[i]->noOfProperties++;
+                    }
+                    if (auctionItem->type == railway) {
+                        bidders[i]->noOfRailways++;
+                    }
+                    if (auctionItem->type == utility) {
+                        bidders[i]->noOfUtilities++;
+                    }
 
                     printWinner(bidders[i], HighestBid, auctionItem);
                     return;
@@ -270,12 +286,28 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                     auctionItem->PropertyProperties.noOfHotels = 0;
                     // transfer funds to the owner
                     auctionItem->owner->cash += HighestBid;
-                    auctionItem->owner->noOfProperties--;
+                    if (auctionItem->type == property) {
+                        auctionItem->owner->noOfProperties--;
+                    }
+                    if (auctionItem->type == railway) {
+                        auctionItem->owner->noOfRailways--;
+                    }
+                    if (auctionItem->type == utility) {
+                        auctionItem->owner->noOfUtilities--;
+                    }
 
                     // pay the bid and get ownership
                     auctionItem->owner = bidders[i];
                     bidders[i]->cash -= HighestBid;
-                    bidders[i]->noOfProperties++;
+                    if (auctionItem->type == property) {
+                        bidders[i]->noOfProperties++;
+                    }
+                    if (auctionItem->type == railway) {
+                        bidders[i]->noOfRailways++;
+                    }
+                    if (auctionItem->type == utility) {
+                        bidders[i]->noOfUtilities++;
+                    }
 
                     printWinner(bidders[i], HighestBid, auctionItem);
                     return;
@@ -295,12 +327,28 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                     auctionItem->PropertyProperties.noOfHotels = 0;
                     // transfer funds to the owner
                     auctionItem->owner->cash += HighestBid;
-                    auctionItem->owner->noOfProperties--;
+                    if (auctionItem->type == property) {
+                        auctionItem->owner->noOfProperties--;
+                    }
+                    if (auctionItem->type == railway) {
+                        auctionItem->owner->noOfRailways--;
+                    }
+                    if (auctionItem->type == utility) {
+                        auctionItem->owner->noOfUtilities--;
+                    }
 
                     // pay the bid and get ownership
                     auctionItem->owner = bidders[i];
                     bidders[i]->cash -= HighestBid;
-                    bidders[i]->noOfProperties++;
+                    if (auctionItem->type == property) {
+                        bidders[i]->noOfProperties++;
+                    }
+                    if (auctionItem->type == railway) {
+                        bidders[i]->noOfRailways++;
+                    }
+                    if (auctionItem->type == utility) {
+                        bidders[i]->noOfUtilities++;
+                    }
 
                     printWinner(bidders[i], HighestBid, auctionItem);
                     return;
@@ -320,12 +368,28 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                     auctionItem->PropertyProperties.noOfHotels = 0;
                     // transfer funds to the owner
                     auctionItem->owner->cash += HighestBid;
-                    auctionItem->owner->noOfProperties--;
+                    if (auctionItem->type == property) {
+                        auctionItem->owner->noOfProperties--;
+                    }
+                    if (auctionItem->type == railway) {
+                        auctionItem->owner->noOfRailways--;
+                    }
+                    if (auctionItem->type == utility) {
+                        auctionItem->owner->noOfUtilities--;
+                    }
 
                     // pay the bid and get ownership
                     auctionItem->owner = bidders[i];
                     bidders[i]->cash -= HighestBid;
-                    bidders[i]->noOfProperties++;
+                    if (auctionItem->type == property) {
+                        bidders[i]->noOfProperties++;
+                    }
+                    if (auctionItem->type == railway) {
+                        bidders[i]->noOfRailways++;
+                    }
+                    if (auctionItem->type == utility) {
+                        bidders[i]->noOfUtilities++;
+                    }
 
                     printWinner(bidders[i], HighestBid, auctionItem);
                     return;
@@ -345,10 +409,26 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
             auctionItem->PropertyProperties.noOfHouses = 0;
             auctionItem->PropertyProperties.noOfHotels = 0;
             auctionItem->owner->cash += HighestBid;
-            auctionItem->owner->noOfProperties--;
+            if (auctionItem->type == property) {
+                auctionItem->owner->noOfProperties--;
+            }
+            if (auctionItem->type == railway) {
+                auctionItem->owner->noOfRailways--;
+            }
+            if (auctionItem->type == utility) {
+                auctionItem->owner->noOfUtilities--;
+            }
             auctionItem->owner = HighestBidder;
             HighestBidder->cash -= HighestBid;
-            HighestBidder->noOfProperties++;
+            if (auctionItem->type == property) {
+                HighestBidder->noOfProperties++;
+            }
+            if (auctionItem->type == railway) {
+                HighestBidder->noOfRailways++;
+            }
+            if (auctionItem->type == utility) {
+                HighestBidder->noOfUtilities++;
+            }
             printWinner(HighestBidder, HighestBid, auctionItem);
             return;
         }
@@ -357,7 +437,15 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
 
             player_x->cash += auctionItem->mortgageValue;
             auctionItem->owner = NULL;
-            player_x->noOfProperties--;
+            if (auctionItem->type == property) {
+                player_x->noOfProperties--;
+            }
+            if (auctionItem->type == railway) {
+                player_x->noOfRailways--;
+            }
+            if (auctionItem->type == utility) {
+                player_x->noOfUtilities--;
+            }
             printf("No one bought item in the auction.\n");
             printf("Sold to the bank for LKR %d\n\n", auctionItem->mortgageValue);
             printf("============================================================\n\n");
@@ -445,7 +533,7 @@ void bankruptAuction(player *player_x, square *board,
 
     while (true) {
 
-        if (player_x->noOfProperties <= 0) {
+        if (player_x->noOfProperties <= 0 && player_x->noOfRailways <= 0 && player_x->noOfUtilities <= 0) {
 
             player_x->isBankrupt = true;
             printf("\n%s went bankrupt\n", player_x->name);
@@ -462,12 +550,28 @@ void bankruptAuction(player *player_x, square *board,
                     auctionItem->PropertyProperties.noOfHotels = 0;
                     // transfer funds to the owner
                     auctionItem->owner->cash += HighestBid;
-                    auctionItem->owner->noOfProperties--;
+                    if (auctionItem->type == property) {
+                        auctionItem->owner->noOfProperties--;
+                    }
+                    if (auctionItem->type == railway) {
+                        auctionItem->owner->noOfRailways--;
+                    }
+                    if (auctionItem->type == utility) {
+                        auctionItem->owner->noOfUtilities--;
+                    }
 
                     // pay the bid and get ownership
                     auctionItem->owner = bidders[i];
                     bidders[i]->cash -= HighestBid;
-                    bidders[i]->noOfProperties++;
+                    if (auctionItem->type == property) {
+                        bidders[i]->noOfProperties++;
+                    }
+                    if (auctionItem->type == railway) {
+                        bidders[i]->noOfRailways++;
+                    }
+                    if (auctionItem->type == utility) {
+                        bidders[i]->noOfUtilities++;
+                    }
 
                     printWinner(bidders[i], HighestBid, auctionItem);
                     return;
@@ -487,12 +591,28 @@ void bankruptAuction(player *player_x, square *board,
                     auctionItem->PropertyProperties.noOfHotels = 0;
                     // transfer funds to the owner
                     auctionItem->owner->cash += HighestBid;
-                    auctionItem->owner->noOfProperties--;
+                    if (auctionItem->type == property) {
+                        auctionItem->owner->noOfProperties--;
+                    }
+                    if (auctionItem->type == railway) {
+                        auctionItem->owner->noOfRailways--;
+                    }
+                    if (auctionItem->type == utility) {
+                        auctionItem->owner->noOfUtilities--;
+                    }
 
                     // pay the bid and get ownership
                     auctionItem->owner = bidders[i];
                     bidders[i]->cash -= HighestBid;
-                    bidders[i]->noOfProperties++;
+                    if (auctionItem->type == property) {
+                        bidders[i]->noOfProperties++;
+                    }
+                    if (auctionItem->type == railway) {
+                        bidders[i]->noOfRailways++;
+                    }
+                    if (auctionItem->type == utility) {
+                        bidders[i]->noOfUtilities++;
+                    }
 
                     printWinner(bidders[i], HighestBid, auctionItem);
                     return;
@@ -512,12 +632,28 @@ void bankruptAuction(player *player_x, square *board,
                     auctionItem->PropertyProperties.noOfHotels = 0;
                     // transfer funds to the owner
                     auctionItem->owner->cash += HighestBid;
-                    auctionItem->owner->noOfProperties--;
+                    if (auctionItem->type == property) {
+                        auctionItem->owner->noOfProperties--;
+                    }
+                    if (auctionItem->type == railway) {
+                        auctionItem->owner->noOfRailways--;
+                    }
+                    if (auctionItem->type == utility) {
+                        auctionItem->owner->noOfUtilities--;
+                    }
 
                     // pay the bid and get ownership
                     auctionItem->owner = bidders[i];
                     bidders[i]->cash -= HighestBid;
-                    bidders[i]->noOfProperties++;
+                    if (auctionItem->type == property) {
+                        bidders[i]->noOfProperties++;
+                    }
+                    if (auctionItem->type == railway) {
+                        bidders[i]->noOfRailways++;
+                    }
+                    if (auctionItem->type == utility) {
+                        bidders[i]->noOfUtilities++;
+                    }
 
                     printWinner(bidders[i], HighestBid, auctionItem);
                     return;
@@ -537,12 +673,28 @@ void bankruptAuction(player *player_x, square *board,
                     auctionItem->PropertyProperties.noOfHotels = 0;
                     // transfer funds to the owner
                     auctionItem->owner->cash += HighestBid;
-                    auctionItem->owner->noOfProperties--;
+                    if (auctionItem->type == property) {
+                        auctionItem->owner->noOfProperties--;
+                    }
+                    if (auctionItem->type == railway) {
+                        auctionItem->owner->noOfRailways--;
+                    }
+                    if (auctionItem->type == utility) {
+                        auctionItem->owner->noOfUtilities--;
+                    }
 
                     // pay the bid and get ownership
                     auctionItem->owner = bidders[i];
                     bidders[i]->cash -= HighestBid;
-                    bidders[i]->noOfProperties++;
+                    if (auctionItem->type == property) {
+                        bidders[i]->noOfProperties++;
+                    }
+                    if (auctionItem->type == railway) {
+                        bidders[i]->noOfRailways++;
+                    }
+                    if (auctionItem->type == utility) {
+                        bidders[i]->noOfUtilities++;
+                    }
 
                     printWinner(bidders[i], HighestBid, auctionItem);
                     return;
@@ -562,10 +714,26 @@ void bankruptAuction(player *player_x, square *board,
             auctionItem->PropertyProperties.noOfHouses = 0;
             auctionItem->PropertyProperties.noOfHotels = 0;
             auctionItem->owner->cash += HighestBid;
-            auctionItem->owner->noOfProperties--;
+            if (auctionItem->type == property) {
+                auctionItem->owner->noOfProperties--;
+            }
+            if (auctionItem->type == railway) {
+                auctionItem->owner->noOfRailways--;
+            }
+            if (auctionItem->type == utility) {
+                auctionItem->owner->noOfUtilities--;
+            }
             auctionItem->owner = HighestBidder;
             HighestBidder->cash -= HighestBid;
-            HighestBidder->noOfProperties++;
+            if (auctionItem->type == property) {
+                HighestBidder->noOfProperties++;
+            }
+            if (auctionItem->type == railway) {
+                HighestBidder->noOfRailways++;
+            }
+            if (auctionItem->type == utility) {
+                HighestBidder->noOfUtilities++;
+            }
             printWinner(HighestBidder, HighestBid, auctionItem);
             return;
         }
@@ -574,7 +742,15 @@ void bankruptAuction(player *player_x, square *board,
             printf("No one bought item in the auction.\n");
             printf("Bank owns %s\n\n", auctionItem->name);
             printf("============================================================\n\n");
-            auctionItem->owner->noOfProperties--;
+            if (auctionItem->type == property) {
+                auctionItem->owner->noOfProperties--;
+            }
+            if (auctionItem->type == railway) {
+                auctionItem->owner->noOfRailways--;
+            }
+            if (auctionItem->type == utility) {
+                auctionItem->owner->noOfUtilities--;
+            }
             auctionItem->owner = playerPointerObject->player_BANK;
             return;
         }

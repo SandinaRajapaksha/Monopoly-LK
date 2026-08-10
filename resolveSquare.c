@@ -25,7 +25,7 @@ void resolveSquare(player *player_x, square *board, context *contextOfGame, play
         resolveRailway(player_x, board, playerObject, contextOfGame);
         break;
     case utility:
-        resolveUtility(player_x, board);
+        resolveUtility(player_x, board, contextOfGame, playerObject);
         break;
     case event:
         resolveEvent(player_x, board);
@@ -106,7 +106,73 @@ void resolveSpecial(player *player_x, square *board) {
     }
 }
 
-void resolveUtility(player *player_x, square *board) {}
+void resolveUtility(player *player_x, square *board, context *contextOfTheGame, playerPointers *playerObject) {
+    if (board[player_x->currentSquare].owner == player_x) {
+        return;
+    }
+
+    if (board[player_x->currentSquare].owner->playerID == bankOfCeylon) {
+        // buy logic and return
+        switch (player_x->playerID) {
+        case aggresiveInvester:
+            if (aggrRailwayBuyCondition(player_x, board)) {
+                board[player_x->currentSquare].owner = player_x;
+                player_x->noOfUtilities++;
+            }
+            break;
+        case riskTaker:
+            if (riskTkrRailwayBuyCondition(player_x, board)) {
+                board[player_x->currentSquare].owner = player_x;
+                player_x->noOfUtilities++;
+            }
+            break;
+        case conservativeBanker:
+            if (consBankerRailwayBuyCondition(player_x, board)) {
+                board[player_x->currentSquare].owner = player_x;
+                player_x->noOfUtilities++;
+            }
+            break;
+        case opportunisticTrader:
+            if (opprtTrdrRailwayBuyCondition(player_x, board, contextOfTheGame)) {
+                board[player_x->currentSquare].owner = player_x;
+                player_x->noOfUtilities++;
+            }
+            break;
+        default:
+            break;
+        }
+    }
+
+    int rent;
+    switch (board[player_x->currentSquare].owner->noOfRailways) {
+    case 1:
+
+        rent = 4 * player_x->diceRoll;
+        if (player_x->cash >= rent) {
+            player_x->cash -= rent;
+            board[player_x->currentSquare].owner->cash += rent;
+            printf("%s payed LKR %d to %s as the rent of %s\n", player_x->name, rent, board[player_x->currentSquare].owner->name, board[player_x->currentSquare].name);
+        } else {
+            AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
+        }
+        break;
+
+    case 2:
+
+        rent = 10 * player_x->diceRoll;
+        if (player_x->cash >= rent) {
+            player_x->cash -= rent;
+            board[player_x->currentSquare].owner->cash += rent;
+            printf("%s payed LKR %d to %s as the rent of %s\n", player_x->name, rent, board[player_x->currentSquare].owner->name, board[player_x->currentSquare].name);
+        } else {
+            AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
+        }
+        break;
+
+    default:
+        break;
+    }
+}
 void resolveEvent(player *player_x, square *board) {}
 void resolveInsure(player *player_x, square *board) {}
 void resolveTax(player *player_x, square *board) {}
