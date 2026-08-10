@@ -118,6 +118,9 @@ typedef struct sq {
     struct {
         specialityType specililtyOfSquare;
     } specialityProperties;
+    struct {
+        int currentUtilityRent;
+    } utilityProperties;
 
 } square;
 

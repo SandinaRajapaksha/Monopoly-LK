@@ -147,9 +147,9 @@ void resolveUtility(player *player_x, square *board, context *contextOfTheGame, 
     switch (board[player_x->currentSquare].owner->noOfRailways) {
     case 1:
 
-        rent = 4 * player_x->diceRoll;
-        if (player_x->cash >= rent) {
-            player_x->cash -= rent;
+        board[player_x->currentSquare].utilityProperties.currentUtilityRent = 4 * player_x->diceRoll;
+        if (player_x->cash >= board[player_x->currentSquare].utilityProperties.currentUtilityRent) {
+            player_x->cash -= board[player_x->currentSquare].utilityProperties.currentUtilityRent;
             board[player_x->currentSquare].owner->cash += rent;
             printf("%s payed LKR %d to %s as the rent of %s\n", player_x->name, rent, board[player_x->currentSquare].owner->name, board[player_x->currentSquare].name);
         } else {
@@ -159,9 +159,9 @@ void resolveUtility(player *player_x, square *board, context *contextOfTheGame, 
 
     case 2:
 
-        rent = 10 * player_x->diceRoll;
-        if (player_x->cash >= rent) {
-            player_x->cash -= rent;
+        board[player_x->currentSquare].utilityProperties.currentUtilityRent = 10 * player_x->diceRoll;
+        if (player_x->cash >= board[player_x->currentSquare].utilityProperties.currentUtilityRent) {
+            player_x->cash -= board[player_x->currentSquare].utilityProperties.currentUtilityRent;
             board[player_x->currentSquare].owner->cash += rent;
             printf("%s payed LKR %d to %s as the rent of %s\n", player_x->name, rent, board[player_x->currentSquare].owner->name, board[player_x->currentSquare].name);
         } else {
