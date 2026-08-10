@@ -154,9 +154,9 @@ void inflationRateRelease(square *board, context *contextofgame) { // parameters
 
     for (int i = 0; i <= 39; i++) {
 
-        board[i].curruntValue = board[i].curruntValue * (1 + (double)contextofgame->currentInflation / (double)100);
-        board[i].PropertyProperties.currentRentalofProperty = board[i].PropertyProperties.currentRentalofProperty * (1 + (double)contextofgame->currentInflation / (double)100);
-        board[i].PropertyProperties.initialPrice = board[i].PropertyProperties.initialPrice * (1 + (double)contextofgame->currentInflation / (double)100);
+        board[i].curruntValue = board[i].curruntValue * doubleToInt(1.0000 + (double)contextofgame->currentInflation / (double)100);
+        board[i].PropertyProperties.currentRentalofProperty = board[i].PropertyProperties.currentRentalofProperty * doubleToInt(1.0000 + (double)contextofgame->currentInflation / (double)100);
+        board[i].PropertyProperties.initialPrice = board[i].PropertyProperties.initialPrice * doubleToInt(1.0000 + (double)contextofgame->currentInflation / (double)100);
         // other affecting proerties to be added
     }
     contextofgame->roundThatInflationHappened = contextofgame->currentBoardRound;

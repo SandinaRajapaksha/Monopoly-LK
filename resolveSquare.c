@@ -34,7 +34,7 @@ void resolveSquare(player *player_x, square *board, context *contextOfGame, play
         resolveInsure(player_x, board);
         break;
     case tax:
-        resolveTax(player_x, board);
+        resolveTax(player_x, board, contextOfGame);
         break;
     case bank:
         resolveBank(player_x, board, contextOfGame);
@@ -175,7 +175,11 @@ void resolveUtility(player *player_x, square *board, context *contextOfTheGame, 
 }
 void resolveEvent(player *player_x, square *board) {}
 void resolveInsure(player *player_x, square *board) {}
-void resolveTax(player *player_x, square *board) {}
+void resolveTax(player *player_x, square *board, context *contextOfTheGame) {
+    int taxAmount = doubleToInt((double)player_x->cash * (double)contextOfTheGame->currentTaxRate / 100.0000);
+    player_x->cash -= taxAmount;
+    printf("%s played LKR %d as Income tax\n", player_x->name, taxAmount);
+}
 
 void resolveRailway(player *player_x, square *board, playerPointers *playerObject, context *contextOfTheGame) {
     // if ownwed by bank

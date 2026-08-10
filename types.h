@@ -6,6 +6,8 @@
 #include <string.h>
 #include <time.h>
 
+#define INITIAL_TAX_RATE 15
+
 typedef struct {
     int rollValue;
     bool doublesRolled;
@@ -256,7 +258,7 @@ bool opprtTrdrRailwayBuyCondition(player *, square *, context *);
 void resolveUtility(player *, square *, context *, playerPointers *);
 void resolveEvent(player *, square *);
 void resolveInsure(player *, square *);
-void resolveTax(player *, square *);
+void resolveTax(player *, square *, context *);
 void resolveBank(player *, square *, context *);
 void resolveProperty(player *, square *, context *, playerPointers *);
 void jailLogic(player *, bool);
@@ -289,4 +291,5 @@ void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerOb
 void bankruptCheck(playerPointers *playerObject, int *);
 void bankruptAuction(player *player_x, square *board,
                      context *contextOfGame, square *auctionItem, playerPointers *playerPointerObject);
+int doubleToInt(double);
 #endif

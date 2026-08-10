@@ -15,7 +15,7 @@ void startGame(void) {
     contextOfTheGame.roundThatInflationHappened = -1;
     contextOfTheGame.currentInflation = 0;
     contextOfTheGame.currentInterestRate = 0;
-    contextOfTheGame.currentTaxRate = 15;
+    contextOfTheGame.currentTaxRate = INITIAL_TAX_RATE;
 
     int topNationalEventCard = 0;
     int topreigionaldevelopmentcard = 0;
