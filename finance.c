@@ -766,3 +766,180 @@ void bankruptAuction(player *player_x, square *board,
         }
     }
 };
+
+void noBuyAuction(player *player_x, playerPointers *playerObject, square *board, context *contextOfGame, square *auctionItem) {
+
+    printf("============================================================\n\n");
+    printf("Auction\n\n");
+    printf("============================================================\n\n");
+
+    printf("Auctioned item : %s\n", auctionItem->name);
+    printf("Current Owner : Bank of Ceylon\n");
+
+    player *bidders[4] = {playerObject->player_1, playerObject->player_2, playerObject->player_3, playerObject->player_4};
+
+    int startingPrice = auctionItem->curruntValue / 2;
+    int HighestBid = startingPrice;
+
+    int aggrHighestBid;
+    int riskTakerHighestBid;
+    int conserBankerHighestBid;
+    int opportTraderHighestBid;
+
+    player *HighestBidder = playerObject->player_BANK;
+
+    while (true) {
+
+        // placing bids
+        for (int i = 0; i <= 3; i++) {
+            switch (bidders[i]->playerID) {
+
+            case aggresiveInvester:
+                if (HighestBidder->playerID == aggresiveInvester) {
+                    // buys and win
+                    auctionItem->PropertyProperties.noOfHouses = 0;
+                    auctionItem->PropertyProperties.noOfHotels = 0;
+
+                    // pay the bid and get ownership
+                    auctionItem->owner = bidders[i];
+                    bidders[i]->cash -= HighestBid;
+
+                    if (auctionItem->type == property) {
+                        bidders[i]->noOfProperties++;
+                    }
+                    if (auctionItem->type == railway) {
+                        bidders[i]->noOfRailways++;
+                    }
+                    if (auctionItem->type == utility) {
+                        bidders[i]->noOfUtilities++;
+                    }
+
+                    printWinner(bidders[i], HighestBid, auctionItem);
+                    return;
+                }
+                bool conditionAggr = (bidders[i]->cash >= HighestBid + 250) && (HighestBid < auctionItem->curruntValue * 1.2);
+                if (conditionAggr) {
+                    aggrHighestBid = HighestBid + 250;
+                    HighestBid = aggrHighestBid;
+                    HighestBidder = bidders[i];
+                }
+                break;
+
+            case riskTaker:
+                if (HighestBidder->playerID == riskTaker) {
+                    // buys and win
+                    auctionItem->PropertyProperties.noOfHouses = 0;
+                    auctionItem->PropertyProperties.noOfHotels = 0;
+                    // pay the bid and get ownership
+                    auctionItem->owner = bidders[i];
+                    bidders[i]->cash -= HighestBid;
+                    if (auctionItem->type == property) {
+                        bidders[i]->noOfProperties++;
+                    }
+                    if (auctionItem->type == railway) {
+                        bidders[i]->noOfRailways++;
+                    }
+                    if (auctionItem->type == utility) {
+                        bidders[i]->noOfUtilities++;
+                    }
+
+                    printWinner(bidders[i], HighestBid, auctionItem);
+                    return;
+                }
+                bool conditionRiskTkr = bidders[i]->cash >= HighestBid + 250;
+                if (conditionRiskTkr) {
+                    riskTakerHighestBid = HighestBid + 250;
+                    HighestBid = riskTakerHighestBid;
+                    HighestBidder = bidders[i];
+                }
+                break;
+
+            case conservativeBanker:
+                if (HighestBidder->playerID == conservativeBanker) {
+                    // buys and win
+                    auctionItem->PropertyProperties.noOfHouses = 0;
+                    auctionItem->PropertyProperties.noOfHotels = 0;
+
+                    // pay the bid and get ownership
+                    auctionItem->owner = bidders[i];
+                    bidders[i]->cash -= HighestBid;
+                    if (auctionItem->type == property) {
+                        bidders[i]->noOfProperties++;
+                    }
+                    if (auctionItem->type == railway) {
+                        bidders[i]->noOfRailways++;
+                    }
+                    if (auctionItem->type == utility) {
+                        bidders[i]->noOfUtilities++;
+                    }
+
+                    printWinner(bidders[i], HighestBid, auctionItem);
+                    return;
+                }
+                bool conditionConserBanker = ((bidders[i]->cash - HighestBid + 250) > bidders[i]->cash / 2) && (HighestBid < auctionItem->curruntValue / (0.75));
+                if (conditionConserBanker) {
+                    conserBankerHighestBid = HighestBid + 250;
+                    HighestBid = conserBankerHighestBid;
+                    HighestBidder = bidders[i];
+                }
+                break;
+
+            case opportunisticTrader:
+                if (HighestBidder->playerID == opportunisticTrader) {
+                    // buys and win
+                    auctionItem->PropertyProperties.noOfHouses = 0;
+                    auctionItem->PropertyProperties.noOfHotels = 0;
+
+                    // pay the bid and get ownership
+                    auctionItem->owner = bidders[i];
+                    bidders[i]->cash -= HighestBid;
+                    if (auctionItem->type == property) {
+                        bidders[i]->noOfProperties++;
+                    }
+                    if (auctionItem->type == railway) {
+                        bidders[i]->noOfRailways++;
+                    }
+                    if (auctionItem->type == utility) {
+                        bidders[i]->noOfUtilities++;
+                    }
+
+                    printWinner(bidders[i], HighestBid, auctionItem);
+                    return;
+                }
+                bool conditionOppotTrader = ((bidders[i]->cash > HighestBid + 250) && (HighestBid < 4000)); // to be implemented
+                if (conditionOppotTrader) {
+                    opportTraderHighestBid = HighestBid + 250;
+                    HighestBid = opportTraderHighestBid;
+                    HighestBidder = bidders[i];
+                }
+                break;
+            default:
+                break;
+            }
+        }
+        if (HighestBidder != playerObject->player_BANK) {
+            auctionItem->PropertyProperties.noOfHouses = 0;
+            auctionItem->PropertyProperties.noOfHotels = 0;
+            auctionItem->owner = HighestBidder;
+
+            HighestBidder->cash -= HighestBid;
+            if (auctionItem->type == property) {
+                HighestBidder->noOfProperties++;
+            }
+            if (auctionItem->type == railway) {
+                HighestBidder->noOfRailways++;
+            }
+            if (auctionItem->type == utility) {
+                HighestBidder->noOfUtilities++;
+            }
+            printWinner(HighestBidder, HighestBid, auctionItem);
+            return;
+        }
+        if (HighestBidder == playerObject->player_BANK) {
+            printf("No one bought item in the auction.\n");
+            printf("============================================================\n\n");
+            return;
+        }
+        return;
+    }
+};
