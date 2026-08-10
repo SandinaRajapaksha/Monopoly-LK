@@ -16,8 +16,9 @@ void startGame(void) {
     contextOfTheGame.currentInflation = 0;
     contextOfTheGame.currentInterestRate = 0;
     contextOfTheGame.currentTaxRate = INITIAL_TAX_RATE;
+    contextOfTheGame.topNationalEventCard = 0;
+    contextOfTheGame.numActiveBoardNatlEffects = 0;
 
-    int topNationalEventCard = 0;
     int topreigionaldevelopmentcard = 0;
     contextOfTheGame.currentBoardRound = 1;
 
@@ -130,7 +131,7 @@ void startGame(void) {
             break;
         }
         roundCounter(&contextOfTheGame, &player_1, &player_2, &player_3,
-                     &player_4);
+                     &player_4, board);
 
         // trigger events after a set number of rounds
         if ((contextOfTheGame.currentBoardRound % 15 == 0) &&

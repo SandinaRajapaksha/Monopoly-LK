@@ -472,26 +472,41 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
 };
 bool payRent(player *player_x, square *board) {
 
-    // player pays rent
-    if (player_x->cash < board[player_x->currentSquare].PropertyProperties.currentRentalofProperty) {
+    if (board[player_x->currentSquare].isClosed) {
+        printf("%s is closed due to Political Rally. No rent collected.\n",
+               board[player_x->currentSquare].name);
+        return true;
+    }
+
+    int rentAmount = board[player_x->currentSquare]
+                         .PropertyProperties.currentRentalofProperty;
+
+    if (board[player_x->currentSquare].PropertyProperties.noOfHotels > 0 &&
+        board[player_x->currentSquare].owner &&
+        board[player_x->currentSquare].owner->playerID != bankOfCeylon) {
+        double mult = 1.0;
+        for (int i = 0; i < board[player_x->currentSquare].owner->numActiveNatlEffects; i++) {
+            NationalEventType e = board[player_x->currentSquare].owner->activeNatlEffects[i].effect;
+            if (e == TourismHype) mult *= 2.0;
+            if (e == FestivalSeason) mult *= 1.5;
+        }
+        rentAmount = doubleToInt(rentAmount * mult);
+    }
+
+    if (player_x->cash < rentAmount) {
         return false;
     }
 
     player_x->cash =
         player_x->cash -
-        board[player_x->currentSquare]
-            .PropertyProperties.currentRentalofProperty;
-
-    // owner gets paid
+        rentAmount;
 
     board[player_x->currentSquare].owner->cash =
         board[player_x->currentSquare].owner->cash +
-        board[player_x->currentSquare]
-            .PropertyProperties.currentRentalofProperty;
+        rentAmount;
 
     printf("%s payed %d to %s as the rent of %s\n", player_x->name,
-           board[player_x->currentSquare]
-               .PropertyProperties.currentRentalofProperty,
+           rentAmount,
            board[player_x->currentSquare].owner->name,
            board[player_x->currentSquare].name);
 

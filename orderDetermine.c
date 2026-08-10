@@ -104,7 +104,7 @@ void finalRankAssign(player *player_X, player *player_1, player *player_2,
 }
 
 void roundCounter(context *contextofGame, player *player_1, player *player_2,
-                  player *player_3, player *player_4) {
+                  player *player_3, player *player_4, square *board) {
     player *players[4] = {player_1, player_2, player_3, player_4};
 
     int activeCount = 0;
@@ -130,6 +130,8 @@ void roundCounter(context *contextofGame, player *player_1, player *player_2,
 
     if (completedLaps + 1 > contextofGame->currentBoardRound) {
         contextofGame->currentBoardRound = completedLaps + 1;
+
+        decayBoardNationalEffects(board, contextofGame);
 
         printf("\n==================================================================\n Round %d Summary \n", completedLaps);
         printf("==================================================================\n\n");

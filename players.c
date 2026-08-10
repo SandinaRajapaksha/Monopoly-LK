@@ -6,15 +6,13 @@ void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerOb
     int owedRent = 0;
 
     if (currentSquare->type == property) {
-        owedRent = currentSquare->PropertyProperties.currentRentalofProperty;
+        owedRent = getEffectivePropertyRent(currentSquare);
     } else if (currentSquare->type == railway) {
         int n = currentSquare->owner->noOfRailways;
-        if (n == 1) owedRent = currentSquare->railwayProperties.baseRentOfRailway;
-        else if (n == 2) owedRent = currentSquare->railwayProperties.baseRentOfRailway_2_owned;
-        else if (n == 3) owedRent = currentSquare->railwayProperties.baseRentOfRailway_3_owned;
-        else if (n == 4) owedRent = currentSquare->railwayProperties.baseRentOfRailway_4_owned;
+        owedRent = getEffectiveRailwayRent(currentSquare, n, currentSquare->owner);
     } else if (currentSquare->type == utility) {
-        owedRent = currentSquare->utilityProperties.currentUtilityRent;
+        int n = currentSquare->owner->noOfUtilities;
+        owedRent = getEffectiveUtilityRent(currentSquare, n, player_x->diceRoll, currentSquare->owner);
     }
 
     do {

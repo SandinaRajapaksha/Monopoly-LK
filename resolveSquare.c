@@ -13,6 +13,8 @@ void resolveSquare(player *player_x, square *board, context *contextOfGame, play
         player_x->hasDebt = false;
     }
 
+    decayPlayerNationalEffects(player_x);
+
     squareType squareToResolve = board[player_x->currentSquare].type;
     switch (squareToResolve) {
     case go:
@@ -28,7 +30,7 @@ void resolveSquare(player *player_x, square *board, context *contextOfGame, play
         resolveUtility(player_x, board, contextOfGame, playerObject);
         break;
     case event:
-        resolveEvent(player_x, board);
+        resolveEvent(player_x, board, contextOfGame, playerObject);
         break;
     case insure:
         resolveInsure(player_x, board);
@@ -143,26 +145,21 @@ void resolveUtility(player *player_x, square *board, context *contextOfTheGame, 
         }
     }
 
-    switch (board[player_x->currentSquare].owner->noOfUtilities) {
+    int utilsOwned = board[player_x->currentSquare].owner->noOfUtilities;
+    int utilRent = getEffectiveUtilityRent(&board[player_x->currentSquare],
+                                            utilsOwned, player_x->diceRoll,
+                                            board[player_x->currentSquare].owner);
+    board[player_x->currentSquare].utilityProperties.currentUtilityRent = utilRent;
+
+    switch (utilsOwned) {
     case 1:
-
-        board[player_x->currentSquare].utilityProperties.currentUtilityRent = 4 * player_x->diceRoll;
-        if (player_x->cash >= board[player_x->currentSquare].utilityProperties.currentUtilityRent) {
-            player_x->cash -= board[player_x->currentSquare].utilityProperties.currentUtilityRent;
-            board[player_x->currentSquare].owner->cash += board[player_x->currentSquare].utilityProperties.currentUtilityRent;
-            printf("%s payed LKR %d to %s as the rent of %s\n", player_x->name, board[player_x->currentSquare].utilityProperties.currentUtilityRent, board[player_x->currentSquare].owner->name, board[player_x->currentSquare].name);
-        } else {
-            AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
-        }
-        break;
-
     case 2:
-
-        board[player_x->currentSquare].utilityProperties.currentUtilityRent = 10 * player_x->diceRoll;
-        if (player_x->cash >= board[player_x->currentSquare].utilityProperties.currentUtilityRent) {
-            player_x->cash -= board[player_x->currentSquare].utilityProperties.currentUtilityRent;
-            board[player_x->currentSquare].owner->cash += board[player_x->currentSquare].utilityProperties.currentUtilityRent;
-            printf("%s payed LKR %d to %s as the rent of %s\n", player_x->name, board[player_x->currentSquare].utilityProperties.currentUtilityRent, board[player_x->currentSquare].owner->name, board[player_x->currentSquare].name);
+        if (player_x->cash >= utilRent) {
+            player_x->cash -= utilRent;
+            board[player_x->currentSquare].owner->cash += utilRent;
+            printf("%s payed LKR %d to %s as the rent of %s\n", player_x->name,
+                   utilRent, board[player_x->currentSquare].owner->name,
+                   board[player_x->currentSquare].name);
         } else {
             AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
         }
@@ -172,7 +169,58 @@ void resolveUtility(player *player_x, square *board, context *contextOfTheGame, 
         break;
     }
 }
-void resolveEvent(player *player_x, square *board) {}
+void resolveEvent(player *player_x, square *board, context *contextOfTheGame, playerPointers *playerObject) {
+    if (board[player_x->currentSquare].squareID == 2) {
+        printf("\n  %s landed on Community Development Fund.\n\n", player_x->name);
+        return;
+    }
+    drawAndApplyNatlEventCard(player_x, board, contextOfTheGame, playerObject);
+}
+
+int getEffectivePropertyRent(square *sq) {
+    if (sq->isClosed) return 0;
+    int rent = sq->PropertyProperties.currentRentalofProperty;
+    if (sq->PropertyProperties.noOfHotels > 0 && sq->owner &&
+        sq->owner->playerID != bankOfCeylon) {
+        double mult = 1.0;
+        for (int i = 0; i < sq->owner->numActiveNatlEffects; i++) {
+            NationalEventType e = sq->owner->activeNatlEffects[i].effect;
+            if (e == TourismHype) mult *= 2.0;
+            if (e == FestivalSeason) mult *= 1.5;
+        }
+        rent = doubleToInt(rent * mult);
+    }
+    return rent;
+}
+
+int getEffectiveRailwayRent(square *sq, int stationsOwned, player *owner) {
+    int rent;
+    switch (stationsOwned) {
+    case 1: rent = sq->railwayProperties.baseRentOfRailway; break;
+    case 2: rent = sq->railwayProperties.baseRentOfRailway_2_owned; break;
+    case 3: rent = sq->railwayProperties.baseRentOfRailway_3_owned; break;
+    case 4: rent = sq->railwayProperties.baseRentOfRailway_4_owned; break;
+    default: rent = 0; break;
+    }
+    if (owner && owner->playerID != bankOfCeylon) {
+        for (int i = 0; i < owner->numActiveNatlEffects; i++) {
+            if (owner->activeNatlEffects[i].effect == FuelShortage)
+                rent *= 2;
+        }
+    }
+    return rent;
+}
+
+int getEffectiveUtilityRent(square *sq, int utilitiesOwned, int diceVal, player *owner) {
+    int rent = (utilitiesOwned == 1) ? (4 * diceVal) : (utilitiesOwned == 2) ? (10 * diceVal) : 0;
+    if (owner && owner->playerID != bankOfCeylon) {
+        for (int i = 0; i < owner->numActiveNatlEffects; i++) {
+            if (owner->activeNatlEffects[i].effect == PowerFailure)
+                rent /= 2;
+        }
+    }
+    return rent;
+}
 void resolveInsure(player *player_x, square *board) {}
 void resolveTax(player *player_x, square *board, context *contextOfTheGame) {
     int taxAmount = doubleToInt((double)player_x->cash * (double)contextOfTheGame->currentTaxRate / 100.0000);
@@ -212,53 +260,17 @@ void resolveRailway(player *player_x, square *board, playerPointers *playerObjec
             break;
         }
     } else if (board[player_x->currentSquare].owner->playerID != player_x->playerID) {
-        switch (board[player_x->currentSquare].owner->noOfRailways) {
-        case 1: {
-            int railRent = board[player_x->currentSquare].railwayProperties.baseRentOfRailway;
-            if (player_x->cash >= railRent) {
-                player_x->cash -= railRent;
-                board[player_x->currentSquare].owner->cash += railRent;
-                printf("%s faah payed LKR %d as the rent of %s\n", player_x->name, railRent, board[player_x->currentSquare].name);
-            } else {
-                AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
-            }
-            break;
-        }
-        case 2: {
-            int railRent = board[player_x->currentSquare].railwayProperties.baseRentOfRailway_2_owned;
-            if (player_x->cash >= railRent) {
-                player_x->cash -= railRent;
-                board[player_x->currentSquare].owner->cash += railRent;
-                printf("%s faah payed LKR %d as the rent of %s\n", player_x->name, railRent, board[player_x->currentSquare].name);
-            } else {
-                AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
-            }
-            break;
-        }
-        case 3: {
-            int railRent = board[player_x->currentSquare].railwayProperties.baseRentOfRailway_3_owned;
-            if (player_x->cash >= railRent) {
-                player_x->cash -= railRent;
-                board[player_x->currentSquare].owner->cash += railRent;
-                printf("%s  faah payed LKR %d as the rent of %s\n", player_x->name, railRent, board[player_x->currentSquare].name);
-            } else {
-                AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
-            }
-            break;
-        }
-        case 4: {
-            int railRent = board[player_x->currentSquare].railwayProperties.baseRentOfRailway_4_owned;
-            if (player_x->cash >= railRent) {
-                player_x->cash -= railRent;
-                board[player_x->currentSquare].owner->cash += railRent;
-                printf("%s payed LKR %d as the rent of %s\n", player_x->name, railRent, board[player_x->currentSquare].name);
-            } else {
-                AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
-            }
-            break;
-        }
-        default:
-            break;
+        int stationsOwned = board[player_x->currentSquare].owner->noOfRailways;
+        int railRent = getEffectiveRailwayRent(&board[player_x->currentSquare],
+                                                stationsOwned,
+                                                board[player_x->currentSquare].owner);
+        if (player_x->cash >= railRent) {
+            player_x->cash -= railRent;
+            board[player_x->currentSquare].owner->cash += railRent;
+            printf("%s payed LKR %d as the rent of %s\n", player_x->name, railRent,
+                   board[player_x->currentSquare].name);
+        } else {
+            AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
         }
     }
     // if owne
@@ -349,24 +361,31 @@ void resolveProperty(player *player_x, square *board,
     else if (board[player_x->currentSquare].owner->playerID !=
              player_x->playerID) {
 
+        int effectiveRent = getEffectivePropertyRent(&board[player_x->currentSquare]);
+
+        if (effectiveRent == 0 && board[player_x->currentSquare].isClosed) {
+            printf("  %s is closed due to Political Rally. No rent collected.\n",
+                   board[player_x->currentSquare].name);
+            return;
+        }
+
         playerType currentPlayer = player_x->playerID;
         switch (currentPlayer) {
         case aggresiveInvester:
 
             if ((player_x->cash >
-                 board[player_x->currentSquare]
-                     .PropertyProperties.currentRentalofProperty) &&
+                 effectiveRent) &&
                 (board[player_x->currentSquare].mortgageStatus !=
                  mortgagedToBank)) {
 
                 payRent(player_x, board);
 
-            } else if (player_x->cash < board[player_x->currentSquare].PropertyProperties.currentRentalofProperty && player_x->noOfProperties == 0) {
+            } else if (player_x->cash < effectiveRent && player_x->noOfProperties == 0) {
                 printf("\n%s went Bankrupt \n", player_x->name);
                 player_x->isBankrupt = true;
                 return;
 
-            } else if (player_x->cash < board[player_x->currentSquare].PropertyProperties.currentRentalofProperty) {
+            } else if (player_x->cash < effectiveRent) {
                 AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
                 return;
             }
@@ -375,19 +394,18 @@ void resolveProperty(player *player_x, square *board,
         case conservativeBanker:
 
             if ((player_x->cash >
-                 board[player_x->currentSquare]
-                     .PropertyProperties.currentRentalofProperty) &&
+                 effectiveRent) &&
                 (board[player_x->currentSquare].mortgageStatus !=
                  mortgagedToBank)) {
 
                 payRent(player_x, board);
 
-            } else if (player_x->cash < board[player_x->currentSquare].PropertyProperties.currentRentalofProperty && player_x->noOfProperties == 0) {
+            } else if (player_x->cash < effectiveRent && player_x->noOfProperties == 0) {
                 printf("\n%s went Bankrupt \n", player_x->name);
                 player_x->isBankrupt = true;
                 return;
 
-            } else if (player_x->cash < board[player_x->currentSquare].PropertyProperties.currentRentalofProperty) {
+            } else if (player_x->cash < effectiveRent) {
                 AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
                 return;
             }
@@ -395,19 +413,18 @@ void resolveProperty(player *player_x, square *board,
         case riskTaker:
 
             if ((player_x->cash >
-                 board[player_x->currentSquare]
-                     .PropertyProperties.currentRentalofProperty) &&
+                 effectiveRent) &&
                 (board[player_x->currentSquare].mortgageStatus !=
                  mortgagedToBank)) {
 
                 payRent(player_x, board);
 
-            } else if (player_x->cash < board[player_x->currentSquare].PropertyProperties.currentRentalofProperty && player_x->noOfProperties == 0) {
+            } else if (player_x->cash < effectiveRent && player_x->noOfProperties == 0) {
                 printf("\n%s went Bankrupt \n", player_x->name);
                 player_x->isBankrupt = true;
                 return;
 
-            } else if (player_x->cash < board[player_x->currentSquare].PropertyProperties.currentRentalofProperty) {
+            } else if (player_x->cash < effectiveRent) {
                 AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
                 return;
             }
@@ -416,19 +433,18 @@ void resolveProperty(player *player_x, square *board,
         case opportunisticTrader:
 
             if ((player_x->cash >
-                 board[player_x->currentSquare]
-                     .PropertyProperties.currentRentalofProperty) &&
+                 effectiveRent) &&
                 (board[player_x->currentSquare].mortgageStatus !=
                  mortgagedToBank)) {
 
                 payRent(player_x, board);
 
-            } else if (player_x->cash < board[player_x->currentSquare].PropertyProperties.currentRentalofProperty && player_x->noOfProperties == 0) {
+            } else if (player_x->cash < effectiveRent && player_x->noOfProperties == 0) {
                 printf("\n%s went Bankrupt \n", player_x->name);
                 player_x->isBankrupt = true;
                 return;
 
-            } else if (player_x->cash < board[player_x->currentSquare].PropertyProperties.currentRentalofProperty) {
+            } else if (player_x->cash < effectiveRent) {
                 AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
                 return;
             }
@@ -441,6 +457,11 @@ void resolveProperty(player *player_x, square *board,
 
     // if property owned by the player
     else if (board[player_x->currentSquare].owner == player_x) {
+
+        if (player_x->constructionSuspended) {
+            printf("  %s cannot construct due to Labour Strike.\n", player_x->name);
+            return;
+        }
 
         bool eligibleForHouse = checkForMonopoly(player_x, board);
 

@@ -36,6 +36,41 @@ typedef enum {
 
 typedef enum { inside = 401,
                outside } jailStatus;
+
+typedef enum {
+    brown = 8001,
+    lightBlue,
+    pink,
+    orange,
+    red,
+    yellow,
+    green,
+    darkBlue
+} groupType;
+
+typedef enum {
+    TourismHype = 3001,
+    FuelShortage,
+    HeavyFloods,
+    PoliticalRally,
+    StockMarketRise,
+    EconomicDowntime,
+    HousingSubsidy_NationalEvent,
+    InterestRateCut,
+    InterestRateIncrease,
+    TaxAmnesty,
+    PowerFailure,
+    ForeignFunding,
+    PortExpansion,
+    FestivalSeason,
+    LabourStrike,
+    InsuranceDiscount,
+    PropertyRevaluation,
+    CurrencyDepreciation,
+    GovernmentGrant,
+    NationalDisaster
+} NationalEventType;
+
 typedef struct {
     playerType playerID;
     char *name;
@@ -59,22 +94,19 @@ typedef struct {
     int loantakigLap;
     int noOfRailways;
     int noOfUtilities;
+    int numActiveNatlEffects;
+    struct {
+        NationalEventType effect;
+        int roundsRemaining;
+        groupType affectedGroup;
+        int affectedSquare;
+    } activeNatlEffects[5];
+    bool constructionSuspended;
 } player;
 
 typedef enum { cannotMortgage,
                mortgagedToBank,
                noMortgage } mortgageType;
-
-typedef enum {
-    brown = 8001,
-    lightBlue,
-    pink,
-    orange,
-    red,
-    yellow,
-    green,
-    darkBlue
-} groupType;
 
 typedef enum {
     gotoJail = 6001,
@@ -123,6 +155,7 @@ typedef struct sq {
     struct {
         int currentUtilityRent;
     } utilityProperties;
+    bool isClosed;
 
 } square;
 
@@ -155,30 +188,6 @@ typedef enum {
 } govRegulationsType;
 
 // national event cards
-
-typedef enum {
-
-    TourismHype = 3001,
-    FuelShortage,
-    PoliticalRally,
-    StockMarketRise,
-    EconomicDowntime,
-    HousingSubsidy_NationalEvent,
-    InterestRateCut,
-    InterestRateIncrease,
-    TaxAmnesty,
-    PowerFailure,
-    ForeignFunding,
-    PortExpansion,
-    FestivalSeason,
-    LabourStrike,
-    InsuranceDiscount,
-    PropertyRevaluation,
-    CurrencyDepreciation,
-    GovernmentGrant,
-    NationalDisaster
-
-} NationalEventType;
 
 // regional development type
 
@@ -214,6 +223,14 @@ typedef struct {
     int roundThatInflationHappened;
     int roundThatEconEventHappened;
     int currentTaxRate;
+    int topNationalEventCard;
+    int numActiveBoardNatlEffects;
+    struct {
+        NationalEventType effect;
+        int roundsRemaining;
+        groupType affectedGroup;
+        int affectedSquare;
+    } boardNatlEffects[5];
 } context;
 
 typedef struct {
@@ -234,6 +251,9 @@ void govRegulationsActivate(square *);
 void dynamicPropertyEventActivate(square *);
 // card decks and draws
 void nationalEventActivate(int *, square *);
+void drawAndApplyNatlEventCard(player *, square *, context *, playerPointers *);
+void decayPlayerNationalEffects(player *);
+void decayBoardNationalEffects(square *, context *);
 void regionalDevelopmentActivate(int *, square *);
 
 void initializeTurnOrder(player *, player *, player *, player *, player *,
@@ -242,7 +262,7 @@ void finalRankAssign(player *, player *, player *, player *, player *);
 void ranker(player *, player *, player *, player *);
 diceRollType dice_roller();
 void move(player *, square *, context *, playerPointers *);
-void roundCounter(context *, player *, player *, player *, player *);
+void roundCounter(context *, player *, player *, player *, player *, square *);
 void eventChecker(int *, int *, square *, int *, economicEventCardType *);
 void inflationRateRelease(square *, context *);
 // resolve square according to types
@@ -256,7 +276,7 @@ bool riskTkrRailwayBuyCondition(player *, square *);
 bool consBankerRailwayBuyCondition(player *, square *);
 bool opprtTrdrRailwayBuyCondition(player *, square *, context *);
 void resolveUtility(player *, square *, context *, playerPointers *);
-void resolveEvent(player *, square *);
+void resolveEvent(player *, square *, context *, playerPointers *);
 void resolveInsure(player *, square *);
 void resolveTax(player *, square *, context *);
 void resolveBank(player *, square *, context *);
@@ -293,4 +313,7 @@ void bankruptAuction(player *player_x, square *board,
                      context *contextOfGame, square *auctionItem, playerPointers *playerPointerObject);
 int doubleToInt(double);
 void noBuyAuction(player *player_x, playerPointers *playerObject, square *board, context *contextOfGame, square *auctionItem);
+int getEffectivePropertyRent(square *sq);
+int getEffectiveRailwayRent(square *sq, int stationsOwned, player *owner);
+int getEffectiveUtilityRent(square *sq, int utilitiesOwned, int diceVal, player *owner);
 #endif
