@@ -2,6 +2,21 @@
 #include <stdbool.h>
 
 void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerObject, context *contextOfTheGame) {
+    square *currentSquare = &board[player_x->currentSquare];
+    int owedRent = 0;
+
+    if (currentSquare->type == property) {
+        owedRent = currentSquare->PropertyProperties.currentRentalofProperty;
+    } else if (currentSquare->type == railway) {
+        int n = currentSquare->owner->noOfRailways;
+        if (n == 1) owedRent = currentSquare->railwayProperties.baseRentOfRailway;
+        else if (n == 2) owedRent = currentSquare->railwayProperties.baseRentOfRailway_2_owned;
+        else if (n == 3) owedRent = currentSquare->railwayProperties.baseRentOfRailway_3_owned;
+        else if (n == 4) owedRent = currentSquare->railwayProperties.baseRentOfRailway_4_owned;
+    } else if (currentSquare->type == utility) {
+        owedRent = currentSquare->utilityProperties.currentUtilityRent;
+    }
+
     do {
 
         networthEvaluate(playerObject->player_1,
@@ -15,8 +30,10 @@ void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerOb
                                playerObject->player_2,
                                playerObject->player_3,
                                playerObject->player_4, board, contextOfTheGame, &board[i]);
-                bool payed = payRent(player_x, board);
-                if (payed == true) {
+                if (player_x->cash >= owedRent) {
+                    player_x->cash -= owedRent;
+                    currentSquare->owner->cash += owedRent;
+                    printf("%s payed LKR %d to %s as the rent of %s\n", player_x->name, owedRent, currentSquare->owner->name, currentSquare->name);
                     return;
                 }
             }
@@ -27,8 +44,10 @@ void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerOb
                                playerObject->player_2,
                                playerObject->player_3,
                                playerObject->player_4, board, contextOfTheGame, &board[i]);
-                bool payed = payRent(player_x, board);
-                if (payed == true) {
+                if (player_x->cash >= owedRent) {
+                    player_x->cash -= owedRent;
+                    currentSquare->owner->cash += owedRent;
+                    printf("%s payed LKR %d to %s as the rent of %s\n", player_x->name, owedRent, currentSquare->owner->name, currentSquare->name);
                     return;
                 }
             }
@@ -39,8 +58,10 @@ void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerOb
                                playerObject->player_2,
                                playerObject->player_3,
                                playerObject->player_4, board, contextOfTheGame, &board[i]);
-                bool payed = payRent(player_x, board);
-                if (payed == true) {
+                if (player_x->cash >= owedRent) {
+                    player_x->cash -= owedRent;
+                    currentSquare->owner->cash += owedRent;
+                    printf("%s payed LKR %d to %s as the rent of %s\n", player_x->name, owedRent, currentSquare->owner->name, currentSquare->name);
                     return;
                 }
             }
@@ -51,8 +72,10 @@ void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerOb
                                playerObject->player_2,
                                playerObject->player_3,
                                playerObject->player_4, board, contextOfTheGame, &board[i]);
-                bool payed = payRent(player_x, board);
-                if (payed == true) {
+                if (player_x->cash >= owedRent) {
+                    player_x->cash -= owedRent;
+                    currentSquare->owner->cash += owedRent;
+                    printf("%s payed LKR %d to %s as the rent of %s\n", player_x->name, owedRent, currentSquare->owner->name, currentSquare->name);
                     return;
                 }
             }
@@ -63,8 +86,10 @@ void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerOb
                                playerObject->player_2,
                                playerObject->player_3,
                                playerObject->player_4, board, contextOfTheGame, &board[i]);
-                bool payed = payRent(player_x, board);
-                if (payed == true) {
+                if (player_x->cash >= owedRent) {
+                    player_x->cash -= owedRent;
+                    currentSquare->owner->cash += owedRent;
+                    printf("%s payed LKR %d to %s as the rent of %s\n", player_x->name, owedRent, currentSquare->owner->name, currentSquare->name);
                     return;
                 }
             }
@@ -75,8 +100,10 @@ void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerOb
                                playerObject->player_2,
                                playerObject->player_3,
                                playerObject->player_4, board, contextOfTheGame, &board[i]);
-                bool payed = payRent(player_x, board);
-                if (payed == true) {
+                if (player_x->cash >= owedRent) {
+                    player_x->cash -= owedRent;
+                    currentSquare->owner->cash += owedRent;
+                    printf("%s payed LKR %d to %s as the rent of %s\n", player_x->name, owedRent, currentSquare->owner->name, currentSquare->name);
                     return;
                 }
             }
@@ -87,8 +114,10 @@ void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerOb
                                playerObject->player_2,
                                playerObject->player_3,
                                playerObject->player_4, board, contextOfTheGame, &board[i]);
-                bool payed = payRent(player_x, board);
-                if (payed == true) {
+                if (player_x->cash >= owedRent) {
+                    player_x->cash -= owedRent;
+                    currentSquare->owner->cash += owedRent;
+                    printf("%s payed LKR %d to %s as the rent of %s\n", player_x->name, owedRent, currentSquare->owner->name, currentSquare->name);
                     return;
                 }
             }
@@ -99,18 +128,48 @@ void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerOb
                                playerObject->player_2,
                                playerObject->player_3,
                                playerObject->player_4, board, contextOfTheGame, &board[i]);
-                bool payed = payRent(player_x, board);
-                if (payed == true) {
+                if (player_x->cash >= owedRent) {
+                    player_x->cash -= owedRent;
+                    currentSquare->owner->cash += owedRent;
+                    printf("%s payed LKR %d to %s as the rent of %s\n", player_x->name, owedRent, currentSquare->owner->name, currentSquare->name);
+                    return;
+                }
+            }
+        }
+        for (int i = 0; i <= 39; i++) {
+            if (board[i].type == railway && board[i].owner == player_x) {
+                sellingAuction(player_x, playerObject->player_1,
+                               playerObject->player_2,
+                               playerObject->player_3,
+                               playerObject->player_4, board, contextOfTheGame, &board[i]);
+                if (player_x->cash >= owedRent) {
+                    player_x->cash -= owedRent;
+                    currentSquare->owner->cash += owedRent;
+                    printf("%s payed LKR %d to %s as the rent of %s\n", player_x->name, owedRent, currentSquare->owner->name, currentSquare->name);
+                    return;
+                }
+            }
+        }
+        for (int i = 0; i <= 39; i++) {
+            if (board[i].type == utility && board[i].owner == player_x) {
+                sellingAuction(player_x, playerObject->player_1,
+                               playerObject->player_2,
+                               playerObject->player_3,
+                               playerObject->player_4, board, contextOfTheGame, &board[i]);
+                if (player_x->cash >= owedRent) {
+                    player_x->cash -= owedRent;
+                    currentSquare->owner->cash += owedRent;
+                    printf("%s payed LKR %d to %s as the rent of %s\n", player_x->name, owedRent, currentSquare->owner->name, currentSquare->name);
                     return;
                 }
             }
         }
     }
 
-    while (player_x->cash < board[player_x->currentSquare].PropertyProperties.currentRentalofProperty &&
-           player_x->noOfProperties > 0);
+    while (player_x->cash < owedRent &&
+           (player_x->noOfProperties > 0 || player_x->noOfRailways > 0 || player_x->noOfUtilities > 0));
 
-    if (player_x->cash < board[player_x->currentSquare].PropertyProperties.currentRentalofProperty) {
+    if (player_x->cash < owedRent) {
         printf("\nplayer %s got bankrupt\n", player_x->name);
         player_x->isBankrupt = true;
     }

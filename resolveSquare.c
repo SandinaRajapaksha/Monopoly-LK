@@ -143,15 +143,14 @@ void resolveUtility(player *player_x, square *board, context *contextOfTheGame, 
         }
     }
 
-    int rent;
-    switch (board[player_x->currentSquare].owner->noOfRailways) {
+    switch (board[player_x->currentSquare].owner->noOfUtilities) {
     case 1:
 
         board[player_x->currentSquare].utilityProperties.currentUtilityRent = 4 * player_x->diceRoll;
         if (player_x->cash >= board[player_x->currentSquare].utilityProperties.currentUtilityRent) {
             player_x->cash -= board[player_x->currentSquare].utilityProperties.currentUtilityRent;
-            board[player_x->currentSquare].owner->cash += rent;
-            printf("%s payed LKR %d to %s as the rent of %s\n", player_x->name, rent, board[player_x->currentSquare].owner->name, board[player_x->currentSquare].name);
+            board[player_x->currentSquare].owner->cash += board[player_x->currentSquare].utilityProperties.currentUtilityRent;
+            printf("%s payed LKR %d to %s as the rent of %s\n", player_x->name, board[player_x->currentSquare].utilityProperties.currentUtilityRent, board[player_x->currentSquare].owner->name, board[player_x->currentSquare].name);
         } else {
             AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
         }
@@ -162,8 +161,8 @@ void resolveUtility(player *player_x, square *board, context *contextOfTheGame, 
         board[player_x->currentSquare].utilityProperties.currentUtilityRent = 10 * player_x->diceRoll;
         if (player_x->cash >= board[player_x->currentSquare].utilityProperties.currentUtilityRent) {
             player_x->cash -= board[player_x->currentSquare].utilityProperties.currentUtilityRent;
-            board[player_x->currentSquare].owner->cash += rent;
-            printf("%s payed LKR %d to %s as the rent of %s\n", player_x->name, rent, board[player_x->currentSquare].owner->name, board[player_x->currentSquare].name);
+            board[player_x->currentSquare].owner->cash += board[player_x->currentSquare].utilityProperties.currentUtilityRent;
+            printf("%s payed LKR %d to %s as the rent of %s\n", player_x->name, board[player_x->currentSquare].utilityProperties.currentUtilityRent, board[player_x->currentSquare].owner->name, board[player_x->currentSquare].name);
         } else {
             AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
         }
@@ -214,26 +213,50 @@ void resolveRailway(player *player_x, square *board, playerPointers *playerObjec
         }
     } else if (board[player_x->currentSquare].owner->playerID != player_x->playerID) {
         switch (board[player_x->currentSquare].owner->noOfRailways) {
-        case 1:
-            player_x->cash -= board[player_x->currentSquare].railwayProperties.baseRentOfRailway;
-            board[player_x->currentSquare].owner->cash += board[player_x->currentSquare].railwayProperties.baseRentOfRailway;
-            printf("%s faah payed LKR %d as the rent of %s\n", player_x->name, board[player_x->currentSquare].railwayProperties.baseRentOfRailway, board[player_x->currentSquare].name);
+        case 1: {
+            int railRent = board[player_x->currentSquare].railwayProperties.baseRentOfRailway;
+            if (player_x->cash >= railRent) {
+                player_x->cash -= railRent;
+                board[player_x->currentSquare].owner->cash += railRent;
+                printf("%s faah payed LKR %d as the rent of %s\n", player_x->name, railRent, board[player_x->currentSquare].name);
+            } else {
+                AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
+            }
             break;
-        case 2:
-            player_x->cash -= board[player_x->currentSquare].railwayProperties.baseRentOfRailway_2_owned;
-            board[player_x->currentSquare].owner->cash += board[player_x->currentSquare].railwayProperties.baseRentOfRailway_2_owned;
-            printf("%s faah payed LKR %d as the rent of %s\n", player_x->name, board[player_x->currentSquare].railwayProperties.baseRentOfRailway_2_owned, board[player_x->currentSquare].name);
+        }
+        case 2: {
+            int railRent = board[player_x->currentSquare].railwayProperties.baseRentOfRailway_2_owned;
+            if (player_x->cash >= railRent) {
+                player_x->cash -= railRent;
+                board[player_x->currentSquare].owner->cash += railRent;
+                printf("%s faah payed LKR %d as the rent of %s\n", player_x->name, railRent, board[player_x->currentSquare].name);
+            } else {
+                AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
+            }
             break;
-        case 3:
-            player_x->cash -= board[player_x->currentSquare].railwayProperties.baseRentOfRailway_3_owned;
-            board[player_x->currentSquare].owner->cash += board[player_x->currentSquare].railwayProperties.baseRentOfRailway_3_owned;
-            printf("%s  faah payed LKR %d as the rent of %s\n", player_x->name, board[player_x->currentSquare].railwayProperties.baseRentOfRailway_3_owned, board[player_x->currentSquare].name);
+        }
+        case 3: {
+            int railRent = board[player_x->currentSquare].railwayProperties.baseRentOfRailway_3_owned;
+            if (player_x->cash >= railRent) {
+                player_x->cash -= railRent;
+                board[player_x->currentSquare].owner->cash += railRent;
+                printf("%s  faah payed LKR %d as the rent of %s\n", player_x->name, railRent, board[player_x->currentSquare].name);
+            } else {
+                AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
+            }
             break;
-        case 4:
-            player_x->cash -= board[player_x->currentSquare].railwayProperties.baseRentOfRailway_4_owned;
-            board[player_x->currentSquare].owner->cash += board[player_x->currentSquare].railwayProperties.baseRentOfRailway_4_owned;
-            printf("%s payed LKR %d as the rent of %s\n", player_x->name, board[player_x->currentSquare].railwayProperties.baseRentOfRailway_4_owned, board[player_x->currentSquare].name);
+        }
+        case 4: {
+            int railRent = board[player_x->currentSquare].railwayProperties.baseRentOfRailway_4_owned;
+            if (player_x->cash >= railRent) {
+                player_x->cash -= railRent;
+                board[player_x->currentSquare].owner->cash += railRent;
+                printf("%s payed LKR %d as the rent of %s\n", player_x->name, railRent, board[player_x->currentSquare].name);
+            } else {
+                AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
+            }
             break;
+        }
         default:
             break;
         }
