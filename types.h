@@ -211,6 +211,7 @@ typedef struct {
     int currentInterestRate;
     int roundThatInflationHappened;
     int roundThatEconEventHappened;
+    int currentTaxRate;
 } context;
 
 typedef struct {

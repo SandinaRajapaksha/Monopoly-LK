@@ -2,6 +2,16 @@
 #include <stdbool.h>
 #include <stdio.h>
 
+int doubleToInt(double doubleValue) {
+    int intPart = (int)doubleValue;
+    double doublePart = doubleValue - intPart;
+    if (intPart >= 0.5) {
+        return intPart + 1;
+    } else {
+        return intPart;
+    }
+}
+
 void networthEvaluate(player *player_1, player *player_2, player *player_3, player *player_4, square *board) {
     player *players[4] = {player_1, player_2, player_3, player_4};
 
