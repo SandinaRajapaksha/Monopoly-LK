@@ -188,29 +188,38 @@ void resolveRailway(player *player_x, square *board, playerPointers *playerObjec
             if (aggrRailwayBuyCondition(player_x, board)) {
                 board[player_x->currentSquare].owner = player_x;
                 player_x->noOfRailways++;
+            } else {
+                noBuyAuction(player_x, playerObject, board, contextOfTheGame, &board[player_x->currentSquare]);
             }
             break;
         case riskTaker:
             if (riskTkrRailwayBuyCondition(player_x, board)) {
                 board[player_x->currentSquare].owner = player_x;
                 player_x->noOfRailways++;
+            } else {
+                noBuyAuction(player_x, playerObject, board, contextOfTheGame, &board[player_x->currentSquare]);
             }
             break;
         case conservativeBanker:
             if (consBankerRailwayBuyCondition(player_x, board)) {
                 board[player_x->currentSquare].owner = player_x;
                 player_x->noOfRailways++;
+            } else {
+                noBuyAuction(player_x, playerObject, board, contextOfTheGame, &board[player_x->currentSquare]);
             }
             break;
         case opportunisticTrader:
             if (opprtTrdrRailwayBuyCondition(player_x, board, contextOfTheGame)) {
                 board[player_x->currentSquare].owner = player_x;
                 player_x->noOfRailways++;
+            } else {
+                noBuyAuction(player_x, playerObject, board, contextOfTheGame, &board[player_x->currentSquare]);
             }
             break;
         default:
             break;
         }
+
     } else if (board[player_x->currentSquare].owner->playerID != player_x->playerID) {
         switch (board[player_x->currentSquare].owner->noOfRailways) {
         case 1: {
@@ -218,7 +227,7 @@ void resolveRailway(player *player_x, square *board, playerPointers *playerObjec
             if (player_x->cash >= railRent) {
                 player_x->cash -= railRent;
                 board[player_x->currentSquare].owner->cash += railRent;
-                printf("%s faah payed LKR %d as the rent of %s\n", player_x->name, railRent, board[player_x->currentSquare].name);
+                printf("%s payed LKR %d as the rent of %s\n", player_x->name, railRent, board[player_x->currentSquare].name);
             } else {
                 AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
             }
@@ -229,7 +238,7 @@ void resolveRailway(player *player_x, square *board, playerPointers *playerObjec
             if (player_x->cash >= railRent) {
                 player_x->cash -= railRent;
                 board[player_x->currentSquare].owner->cash += railRent;
-                printf("%s faah payed LKR %d as the rent of %s\n", player_x->name, railRent, board[player_x->currentSquare].name);
+                printf("%s payed LKR %d as the rent of %s\n", player_x->name, railRent, board[player_x->currentSquare].name);
             } else {
                 AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
             }
@@ -240,7 +249,7 @@ void resolveRailway(player *player_x, square *board, playerPointers *playerObjec
             if (player_x->cash >= railRent) {
                 player_x->cash -= railRent;
                 board[player_x->currentSquare].owner->cash += railRent;
-                printf("%s  faah payed LKR %d as the rent of %s\n", player_x->name, railRent, board[player_x->currentSquare].name);
+                printf("%s   payed LKR %d as the rent of %s\n", player_x->name, railRent, board[player_x->currentSquare].name);
             } else {
                 AggrNoCashAuction(board, player_x, playerObject, contextOfTheGame);
             }

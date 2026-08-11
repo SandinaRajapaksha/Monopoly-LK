@@ -5,7 +5,7 @@
 int doubleToInt(double doubleValue) {
     int intPart = (int)doubleValue;
     double doublePart = doubleValue - intPart;
-    if (intPart >= 0.5) {
+    if (doublePart >= 0.5) {
         return intPart + 1;
     } else {
         return intPart;
@@ -239,7 +239,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
     player *HighestBidder = player_x;
 
     while (true) {
-        if (player_x->noOfProperties == 0) {
+        if (player_x->noOfProperties <= 0 && player_x->noOfRailways <= 0 && player_x->noOfUtilities <= 0) {
             printf("\n%s went Bankrupt\n", player_x->name);
             player_x->isBankrupt = true;
             return;
