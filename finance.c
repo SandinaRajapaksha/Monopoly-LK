@@ -212,6 +212,13 @@ void printWinner(player *winner, int HighestBid, square *auctionedItem) {
 };
 void sellingAuction(player *player_x, player *player_1, player *player_2, player *player_3, player *player_4, square *board, context *contextOfGame, square *auctionItem) {
 
+    if (player_x->hasDebt == true) {
+        printf("Properties of %s are loan locked\n", player_x->name);
+        printf("%s went bankrupt\n", player_x->name);
+        player_x->isBankrupt = true;
+        return;
+    }
+
     printf("============================================================\n\n");
     printf("Auction\n\n");
     printf("============================================================\n\n");
