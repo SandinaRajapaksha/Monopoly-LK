@@ -24,13 +24,14 @@ void disasterAcitivate(square *board, context *contextOfTheGame) {
 
     int temp[40] = {};
     int countPropertiesWithBuildings = 0;
-    square *propertiesWithBuildings[countPropertiesWithBuildings];
 
     for (int i = 0; i <= 39; i++) {
         if (board[i].PropertyProperties.noOfHouses > 0 || board[i].PropertyProperties.noOfHotels > 0) {
             countPropertiesWithBuildings++;
         }
     }
+
+    square *propertiesWithBuildings[countPropertiesWithBuildings];
     for (int i = 0, j = 0; i <= 39; i++) {
         if (board[i].PropertyProperties.noOfHouses > 0 || board[i].PropertyProperties.noOfHotels > 0) {
             propertiesWithBuildings[j] = &board[i];
@@ -38,11 +39,16 @@ void disasterAcitivate(square *board, context *contextOfTheGame) {
         }
     }
 
-    int randomProperty = (rand() % countPropertiesWithBuildings) + 1;
-    printf("Affected property : %s\n   |    owner : %s\n", board[randomProperty].name, board[randomProperty].owner->name);
+    if (countPropertiesWithBuildings == 0) {
+        return;
+    }
+    int randomProperty = rand() % countPropertiesWithBuildings;
+    printf("Affected property : %s\n   ---    owner : %s\n", board[randomProperty].name, board[randomProperty].owner->name);
 
     printf("=========================================================\n");
+    contextOfTheGame->rounfThatDisasterHappend = contextOfTheGame->currentBoardRound;
 }
+
 void econEventActivate(square *board, context *contextOfTheGame) {
     // random
     economicEventCardType econEvents[8] = {

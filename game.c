@@ -144,6 +144,11 @@ void startGame(void) {
             (contextOfTheGame.currentBoardRound != contextOfTheGame.roundThatInflationHappened)) {
             inflationRateRelease(board, &contextOfTheGame);
         }
+
+        if ((contextOfTheGame.currentBoardRound % 10 == 0) &&
+            (contextOfTheGame.currentBoardRound != contextOfTheGame.rounfThatDisasterHappend)) {
+            disasterAcitivate(board, &contextOfTheGame);
+        }
     }
 
     player *players[4] = {&player_1, &player_2, &player_3, &player_4};

@@ -303,4 +303,6 @@ void bankruptAuction(player *player_x, square *board,
                      context *contextOfGame, square *auctionItem, playerPointers *playerPointerObject);
 int doubleToInt(double);
 void noBuyAuction(player *player_x, playerPointers *playerObject, square *board, context *contextOfGame, square *auctionItem);
+
+void disasterAcitivate(square *board, context *contextOfTheGame);
 #endif
