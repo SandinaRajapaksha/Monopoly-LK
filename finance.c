@@ -605,6 +605,7 @@ void bankruptAuction(player *player_x, square *board,
                     aggrHighestBid = HighestBid + 250;
                     HighestBid = aggrHighestBid;
                     HighestBidder = bidders[i];
+                    printf("Aggresive Invester bids LKR %d\n", HighestBid);
                 }
                 break;
 
@@ -646,6 +647,7 @@ void bankruptAuction(player *player_x, square *board,
                     riskTakerHighestBid = HighestBid + 250;
                     HighestBid = riskTakerHighestBid;
                     HighestBidder = bidders[i];
+                    printf("Risk Taker bids LKR %d\n", HighestBid);
                 }
                 break;
 
@@ -687,6 +689,7 @@ void bankruptAuction(player *player_x, square *board,
                     conserBankerHighestBid = HighestBid + 250;
                     HighestBid = conserBankerHighestBid;
                     HighestBidder = bidders[i];
+                    printf("Conservative Banker bids LKR %d\n", HighestBid);
                 }
                 break;
 
@@ -728,6 +731,7 @@ void bankruptAuction(player *player_x, square *board,
                     opportTraderHighestBid = HighestBid + 250;
                     HighestBid = opportTraderHighestBid;
                     HighestBidder = bidders[i];
+                    printf("Opportunistic Trader bids LKR %d\n", HighestBid);
                 }
                 break;
             default:
@@ -836,6 +840,7 @@ void noBuyAuction(player *player_x, playerPointers *playerObject, square *board,
                     aggrHighestBid = HighestBid + 250;
                     HighestBid = aggrHighestBid;
                     HighestBidder = bidders[i];
+                    printf("Aggresive Invester bids LKR %d\n", HighestBid);
                 }
                 break;
 
@@ -865,6 +870,7 @@ void noBuyAuction(player *player_x, playerPointers *playerObject, square *board,
                     riskTakerHighestBid = HighestBid + 250;
                     HighestBid = riskTakerHighestBid;
                     HighestBidder = bidders[i];
+                    printf("Risk Taker bids LKR %d\n", HighestBid);
                 }
                 break;
 
@@ -895,6 +901,7 @@ void noBuyAuction(player *player_x, playerPointers *playerObject, square *board,
                     conserBankerHighestBid = HighestBid + 250;
                     HighestBid = conserBankerHighestBid;
                     HighestBidder = bidders[i];
+                    printf("Conservative Banker bids LKR %d\n", HighestBid);
                 }
                 break;
 
@@ -925,6 +932,7 @@ void noBuyAuction(player *player_x, playerPointers *playerObject, square *board,
                     opportTraderHighestBid = HighestBid + 250;
                     HighestBid = opportTraderHighestBid;
                     HighestBidder = bidders[i];
+                    printf("Opportunistic Trader bids LKR %d\n", HighestBid);
                 }
                 break;
             default:

@@ -9,10 +9,14 @@ void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerOb
         owedRent = currentSquare->PropertyProperties.currentRentalofProperty;
     } else if (currentSquare->type == railway) {
         int n = currentSquare->owner->noOfRailways;
-        if (n == 1) owedRent = currentSquare->railwayProperties.baseRentOfRailway;
-        else if (n == 2) owedRent = currentSquare->railwayProperties.baseRentOfRailway_2_owned;
-        else if (n == 3) owedRent = currentSquare->railwayProperties.baseRentOfRailway_3_owned;
-        else if (n == 4) owedRent = currentSquare->railwayProperties.baseRentOfRailway_4_owned;
+        if (n == 1)
+            owedRent = currentSquare->railwayProperties.baseRentOfRailway;
+        else if (n == 2)
+            owedRent = currentSquare->railwayProperties.baseRentOfRailway_2_owned;
+        else if (n == 3)
+            owedRent = currentSquare->railwayProperties.baseRentOfRailway_3_owned;
+        else if (n == 4)
+            owedRent = currentSquare->railwayProperties.baseRentOfRailway_4_owned;
     } else if (currentSquare->type == utility) {
         owedRent = currentSquare->utilityProperties.currentUtilityRent;
     }
@@ -166,7 +170,7 @@ void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerOb
         }
     }
 
-    while (player_x->cash < owedRent &&
+    while (!player_x->isBankrupt && player_x->cash < owedRent &&
            (player_x->noOfProperties > 0 || player_x->noOfRailways > 0 || player_x->noOfUtilities > 0));
 
     if (player_x->cash < owedRent) {
