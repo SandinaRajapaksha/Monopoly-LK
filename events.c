@@ -1,6 +1,48 @@
 #include "types.h"
 #include <stdio.h>
 
+void disasterAcitivate(square *board, context *contextOfTheGame) {
+    contextOfTheGame->currentDisaster = (rand() % 5) + 1;
+    printf("=========================================================\n");
+    switch (contextOfTheGame->currentDisaster) {
+    case 1:
+        printf("Disaster happens : Fire\n");
+        break;
+    case 2:
+        printf("Disaster happens : Flood\n");
+        break;
+    case 3:
+        printf("Disaster happens : Riot\n");
+        break;
+    case 4:
+        printf("Disaster happens : Building Collapse\n");
+        break;
+    case 5:
+        printf("Disaster happens : Elecetrical Failure\n");
+        break;
+    }
+
+    int temp[40] = {};
+    int countPropertiesWithBuildings = 0;
+    square *propertiesWithBuildings[countPropertiesWithBuildings];
+
+    for (int i = 0; i <= 39; i++) {
+        if (board[i].PropertyProperties.noOfHouses > 0 || board[i].PropertyProperties.noOfHotels > 0) {
+            countPropertiesWithBuildings++;
+        }
+    }
+    for (int i = 0, j = 0; i <= 39; i++) {
+        if (board[i].PropertyProperties.noOfHouses > 0 || board[i].PropertyProperties.noOfHotels > 0) {
+            propertiesWithBuildings[j] = &board[i];
+            j++;
+        }
+    }
+
+    int randomProperty = (rand() % countPropertiesWithBuildings) + 1;
+    printf("Affected property : %s\n   |    owner : %s\n", board[randomProperty].name, board[randomProperty].owner->name);
+
+    printf("=========================================================\n");
+}
 void econEventActivate(square *board, context *contextOfTheGame) {
     // random
     economicEventCardType econEvents[8] = {

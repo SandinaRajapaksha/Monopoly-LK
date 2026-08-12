@@ -139,6 +139,13 @@ typedef enum {
     PoliticalUnrest
 
 } economicEventCardType;
+typedef enum {
+    fire = 1,
+    flood,
+    riot,
+    buildingCollapse,
+    electricalFailure
+} disaster;
 
 // goverment regulation types
 typedef enum {
@@ -214,6 +221,9 @@ typedef struct {
     int roundThatInflationHappened;
     int roundThatEconEventHappened;
     int currentTaxRate;
+    int rounfThatDisasterHappend;
+    disaster currentDisaster;
+
 } context;
 
 typedef struct {
