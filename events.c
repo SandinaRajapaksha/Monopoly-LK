@@ -40,10 +40,26 @@ void disasterAcitivate(square *board, context *contextOfTheGame) {
     }
 
     if (countPropertiesWithBuildings == 0) {
+        printf("No property affected\n");
+        printf("=========================================================\n");
+        contextOfTheGame->rounfThatDisasterHappend = contextOfTheGame->currentBoardRound;
         return;
     }
     int randomProperty = rand() % countPropertiesWithBuildings;
-    printf("Affected property : %s\n   ---    owner : %s\n", board[randomProperty].name, board[randomProperty].owner->name);
+    printf("Affected property : %s\nowner : %s\n", propertiesWithBuildings[randomProperty]->name, propertiesWithBuildings[randomProperty]->owner->name);
+    if (propertiesWithBuildings[randomProperty]->PropertyProperties.insuranceCompany != none) {
+        // insurance logic to be implemented
+    }
+    propertiesWithBuildings[randomProperty]->PropertyProperties.noOfHotels = 0;
+
+    if (propertiesWithBuildings[randomProperty]->PropertyProperties.noOfHouses != 0) {
+        propertiesWithBuildings[randomProperty]->owner->noOfHousesOwned -= propertiesWithBuildings[randomProperty]->PropertyProperties.noOfHouses;
+        propertiesWithBuildings[randomProperty]->PropertyProperties.noOfHouses = 0;
+    }
+    if (propertiesWithBuildings[randomProperty]->PropertyProperties.noOfHotels != 0) {
+        propertiesWithBuildings[randomProperty]->owner->noOfHotelsOwned--;
+        propertiesWithBuildings[randomProperty]->PropertyProperties.noOfHotels = 0;
+    }
 
     printf("=========================================================\n");
     contextOfTheGame->rounfThatDisasterHappend = contextOfTheGame->currentBoardRound;

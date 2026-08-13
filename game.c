@@ -111,18 +111,38 @@ void startGame(void) {
         if (player_1.isBankrupt == false) {
 
             move(&player_1, board, &contextOfTheGame, &playerPointerObject);
+            networthEvaluate(&player_1, &player_2, &player_3, &player_4, board);
+            bankruptCheck(&playerPointerObject, &noOfBankruptPlayer);
+            if (noOfBankruptPlayer == 3) {
+                break;
+            }
         }
         if (player_2.isBankrupt == false) {
 
             move(&player_2, board, &contextOfTheGame, &playerPointerObject);
+            networthEvaluate(&player_1, &player_2, &player_3, &player_4, board);
+            bankruptCheck(&playerPointerObject, &noOfBankruptPlayer);
+            if (noOfBankruptPlayer == 3) {
+                break;
+            }
         }
         if (player_3.isBankrupt == false) {
 
             move(&player_3, board, &contextOfTheGame, &playerPointerObject);
+            networthEvaluate(&player_1, &player_2, &player_3, &player_4, board);
+            bankruptCheck(&playerPointerObject, &noOfBankruptPlayer);
+            if (noOfBankruptPlayer == 3) {
+                break;
+            }
         }
         if (player_4.isBankrupt == false) {
 
             move(&player_4, board, &contextOfTheGame, &playerPointerObject);
+            networthEvaluate(&player_1, &player_2, &player_3, &player_4, board);
+            bankruptCheck(&playerPointerObject, &noOfBankruptPlayer);
+            if (noOfBankruptPlayer == 3) {
+                break;
+            }
         }
 
         networthEvaluate(&player_1, &player_2, &player_3, &player_4, board);

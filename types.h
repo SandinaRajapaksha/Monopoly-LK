@@ -82,8 +82,12 @@ typedef enum {
     FreeParking
 
 } specialityType;
-typedef enum { inusured,
-               notInsured } insurance;
+
+typedef enum {
+    none,
+    Ceylinco,
+    SL_Insurance
+} insurance;
 
 typedef struct sq {
 
@@ -108,10 +112,11 @@ typedef struct sq {
         int baseRental;
         int houseConstructionCost;
         int hotelConstructionCost;
-        insurance insuranceStatus;
+        insurance insuranceCompany;
         int noOfHouses;
         int noOfHotels;
         int currentRentalofProperty;
+
     } PropertyProperties;
 
     struct {
