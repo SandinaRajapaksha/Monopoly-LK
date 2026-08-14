@@ -19,8 +19,8 @@ void startGame(void) {
     contextOfTheGame.rounfThatDisasterHappend = -1;
     contextOfTheGame.currentDisaster = -1;
     contextOfTheGame.topNationalEventCard = 0;
-
-    int topreigionaldevelopmentcard = 0;
+    contextOfTheGame.topRegionalDevelopmentCard = 0;
+    contextOfTheGame.roundThatRegionalDevelopmentHappened = -1;
     contextOfTheGame.currentBoardRound = 1;
 
     int noOfBankruptPlayer = 0;
@@ -169,6 +169,13 @@ void startGame(void) {
             (contextOfTheGame.currentBoardRound != contextOfTheGame.rounfThatDisasterHappend)) {
             disasterAcitivate(board, &contextOfTheGame);
         }
+
+        if ((contextOfTheGame.currentBoardRound % 15 == 0) &&
+            (contextOfTheGame.currentBoardRound != contextOfTheGame.roundThatRegionalDevelopmentHappened)) {
+            regionalDevelopmentActivate(board, &contextOfTheGame, &playerPointerObject);
+        }
+
+        decayRegionalDevelopmentEffects(&contextOfTheGame, board);
     }
 
     player *players[4] = {&player_1, &player_2, &player_3, &player_4};

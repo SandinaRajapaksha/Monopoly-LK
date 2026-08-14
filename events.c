@@ -595,31 +595,335 @@ void decayNationalEventEffects(player *player_x, square *board) {
     }
 }
 
-void regionalDevelopmentActivate(int *topreigionaldevelopmentcard,
-                                 square *board) {
-    // deck
-    regionalDevelopmentType regionalDevelopmentCards[12] = {
+char *getRegionalEventName(regionalDevelopmentType effect) {
+    switch (effect) {
+    case southernTourismBoom:
+        return "Southern Tourism Boom";
+    case portCityExpansion:
+        return "Port City Expansion";
+    case itIndustryGrowth:
+        return "IT Industry Growth";
+    case nothernDevelopmentProgramme:
+        return "Northern Development Programme";
+    case teaExportBoom:
+        return "Tea Export Boom";
+    case airPortExpansion:
+        return "Airport Expansion";
+    case universityCityGrowth:
+        return "University City Growth";
+    case beachPollution:
+        return "Beach Pollution";
+    case floodDamage:
+        return "Flood Damage";
+    case transportStrike:
+        return "Transport Strike";
+    case electricityTariffIncrease:
+        return "Electricity Tariff Increase";
+    case waterShortage:
+        return "Water Shortage";
+    }
+    return "Unknown";
+}
 
-        southernTourismBoom,
-        portCityExpansion,
-        itIndustryGrowth,
-        nothernDevelopmentProgramme,
-        teaExportBoom,
-        airPortExpansion,
-        universityCityGrowth,
-        beachPollution,
-        floodDamage,
-        transportStrike,
-        electricityTariffIncrease,
-        waterShortage};
+void addRegionalEffect(context *contextOfTheGame, regionalDevelopmentType effect, int rounds, groupType group, int squareIdx) {
+    if (contextOfTheGame->numActiveRegionalEffects >= 5) {
+        return;
+    }
+    int i = contextOfTheGame->numActiveRegionalEffects++;
+    contextOfTheGame->activeRegionalEffects[i].effect = effect;
+    contextOfTheGame->activeRegionalEffects[i].roundsRemaining = rounds;
+    contextOfTheGame->activeRegionalEffects[i].affectedGroup = group;
+    contextOfTheGame->activeRegionalEffects[i].affectedSquare = squareIdx;
+}
 
-    regionalDevelopmentType currentRegionalEvent =
-        regionalDevelopmentCards[*topreigionaldevelopmentcard];
+void southernTourismBoom_activate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property && board[i].PropertyProperties.propertyGroup == yellow) {
+            board[i].curruntValue = doubleToInt(board[i].curruntValue * 1.20);
+        }
+    }
+}
+void southernTourismBoom_deactivate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property && board[i].PropertyProperties.propertyGroup == yellow) {
+            board[i].curruntValue = doubleToInt(board[i].curruntValue / 1.20);
+        }
+    }
+}
 
-    // all the shit happening in regional devellopment
+void portCityExpansion_activate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property && board[i].PropertyProperties.propertyGroup == lightBlue) {
+            board[i].curruntValue = doubleToInt(board[i].curruntValue * 1.15);
+        }
+    }
+}
+void portCityExpansion_deactivate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property && board[i].PropertyProperties.propertyGroup == lightBlue) {
+            board[i].curruntValue = doubleToInt(board[i].curruntValue / 1.15);
+        }
+    }
+}
 
-    // push the card to bottom
-    *topreigionaldevelopmentcard = (*topreigionaldevelopmentcard + 1) % 12;
+void itIndustryGrowth_activate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property && board[i].PropertyProperties.propertyGroup == pink) {
+            board[i].curruntValue = doubleToInt(board[i].curruntValue * 1.15);
+        }
+    }
+}
+void itIndustryGrowth_deactivate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property && board[i].PropertyProperties.propertyGroup == pink) {
+            board[i].curruntValue = doubleToInt(board[i].curruntValue / 1.15);
+        }
+    }
+}
+
+void nothernDevelopmentProgramme_activate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property && board[i].PropertyProperties.propertyGroup == green) {
+            board[i].curruntValue = doubleToInt(board[i].curruntValue * 1.20);
+        }
+    }
+}
+void nothernDevelopmentProgramme_deactivate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property && board[i].PropertyProperties.propertyGroup == green) {
+            board[i].curruntValue = doubleToInt(board[i].curruntValue / 1.20);
+        }
+    }
+}
+
+void airPortExpansion_activate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property && board[i].PropertyProperties.propertyGroup == orange) {
+            board[i].curruntValue = doubleToInt(board[i].curruntValue * 1.20);
+        }
+    }
+}
+void airPortExpansion_deactivate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property && board[i].PropertyProperties.propertyGroup == orange) {
+            board[i].curruntValue = doubleToInt(board[i].curruntValue / 1.20);
+        }
+    }
+}
+
+void universityCityGrowth_activate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property) {
+            board[i].PropertyProperties.houseConstructionCost = doubleToInt(board[i].PropertyProperties.houseConstructionCost * 0.85);
+            board[i].PropertyProperties.hotelConstructionCost = doubleToInt(board[i].PropertyProperties.hotelConstructionCost * 0.85);
+        }
+    }
+}
+void universityCityGrowth_deactivate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property) {
+            board[i].PropertyProperties.houseConstructionCost = doubleToInt(board[i].PropertyProperties.houseConstructionCost / 0.85);
+            board[i].PropertyProperties.hotelConstructionCost = doubleToInt(board[i].PropertyProperties.hotelConstructionCost / 0.85);
+        }
+    }
+}
+
+void beachPollution_activate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property && board[i].PropertyProperties.propertyGroup == yellow) {
+            board[i].curruntValue = doubleToInt(board[i].curruntValue * 0.85);
+        }
+    }
+}
+void beachPollution_deactivate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property && board[i].PropertyProperties.propertyGroup == yellow) {
+            board[i].curruntValue = doubleToInt(board[i].curruntValue / 0.85);
+        }
+    }
+}
+
+void transportStrike_activate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == railway) {
+            board[i].curruntValue = doubleToInt(board[i].curruntValue * 0.75);
+        }
+    }
+}
+void transportStrike_deactivate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == railway) {
+            board[i].curruntValue = doubleToInt(board[i].curruntValue / 0.75);
+        }
+    }
+}
+
+void waterShortage_activate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property && board[i].PropertyProperties.noOfHotels == 1) {
+            board[i].PropertyProperties.currentRentalofProperty = doubleToInt(board[i].PropertyProperties.currentRentalofProperty * 0.50);
+        }
+    }
+}
+void waterShortage_deactivate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property && board[i].PropertyProperties.noOfHotels == 1) {
+            board[i].PropertyProperties.currentRentalofProperty = doubleToInt(board[i].PropertyProperties.currentRentalofProperty / 0.50);
+        }
+    }
+}
+
+void regionalDevelopmentActivate(square *board, context *contextOfTheGame, playerPointers *playerObject) {
+    // 12-card deck, top card drawn, then returned to the bottom
+    regionalDevelopmentType deck[12] = {
+        southernTourismBoom, portCityExpansion, itIndustryGrowth,
+        nothernDevelopmentProgramme, teaExportBoom, airPortExpansion,
+        universityCityGrowth, beachPollution, floodDamage,
+        transportStrike, electricityTariffIncrease, waterShortage};
+
+    regionalDevelopmentType card = deck[contextOfTheGame->topRegionalDevelopmentCard];
+    contextOfTheGame->topRegionalDevelopmentCard = (contextOfTheGame->topRegionalDevelopmentCard + 1) % 12;
+    contextOfTheGame->roundThatRegionalDevelopmentHappened = contextOfTheGame->currentBoardRound;
+
+    printf("\n=========================================================\n");
+    printf("Regional Development Card : %s\n", getRegionalEventName(card));
+    printf("---------------------------------------------------------\n");
+
+    switch (card) {
+    case southernTourismBoom:
+        printf("Southern (yellow) property values increase by 20%% for 15 rounds\n");
+        southernTourismBoom_activate(board);
+        addRegionalEffect(contextOfTheGame, card, 15, 0, -1);
+        break;
+    case portCityExpansion:
+        printf("Port city (light blue) property values increase by 15%% for 15 rounds\n");
+        portCityExpansion_activate(board);
+        addRegionalEffect(contextOfTheGame, card, 15, 0, -1);
+        break;
+    case itIndustryGrowth:
+        printf("IT corridor (pink) property values increase by 15%% for 15 rounds\n");
+        itIndustryGrowth_activate(board);
+        addRegionalEffect(contextOfTheGame, card, 15, 0, -1);
+        break;
+    case nothernDevelopmentProgramme:
+        printf("Northern (green) property values increase by 20%% for 15 rounds\n");
+        nothernDevelopmentProgramme_activate(board);
+        addRegionalEffect(contextOfTheGame, card, 15, 0, -1);
+        break;
+    case teaExportBoom: {
+        player *all[4] = {playerObject->player_1, playerObject->player_2, playerObject->player_3, playerObject->player_4};
+        for (int i = 0; i < 4; i++) {
+            if (!all[i]->isBankrupt) {
+                all[i]->cash += 2500;
+                printf("%s received LKR 2500 tea export dividend\n", all[i]->name);
+            }
+        }
+        break;
+    }
+    case airPortExpansion:
+        printf("Airport corridor (orange) property values increase by 20%% for 15 rounds\n");
+        airPortExpansion_activate(board);
+        addRegionalEffect(contextOfTheGame, card, 15, 0, -1);
+        break;
+    case universityCityGrowth:
+        printf("Construction costs reduced by 15%% for 15 rounds\n");
+        universityCityGrowth_activate(board);
+        addRegionalEffect(contextOfTheGame, card, 15, 0, -1);
+        break;
+    case beachPollution:
+        printf("Southern (yellow) property values decrease by 15%% for 15 rounds\n");
+        beachPollution_activate(board);
+        addRegionalEffect(contextOfTheGame, card, 15, 0, -1);
+        break;
+    case floodDamage: {
+        int coastal[40], n = 0;
+        for (int i = 0; i < 40; i++) {
+            if (board[i].type == property && board[i].PropertyProperties.propertyGroup == yellow && board[i].owner != NULL) {
+                coastal[n++] = i;
+            }
+        }
+        if (n > 0) {
+            int idx = coastal[rand() % n];
+            printf("Regional floods damage %s\n", board[idx].name);
+            damageBuilding(&board[idx]);
+        } else {
+            printf("No coastal property owned - no damage\n");
+        }
+        break;
+    }
+    case transportStrike:
+        printf("Railway station values decrease by 25%% for 15 rounds\n");
+        transportStrike_activate(board);
+        addRegionalEffect(contextOfTheGame, card, 15, 0, -1);
+        break;
+    case electricityTariffIncrease: {
+        player *all[4] = {playerObject->player_1, playerObject->player_2, playerObject->player_3, playerObject->player_4};
+        for (int i = 0; i < 4; i++) {
+            if (!all[i]->isBankrupt) {
+                int levy = (all[i]->cash >= 1500) ? 1500 : all[i]->cash;
+                all[i]->cash -= levy;
+                printf("%s paid LKR %d electricity surcharge\n", all[i]->name, levy);
+            }
+        }
+        break;
+    }
+    case waterShortage:
+        printf("Hotel rent halved for 5 rounds\n");
+        waterShortage_activate(board);
+        addRegionalEffect(contextOfTheGame, card, 5, 0, -1);
+        break;
+    }
+    printf("=========================================================\n");
+}
+
+void decayRegionalDevelopmentEffects(context *contextOfTheGame, square *board) {
+    int i = 0;
+    while (i < contextOfTheGame->numActiveRegionalEffects) {
+        contextOfTheGame->activeRegionalEffects[i].roundsRemaining--;
+        if (contextOfTheGame->activeRegionalEffects[i].roundsRemaining > 0) {
+            i++;
+            continue;
+        }
+
+        regionalDevelopmentType effect = contextOfTheGame->activeRegionalEffects[i].effect;
+        switch (effect) {
+        case southernTourismBoom:
+            southernTourismBoom_deactivate(board);
+            break;
+        case portCityExpansion:
+            portCityExpansion_deactivate(board);
+            break;
+        case itIndustryGrowth:
+            itIndustryGrowth_deactivate(board);
+            break;
+        case nothernDevelopmentProgramme:
+            nothernDevelopmentProgramme_deactivate(board);
+            break;
+        case airPortExpansion:
+            airPortExpansion_deactivate(board);
+            break;
+        case universityCityGrowth:
+            universityCityGrowth_deactivate(board);
+            break;
+        case beachPollution:
+            beachPollution_deactivate(board);
+            break;
+        case transportStrike:
+            transportStrike_deactivate(board);
+            break;
+        case waterShortage:
+            waterShortage_deactivate(board);
+            break;
+        default:
+            break;
+        }
+        printf("%s effect expired\n", getRegionalEventName(effect));
+
+        for (int j = i; j < contextOfTheGame->numActiveRegionalEffects - 1; j++) {
+            contextOfTheGame->activeRegionalEffects[j] = contextOfTheGame->activeRegionalEffects[j + 1];
+        }
+        contextOfTheGame->numActiveRegionalEffects--;
+    }
 }
 
 void dynamicPropertyEventActivate(square *board) { // parameters to be added

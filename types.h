@@ -240,6 +240,15 @@ typedef struct {
     int rounfThatDisasterHappend;
     disaster currentDisaster;
     int topNationalEventCard;
+    int topRegionalDevelopmentCard;
+    int roundThatRegionalDevelopmentHappened;
+    int numActiveRegionalEffects;
+    struct {
+        regionalDevelopmentType effect;
+        int roundsRemaining;
+        groupType affectedGroup;
+        int affectedSquare;
+    } activeRegionalEffects[5];
 
 } context;
 
@@ -262,6 +271,28 @@ void dynamicPropertyEventActivate(square *);
 // card decks and draws
 void nationalEventActivate(player *, square *, context *, playerPointers *);
 void decayNationalEventEffects(player *, square *);
+void regionalDevelopmentActivate(square *, context *, playerPointers *);
+void decayRegionalDevelopmentEffects(context *, square *);
+char *getRegionalEventName(regionalDevelopmentType);
+void addRegionalEffect(context *, regionalDevelopmentType, int, groupType, int);
+void southernTourismBoom_activate(square *);
+void southernTourismBoom_deactivate(square *);
+void portCityExpansion_activate(square *);
+void portCityExpansion_deactivate(square *);
+void itIndustryGrowth_activate(square *);
+void itIndustryGrowth_deactivate(square *);
+void nothernDevelopmentProgramme_activate(square *);
+void nothernDevelopmentProgramme_deactivate(square *);
+void airPortExpansion_activate(square *);
+void airPortExpansion_deactivate(square *);
+void universityCityGrowth_activate(square *);
+void universityCityGrowth_deactivate(square *);
+void beachPollution_activate(square *);
+void beachPollution_deactivate(square *);
+void transportStrike_activate(square *);
+void transportStrike_deactivate(square *);
+void waterShortage_activate(square *);
+void waterShortage_deactivate(square *);
 char *getNatlEventName(NationalEventType);
 void addNatlEffect(player *, NationalEventType, int, groupType, int);
 void stockMarketRise_activate(square *);
@@ -280,7 +311,6 @@ groupType propertyRevaluation_activate(square *);
 void propertyRevaluation_deactivate(square *, groupType);
 void recalcRent(square *);
 void damageBuilding(square *);
-void regionalDevelopmentActivate(int *, square *);
 
 void initializeTurnOrder(player *, player *, player *, player *, player *,
                          player *, player *, player *);
