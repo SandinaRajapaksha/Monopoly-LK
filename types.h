@@ -249,6 +249,12 @@ typedef struct {
         groupType affectedGroup;
         int affectedSquare;
     } activeRegionalEffects[5];
+    int roundThatDynamicPropertyEventHappened;
+    int dynamicEventRoundsRemaining;
+    groupType dynamicBoomGroup;
+    groupType dynamicDeclineGroup;
+    groupType lastDynamicBoomGroup;
+    groupType lastDynamicDeclineGroup;
 
 } context;
 
@@ -267,7 +273,13 @@ void initializeBoard(square *, playerPointers *);
 //  randomly choosen after round count
 void econEventActivate(square *, context *);
 void govRegulationsActivate(square *);
-void dynamicPropertyEventActivate(square *);
+void dynamicPropertyEventActivate(square *, context *);
+void decayDynamicPropertyEffects(context *, square *);
+char *getGroupName(groupType);
+void dynamicPropertyBoom_activate(square *, groupType);
+void dynamicPropertyBoom_deactivate(square *, groupType);
+void dynamicPropertyDecline_activate(square *, groupType);
+void dynamicPropertyDecline_deactivate(square *, groupType);
 // card decks and draws
 void nationalEventActivate(player *, square *, context *, playerPointers *);
 void decayNationalEventEffects(player *, square *);

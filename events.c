@@ -926,11 +926,135 @@ void decayRegionalDevelopmentEffects(context *contextOfTheGame, square *board) {
     }
 }
 
-void dynamicPropertyEventActivate(square *board) { // parameters to be added
-    // random event
-    dynamicPropertyMarketEventType dynamicPropertyEvents[2] = {
-        dynamicPropertyMarketBoom, dynamicPropertyMarketDecline};
-    // all the other shit
+char *getGroupName(groupType group) {
+    switch (group) {
+    case brown:
+        return "Brown";
+    case lightBlue:
+        return "Light Blue";
+    case pink:
+        return "Pink";
+    case orange:
+        return "Orange";
+    case red:
+        return "Red";
+    case yellow:
+        return "Yellow";
+    case green:
+        return "Green";
+    case darkBlue:
+        return "Dark Blue";
+    }
+    return "Unknown";
+}
+
+void dynamicPropertyBoom_activate(square *board, groupType group) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property && board[i].PropertyProperties.propertyGroup == group) {
+            board[i].PropertyProperties.initialPrice = doubleToInt(board[i].PropertyProperties.initialPrice * 1.15);
+            board[i].mortgageValue = doubleToInt(board[i].mortgageValue * 1.15);
+            board[i].PropertyProperties.currentRentalofProperty = doubleToInt(board[i].PropertyProperties.currentRentalofProperty * 1.25);
+            board[i].PropertyProperties.houseConstructionCost = doubleToInt(board[i].PropertyProperties.houseConstructionCost * 1.10);
+            board[i].PropertyProperties.hotelConstructionCost = doubleToInt(board[i].PropertyProperties.hotelConstructionCost * 1.10);
+            board[i].curruntValue = doubleToInt(board[i].curruntValue * 1.20);
+        }
+    }
+}
+void dynamicPropertyBoom_deactivate(square *board, groupType group) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property && board[i].PropertyProperties.propertyGroup == group) {
+            board[i].PropertyProperties.initialPrice = doubleToInt(board[i].PropertyProperties.initialPrice / 1.15);
+            board[i].mortgageValue = doubleToInt(board[i].mortgageValue / 1.15);
+            board[i].PropertyProperties.currentRentalofProperty = doubleToInt(board[i].PropertyProperties.currentRentalofProperty / 1.25);
+            board[i].PropertyProperties.houseConstructionCost = doubleToInt(board[i].PropertyProperties.houseConstructionCost / 1.10);
+            board[i].PropertyProperties.hotelConstructionCost = doubleToInt(board[i].PropertyProperties.hotelConstructionCost / 1.10);
+            board[i].curruntValue = doubleToInt(board[i].curruntValue / 1.20);
+        }
+    }
+}
+
+void dynamicPropertyDecline_activate(square *board, groupType group) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property && board[i].PropertyProperties.propertyGroup == group) {
+            board[i].curruntValue = doubleToInt(board[i].curruntValue * 0.85);
+            board[i].PropertyProperties.currentRentalofProperty = doubleToInt(board[i].PropertyProperties.currentRentalofProperty * 0.80);
+            board[i].mortgageValue = doubleToInt(board[i].mortgageValue * 0.90);
+        }
+    }
+}
+void dynamicPropertyDecline_deactivate(square *board, groupType group) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property && board[i].PropertyProperties.propertyGroup == group) {
+            board[i].curruntValue = doubleToInt(board[i].curruntValue / 0.85);
+            board[i].PropertyProperties.currentRentalofProperty = doubleToInt(board[i].PropertyProperties.currentRentalofProperty / 0.80);
+            board[i].mortgageValue = doubleToInt(board[i].mortgageValue / 0.90);
+        }
+    }
+}
+
+void dynamicPropertyEventActivate(square *board, context *contextOfTheGame) {
+    // end any leftover effects from a previous review first
+    if (contextOfTheGame->dynamicEventRoundsRemaining > 0) {
+        if (contextOfTheGame->dynamicBoomGroup != (groupType)-1) {
+            dynamicPropertyBoom_deactivate(board, contextOfTheGame->dynamicBoomGroup);
+        }
+        if (contextOfTheGame->dynamicDeclineGroup != (groupType)-1) {
+            dynamicPropertyDecline_deactivate(board, contextOfTheGame->dynamicDeclineGroup);
+        }
+    }
+
+    // random boom group - same group cannot boom in consecutive reviews
+    groupType boomGroup = (groupType)(brown + (rand() % 8));
+    while (boomGroup == contextOfTheGame->lastDynamicBoomGroup) {
+        boomGroup = (groupType)(brown + (rand() % 8));
+    }
+    // random decline group - different from the boom group, cannot decline consecutively
+    groupType declineGroup = (groupType)(brown + (rand() % 8));
+    while (declineGroup == boomGroup || declineGroup == contextOfTheGame->lastDynamicDeclineGroup) {
+        declineGroup = (groupType)(brown + (rand() % 8));
+    }
+
+    contextOfTheGame->lastDynamicBoomGroup = boomGroup;
+    contextOfTheGame->lastDynamicDeclineGroup = declineGroup;
+    contextOfTheGame->dynamicBoomGroup = boomGroup;
+    contextOfTheGame->dynamicDeclineGroup = declineGroup;
+    contextOfTheGame->dynamicEventRoundsRemaining = 10;
+    contextOfTheGame->roundThatDynamicPropertyEventHappened = contextOfTheGame->currentBoardRound;
+
+    printf("\n=========================================================\n");
+    printf("Property Market Review (Round %d)\n", contextOfTheGame->currentBoardRound);
+    printf("---------------------------------------------------------\n");
+    printf("Market Boom on %s group for 10 rounds\n", getGroupName(boomGroup));
+    printf("Purchase prices +15%%\nmortgage values +15%%\nrental income +25%%\n");
+    printf("Construction costs +10%%\nproperty values +20%%\n\n");
+    printf("Market Decline on %s group for 10 rounds\n", getGroupName(declineGroup));
+    printf("Property values -15%%\nrental income -20%%\nmortgage values -10%%\n");
+    printf("Auction starting prices -25%%\n");
+    printf("=========================================================\n");
+
+    dynamicPropertyBoom_activate(board, boomGroup);
+    dynamicPropertyDecline_activate(board, declineGroup);
+}
+
+void decayDynamicPropertyEffects(context *contextOfTheGame, square *board) {
+    if (contextOfTheGame->dynamicEventRoundsRemaining <= 0) {
+        return;
+    }
+    contextOfTheGame->dynamicEventRoundsRemaining--;
+    if (contextOfTheGame->dynamicEventRoundsRemaining > 0) {
+        return;
+    }
+
+    if (contextOfTheGame->dynamicBoomGroup != (groupType)-1) {
+        dynamicPropertyBoom_deactivate(board, contextOfTheGame->dynamicBoomGroup);
+        printf("%s group Market Boom expired\n", getGroupName(contextOfTheGame->dynamicBoomGroup));
+    }
+    if (contextOfTheGame->dynamicDeclineGroup != (groupType)-1) {
+        dynamicPropertyDecline_deactivate(board, contextOfTheGame->dynamicDeclineGroup);
+        printf("%s group Market Decline expired\n", getGroupName(contextOfTheGame->dynamicDeclineGroup));
+    }
+    contextOfTheGame->dynamicBoomGroup = (groupType)-1;
+    contextOfTheGame->dynamicDeclineGroup = (groupType)-1;
 }
 
 void inflationRateRelease(square *board, context *contextofgame) { // parameters to be added

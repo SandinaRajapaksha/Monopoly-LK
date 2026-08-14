@@ -546,6 +546,11 @@ void bankruptAuction(player *player_x, square *board,
     }
 
     int startingPrice = auctionItem->curruntValue / 2;
+    if (auctionItem->type == property &&
+        contextOfGame->dynamicDeclineGroup != (groupType)-1 &&
+        auctionItem->PropertyProperties.propertyGroup == contextOfGame->dynamicDeclineGroup) {
+        startingPrice = doubleToInt(startingPrice * 0.75);
+    }
     int HighestBid = startingPrice;
 
     int aggrHighestBid;
@@ -797,6 +802,11 @@ void noBuyAuction(player *player_x, playerPointers *playerObject, square *board,
     player *bidders[4] = {playerObject->player_1, playerObject->player_2, playerObject->player_3, playerObject->player_4};
 
     int startingPrice = auctionItem->curruntValue / 2;
+    if (auctionItem->type == property &&
+        contextOfGame->dynamicDeclineGroup != (groupType)-1 &&
+        auctionItem->PropertyProperties.propertyGroup == contextOfGame->dynamicDeclineGroup) {
+        startingPrice = doubleToInt(startingPrice * 0.75);
+    }
     int HighestBid = startingPrice;
 
     int aggrHighestBid;

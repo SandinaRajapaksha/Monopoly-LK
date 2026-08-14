@@ -21,6 +21,12 @@ void startGame(void) {
     contextOfTheGame.topNationalEventCard = 0;
     contextOfTheGame.topRegionalDevelopmentCard = 0;
     contextOfTheGame.roundThatRegionalDevelopmentHappened = -1;
+    contextOfTheGame.roundThatDynamicPropertyEventHappened = -1;
+    contextOfTheGame.dynamicEventRoundsRemaining = 0;
+    contextOfTheGame.dynamicBoomGroup = (groupType)-1;
+    contextOfTheGame.dynamicDeclineGroup = (groupType)-1;
+    contextOfTheGame.lastDynamicBoomGroup = (groupType)-1;
+    contextOfTheGame.lastDynamicDeclineGroup = (groupType)-1;
     contextOfTheGame.currentBoardRound = 1;
 
     int noOfBankruptPlayer = 0;
@@ -151,8 +157,15 @@ void startGame(void) {
         if (noOfBankruptPlayer == 3) {
             break;
         }
+        int previousRound = contextOfTheGame.currentBoardRound;
         roundCounter(&contextOfTheGame, &player_1, &player_2, &player_3,
                      &player_4);
+
+        // round-based effects tick only when a new round actually starts
+        if (contextOfTheGame.currentBoardRound != previousRound) {
+            decayRegionalDevelopmentEffects(&contextOfTheGame, board);
+            decayDynamicPropertyEffects(&contextOfTheGame, board);
+        }
 
         // trigger events after a set number of rounds
         if ((contextOfTheGame.currentBoardRound % 15 == 0) &&
@@ -175,7 +188,10 @@ void startGame(void) {
             regionalDevelopmentActivate(board, &contextOfTheGame, &playerPointerObject);
         }
 
-        decayRegionalDevelopmentEffects(&contextOfTheGame, board);
+        if ((contextOfTheGame.currentBoardRound % 10 == 0) &&
+            (contextOfTheGame.currentBoardRound != contextOfTheGame.roundThatDynamicPropertyEventHappened)) {
+            dynamicPropertyEventActivate(board, &contextOfTheGame);
+        }
     }
 
     player *players[4] = {&player_1, &player_2, &player_3, &player_4};
