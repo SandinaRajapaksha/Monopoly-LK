@@ -27,6 +27,9 @@ void startGame(void) {
     contextOfTheGame.dynamicDeclineGroup = (groupType)-1;
     contextOfTheGame.lastDynamicBoomGroup = (groupType)-1;
     contextOfTheGame.lastDynamicDeclineGroup = (groupType)-1;
+    contextOfTheGame.currentActiveGovRegulation = (govRegulationsType)-1;
+    contextOfTheGame.govRegulationRoundsRemaining = 0;
+    contextOfTheGame.roundThatGovRegulationHappened = -1;
     contextOfTheGame.currentBoardRound = 1;
 
     int noOfBankruptPlayer = 0;
@@ -165,6 +168,7 @@ void startGame(void) {
         if (contextOfTheGame.currentBoardRound != previousRound) {
             decayRegionalDevelopmentEffects(&contextOfTheGame, board);
             decayDynamicPropertyEffects(&contextOfTheGame, board);
+            decayGovRegulationEffects(&contextOfTheGame, board);
         }
 
         // trigger events after a set number of rounds
@@ -191,6 +195,11 @@ void startGame(void) {
         if ((contextOfTheGame.currentBoardRound % 10 == 0) &&
             (contextOfTheGame.currentBoardRound != contextOfTheGame.roundThatDynamicPropertyEventHappened)) {
             dynamicPropertyEventActivate(board, &contextOfTheGame);
+        }
+
+        if ((contextOfTheGame.currentBoardRound % 15 == 0) &&
+            (contextOfTheGame.currentBoardRound != contextOfTheGame.roundThatGovRegulationHappened)) {
+            govRegulationsActivate(board, &contextOfTheGame, &playerPointerObject);
         }
     }
 

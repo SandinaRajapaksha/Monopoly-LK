@@ -149,6 +149,9 @@ void resolveUtility(player *player_x, square *board, context *contextOfTheGame, 
     case 1:
 
         board[player_x->currentSquare].utilityProperties.currentUtilityRent = 4 * player_x->diceRoll;
+        if (contextOfTheGame->currentActiveGovRegulation == ElectricityTariffRevision) {
+            board[player_x->currentSquare].utilityProperties.currentUtilityRent = doubleToInt(board[player_x->currentSquare].utilityProperties.currentUtilityRent * 0.50);
+        }
         if (player_x->cash >= board[player_x->currentSquare].utilityProperties.currentUtilityRent) {
             player_x->cash -= board[player_x->currentSquare].utilityProperties.currentUtilityRent;
             board[player_x->currentSquare].owner->cash += board[player_x->currentSquare].utilityProperties.currentUtilityRent;
@@ -161,6 +164,9 @@ void resolveUtility(player *player_x, square *board, context *contextOfTheGame, 
     case 2:
 
         board[player_x->currentSquare].utilityProperties.currentUtilityRent = 10 * player_x->diceRoll;
+        if (contextOfTheGame->currentActiveGovRegulation == ElectricityTariffRevision) {
+            board[player_x->currentSquare].utilityProperties.currentUtilityRent = doubleToInt(board[player_x->currentSquare].utilityProperties.currentUtilityRent * 0.50);
+        }
         if (player_x->cash >= board[player_x->currentSquare].utilityProperties.currentUtilityRent) {
             player_x->cash -= board[player_x->currentSquare].utilityProperties.currentUtilityRent;
             board[player_x->currentSquare].owner->cash += board[player_x->currentSquare].utilityProperties.currentUtilityRent;

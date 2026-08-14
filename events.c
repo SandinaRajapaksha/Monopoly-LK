@@ -163,12 +163,168 @@ void econEventActivate(square *board, context *contextOfTheGame) {
         contextOfTheGame->currentBoardRound;
 }
 
-void govRegulationsActivate(square *board) {
-    // random
-    govRegulationsType govRegulations[8] = {
-        IncreasePropertyTax, ReduceLoanInterest, HousingSubsidy,
+char *getGovRegulationName(govRegulationsType regulation) {
+    switch (regulation) {
+    case IncreasePropertyTax:
+        return "Increase Property Tax";
+    case HousingSubsidy:
+        return "Housing Subsidy";
+    case LuxaryPropertyTax:
+        return "Luxury Property Tax";
+    case RailwayModernization:
+        return "Railway Modernization";
+    case ElectricityTariffRevision:
+        return "Electricity Tariff Revision";
+    case AntiSpeculantAct:
+        return "Anti-Speculant Act";
+    default:
+        return "Unknown";
+    }
+}
+
+void housingSubsidy_gov_activate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property) {
+            board[i].PropertyProperties.houseConstructionCost = doubleToInt(board[i].PropertyProperties.houseConstructionCost * 0.80);
+            board[i].PropertyProperties.hotelConstructionCost = doubleToInt(board[i].PropertyProperties.hotelConstructionCost * 0.80);
+        }
+    }
+}
+void housingSubsidy_gov_deactivate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property) {
+            board[i].PropertyProperties.houseConstructionCost = doubleToInt(board[i].PropertyProperties.houseConstructionCost / 0.80);
+            board[i].PropertyProperties.hotelConstructionCost = doubleToInt(board[i].PropertyProperties.hotelConstructionCost / 0.80);
+        }
+    }
+}
+
+void railwayModernization_activate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == railway) {
+            board[i].curruntValue = doubleToInt(board[i].curruntValue * 1.20);
+        }
+    }
+}
+void railwayModernization_deactivate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == railway) {
+            board[i].curruntValue = doubleToInt(board[i].curruntValue / 1.20);
+        }
+    }
+}
+
+void govRegulationDeactivate(square *board, context *contextOfTheGame) {
+    switch (contextOfTheGame->currentActiveGovRegulation) {
+    case IncreasePropertyTax:
+        contextOfTheGame->currentTaxRate = doubleToInt(contextOfTheGame->currentTaxRate / 1.50);
+        break;
+    case HousingSubsidy:
+        housingSubsidy_gov_deactivate(board);
+        break;
+    case RailwayModernization:
+        railwayModernization_deactivate(board);
+        break;
+    case ElectricityTariffRevision:
+        break;
+    default:
+        break;
+    }
+}
+
+void govRegulationsActivate(square *board, context *contextOfTheGame, playerPointers *playerObject) {
+    // end any leftover regulation from a previous draw first
+    if (contextOfTheGame->govRegulationRoundsRemaining > 0 &&
+        contextOfTheGame->currentActiveGovRegulation != (govRegulationsType)-1) {
+        govRegulationDeactivate(board, contextOfTheGame);
+        printf("%s regulation expired\n", getGovRegulationName(contextOfTheGame->currentActiveGovRegulation));
+    }
+
+    // random regulation
+    govRegulationsType govRegulations[6] = {
+        IncreasePropertyTax, HousingSubsidy,
         LuxaryPropertyTax, RailwayModernization, ElectricityTariffRevision,
-        InsuranceRegulation, AntiSpeculantAct};
+        AntiSpeculantAct};
+
+    govRegulationsType regulation = govRegulations[rand() % 6];
+
+    printf("\n=========================================================\n");
+    printf("Government Regulation : %s\n", getGovRegulationName(regulation));
+    printf("---------------------------------------------------------\n");
+
+    switch (regulation) {
+    case IncreasePropertyTax:
+        printf("Property tax rate increased by 50%% for 15 rounds\n");
+        contextOfTheGame->currentTaxRate = doubleToInt(contextOfTheGame->currentTaxRate * 1.50);
+        break;
+    case HousingSubsidy:
+        printf("House and hotel construction costs reduced by 20%% for 15 rounds\n");
+        housingSubsidy_gov_activate(board);
+        break;
+    case LuxaryPropertyTax: {
+        player *all[4] = {playerObject->player_1, playerObject->player_2, playerObject->player_3, playerObject->player_4};
+        for (int i = 0; i < 4; i++) {
+            if (all[i]->isBankrupt) {
+                continue;
+            }
+            for (int j = 0; j < 40; j++) {
+                if (board[j].type == property && board[j].PropertyProperties.propertyGroup == darkBlue && board[j].owner == all[i]) {
+                    int tax = (all[i]->cash >= 3000) ? 3000 : all[i]->cash;
+                    all[i]->cash -= tax;
+                    printf("%s paid LKR %d luxury property tax on %s\n", all[i]->name, tax, board[j].name);
+                }
+            }
+        }
+        break;
+    }
+    case RailwayModernization:
+        printf("Railway station values increase by 20%% for 15 rounds\n");
+        railwayModernization_activate(board);
+        break;
+    case ElectricityTariffRevision:
+        printf("Utility income halved for 15 rounds\n");
+        break;
+    case AntiSpeculantAct: {
+        player *all[4] = {playerObject->player_1, playerObject->player_2, playerObject->player_3, playerObject->player_4};
+        for (int i = 0; i < 4; i++) {
+            if (all[i]->isBankrupt) {
+                continue;
+            }
+            for (int j = 0; j < 40; j++) {
+                if (board[j].type == property && board[j].owner == all[i] &&
+                    board[j].PropertyProperties.noOfHouses == 0 && board[j].PropertyProperties.noOfHotels == 0) {
+                    int fine = (all[i]->cash >= 1500) ? 1500 : all[i]->cash;
+                    all[i]->cash -= fine;
+                    printf("%s paid LKR %d anti-speculant fine on unimproved %s\n", all[i]->name, fine, board[j].name);
+                }
+            }
+        }
+        break;
+    }
+    default:
+        break;
+    }
+    printf("=========================================================\n");
+
+    contextOfTheGame->currentActiveGovRegulation = regulation;
+    contextOfTheGame->govRegulationRoundsRemaining = 15;
+    contextOfTheGame->roundThatGovRegulationHappened = contextOfTheGame->currentBoardRound;
+}
+
+void decayGovRegulationEffects(context *contextOfTheGame, square *board) {
+    if (contextOfTheGame->govRegulationRoundsRemaining <= 0) {
+        return;
+    }
+    contextOfTheGame->govRegulationRoundsRemaining--;
+    if (contextOfTheGame->govRegulationRoundsRemaining > 0) {
+        return;
+    }
+
+    if (contextOfTheGame->currentActiveGovRegulation != (govRegulationsType)-1) {
+        govRegulationDeactivate(board, contextOfTheGame);
+        printf("%s regulation expired\n", getGovRegulationName(contextOfTheGame->currentActiveGovRegulation));
+        contextOfTheGame->currentActiveGovRegulation = (govRegulationsType)-1;
+    }
 }
 
 char *getNatlEventName(NationalEventType effect) {

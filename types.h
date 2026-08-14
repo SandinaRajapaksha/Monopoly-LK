@@ -255,6 +255,9 @@ typedef struct {
     groupType dynamicDeclineGroup;
     groupType lastDynamicBoomGroup;
     groupType lastDynamicDeclineGroup;
+    govRegulationsType currentActiveGovRegulation;
+    int govRegulationRoundsRemaining;
+    int roundThatGovRegulationHappened;
 
 } context;
 
@@ -272,7 +275,14 @@ void startGame(void);
 void initializeBoard(square *, playerPointers *);
 //  randomly choosen after round count
 void econEventActivate(square *, context *);
-void govRegulationsActivate(square *);
+void govRegulationsActivate(square *, context *, playerPointers *);
+void govRegulationDeactivate(square *, context *);
+void decayGovRegulationEffects(context *, square *);
+char *getGovRegulationName(govRegulationsType);
+void housingSubsidy_gov_activate(square *);
+void housingSubsidy_gov_deactivate(square *);
+void railwayModernization_activate(square *);
+void railwayModernization_deactivate(square *);
 void dynamicPropertyEventActivate(square *, context *);
 void decayDynamicPropertyEffects(context *, square *);
 char *getGroupName(groupType);
