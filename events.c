@@ -53,12 +53,31 @@ void disasterAcitivate(square *board, context *contextOfTheGame) {
     propertiesWithBuildings[randomProperty]->PropertyProperties.noOfHotels = 0;
 
     if (propertiesWithBuildings[randomProperty]->PropertyProperties.noOfHouses != 0) {
-        propertiesWithBuildings[randomProperty]->owner->noOfHousesOwned -= propertiesWithBuildings[randomProperty]->PropertyProperties.noOfHouses;
-        propertiesWithBuildings[randomProperty]->PropertyProperties.noOfHouses = 0;
+        int total_loss_houses_value = propertiesWithBuildings[randomProperty]->PropertyProperties.noOfHouses *
+                                      propertiesWithBuildings[randomProperty]->PropertyProperties.houseConstructionCost;
+        // if not insured, repairing logic
+        if (propertiesWithBuildings[randomProperty]->owner->cash >= total_loss_houses_value) {
+
+            propertiesWithBuildings[randomProperty]->owner->cash -= propertiesWithBuildings[randomProperty]->PropertyProperties.houseConstructionCost;
+            printf("%s repaired the property by paying LKR %d\n", propertiesWithBuildings[randomProperty]->owner->name, total_loss_houses_value);
+
+        } else {
+            propertiesWithBuildings[randomProperty]->owner->noOfHousesOwned -= propertiesWithBuildings[randomProperty]->PropertyProperties.noOfHouses;
+            propertiesWithBuildings[randomProperty]->PropertyProperties.noOfHouses = 0;
+        }
     }
     if (propertiesWithBuildings[randomProperty]->PropertyProperties.noOfHotels != 0) {
-        propertiesWithBuildings[randomProperty]->owner->noOfHotelsOwned--;
-        propertiesWithBuildings[randomProperty]->PropertyProperties.noOfHotels = 0;
+        int total_loss_hotel_value = propertiesWithBuildings[randomProperty]->PropertyProperties.noOfHotels;
+        // if not insured, repairing logic
+        if (propertiesWithBuildings[randomProperty]->owner->cash >= total_loss_hotel_value) {
+
+            propertiesWithBuildings[randomProperty]->owner->cash -= propertiesWithBuildings[randomProperty]->PropertyProperties.hotelConstructionCost;
+            printf("%s repaired the property by paying LKR %d\n", propertiesWithBuildings[randomProperty]->name, total_loss_hotel_value);
+        } else {
+
+            propertiesWithBuildings[randomProperty]->owner->noOfHotelsOwned--;
+            propertiesWithBuildings[randomProperty]->PropertyProperties.noOfHotels = 0;
+        }
     }
 
     printf("=========================================================\n");
