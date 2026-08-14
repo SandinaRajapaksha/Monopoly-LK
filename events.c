@@ -171,10 +171,216 @@ void govRegulationsActivate(square *board) {
         InsuranceRegulation, AntiSpeculantAct};
 }
 
-void nationalEventActivate(int *topNationalEventcard, square *board) {
-    // deck
-    NationalEventType NationalEventCards[19] = {
-        TourismHype, FuelShortage, PoliticalRally,
+static const char *getNatlEventName(NationalEventType effect) {
+    switch (effect) {
+    case TourismHype:
+        return "Tourism Hype";
+    case FuelShortage:
+        return "Fuel Shortage";
+    case HeavyFloods:
+        return "Heavy Floods";
+    case PoliticalRally:
+        return "Political Rally";
+    case StockMarketRise:
+        return "Stock Market Rise";
+    case EconomicDowntime:
+        return "Economic Downturn";
+    case HousingSubsidy_NationalEvent:
+        return "Housing Subsidy";
+    case InterestRateCut:
+        return "Interest Rate Cut";
+    case InterestRateIncrease:
+        return "Interest Rate Increase";
+    case TaxAmnesty:
+        return "Tax Amnesty";
+    case PowerFailure:
+        return "Power Failure";
+    case ForeignFunding:
+        return "Foreign Funding";
+    case PortExpansion:
+        return "Port Expansion";
+    case FestivalSeason:
+        return "Festival Season";
+    case LabourStrike:
+        return "Labour Strike";
+    case InsuranceDiscount:
+        return "Insurance Discount";
+    case PropertyRevaluation:
+        return "Property Revaluation";
+    case CurrencyDepreciation:
+        return "Currency Depreciation";
+    case GovernmentGrant:
+        return "Government Grant";
+    case NationalDisaster:
+        return "National Disaster";
+    }
+    return "Unknown";
+}
+
+static void addNatlEffect(player *player_x, NationalEventType effect, int rounds, groupType group, int squareIdx) {
+    if (player_x->numActiveNatlEffects >= 5) {
+        return;
+    }
+    int i = player_x->numActiveNatlEffects++;
+    player_x->activeNatlEffects[i].effect = effect;
+    player_x->activeNatlEffects[i].roundsRemaining = rounds;
+    player_x->activeNatlEffects[i].affectedGroup = group;
+    player_x->activeNatlEffects[i].affectedSquare = squareIdx;
+}
+
+static void stockMarketRise_activate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        board[i].curruntValue = doubleToInt(board[i].curruntValue * 1.10);
+    }
+}
+static void stockMarketRise_deactivate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        board[i].curruntValue = doubleToInt(board[i].curruntValue / 1.10);
+    }
+}
+
+static void economicDownturn_activate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        board[i].curruntValue = doubleToInt(board[i].curruntValue * 0.85);
+        if (board[i].type == property) {
+            board[i].PropertyProperties.currentRentalofProperty = doubleToInt(board[i].PropertyProperties.currentRentalofProperty * 0.90);
+        }
+    }
+}
+static void economicDownturn_deactivate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        board[i].curruntValue = doubleToInt(board[i].curruntValue / 0.85);
+        if (board[i].type == property) {
+            board[i].PropertyProperties.currentRentalofProperty = doubleToInt(board[i].PropertyProperties.currentRentalofProperty / 0.90);
+        }
+    }
+}
+
+static void housingSubsidy_activate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property) {
+            board[i].PropertyProperties.houseConstructionCost = doubleToInt(board[i].PropertyProperties.houseConstructionCost * 0.70);
+        }
+    }
+}
+static void housingSubsidy_deactivate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property) {
+            board[i].PropertyProperties.houseConstructionCost = doubleToInt(board[i].PropertyProperties.houseConstructionCost / 0.70);
+        }
+    }
+}
+
+static void foreignFunding_activate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property &&
+            (board[i].PropertyProperties.propertyGroup == orange || board[i].PropertyProperties.propertyGroup == red)) {
+            board[i].curruntValue = doubleToInt(board[i].curruntValue * 1.15);
+        }
+    }
+}
+static void foreignFunding_deactivate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property &&
+            (board[i].PropertyProperties.propertyGroup == orange || board[i].PropertyProperties.propertyGroup == red)) {
+            board[i].curruntValue = doubleToInt(board[i].curruntValue / 1.15);
+        }
+    }
+}
+
+static void portExpansion_activate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == railway) {
+            board[i].curruntValue = doubleToInt(board[i].curruntValue * 1.20);
+        }
+    }
+}
+static void portExpansion_deactivate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == railway) {
+            board[i].curruntValue = doubleToInt(board[i].curruntValue / 1.20);
+        }
+    }
+}
+
+static void currencyDepreciation_activate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property) {
+            board[i].PropertyProperties.houseConstructionCost = doubleToInt(board[i].PropertyProperties.houseConstructionCost * 1.10);
+            board[i].PropertyProperties.hotelConstructionCost = doubleToInt(board[i].PropertyProperties.hotelConstructionCost * 1.10);
+        }
+    }
+}
+static void currencyDepreciation_deactivate(square *board) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property) {
+            board[i].PropertyProperties.houseConstructionCost = doubleToInt(board[i].PropertyProperties.houseConstructionCost / 1.10);
+            board[i].PropertyProperties.hotelConstructionCost = doubleToInt(board[i].PropertyProperties.hotelConstructionCost / 1.10);
+        }
+    }
+}
+
+static groupType propertyRevaluation_activate(square *board) {
+    groupType group = (groupType)(brown + (rand() % 8));
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property && board[i].PropertyProperties.propertyGroup == group) {
+            board[i].curruntValue = doubleToInt(board[i].curruntValue * 1.15);
+        }
+    }
+    return group;
+}
+static void propertyRevaluation_deactivate(square *board, groupType group) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].type == property && board[i].PropertyProperties.propertyGroup == group) {
+            board[i].curruntValue = doubleToInt(board[i].curruntValue / 1.15);
+        }
+    }
+}
+
+static void recalcRent(square *sq) {
+    int n = (sq->PropertyProperties.noOfHotels == 1) ? 5 : sq->PropertyProperties.noOfHouses;
+    switch (n) {
+    case 1:
+        sq->PropertyProperties.currentRentalofProperty = 2 * sq->PropertyProperties.baseRental;
+        break;
+    case 2:
+        sq->PropertyProperties.currentRentalofProperty = 3 * sq->PropertyProperties.baseRental;
+        break;
+    case 3:
+        sq->PropertyProperties.currentRentalofProperty = 5 * sq->PropertyProperties.baseRental;
+        break;
+    case 4:
+        sq->PropertyProperties.currentRentalofProperty = 7 * sq->PropertyProperties.baseRental;
+        break;
+    case 5:
+        sq->PropertyProperties.currentRentalofProperty = 10 * sq->PropertyProperties.baseRental;
+        break;
+    default:
+        sq->PropertyProperties.currentRentalofProperty = sq->PropertyProperties.baseRental;
+        break;
+    }
+}
+
+static void damageBuilding(square *sq) {
+    if (sq->PropertyProperties.noOfHotels == 1) {
+        sq->PropertyProperties.noOfHotels = 0;
+        sq->owner->noOfHotelsOwned--;
+        printf("Hotel destroyed at %s\n", sq->name);
+    } else if (sq->PropertyProperties.noOfHouses > 0) {
+        sq->PropertyProperties.noOfHouses--;
+        sq->owner->noOfHousesOwned--;
+        printf("A house destroyed at %s\n", sq->name);
+    } else {
+        printf("No buildings at %s - nothing damaged\n", sq->name);
+        return;
+    }
+    recalcRent(sq);
+}
+
+void nationalEventActivate(player *player_x, square *board, context *contextOfTheGame, playerPointers *playerObject) {
+    // 20-card deck, top card drawn, then returned to the bottom
+    NationalEventType deck[20] = {
+        TourismHype, FuelShortage, HeavyFloods, PoliticalRally,
         StockMarketRise, EconomicDowntime, HousingSubsidy_NationalEvent,
         InterestRateCut, InterestRateIncrease, TaxAmnesty,
         PowerFailure, ForeignFunding, PortExpansion,
@@ -182,12 +388,211 @@ void nationalEventActivate(int *topNationalEventcard, square *board) {
         PropertyRevaluation, CurrencyDepreciation, GovernmentGrant,
         NationalDisaster};
 
-    NationalEventType currentNationalEvent =
-        NationalEventCards[*topNationalEventcard];
-    // all the shit happening accoding to event
+    NationalEventType card = deck[contextOfTheGame->topNationalEventCard];
+    contextOfTheGame->topNationalEventCard = (contextOfTheGame->topNationalEventCard + 1) % 20;
 
-    // push the card to bottom
-    *topNationalEventcard = (*topNationalEventcard + 1) % 19;
+    printf("\n=========================================================\n");
+    printf("National Event Card : %s\n", getNatlEventName(card));
+    printf("Drawn by : %s\n", player_x->name);
+    printf("---------------------------------------------------------\n");
+
+    switch (card) {
+    case TourismHype:
+        printf("Hotels earn double rent for 5 rounds\n");
+        addNatlEffect(player_x, card, 5, 0, -1);
+        break;
+    case FuelShortage:
+        printf("Railway rent doubles for 5 rounds\n");
+        addNatlEffect(player_x, card, 5, 0, -1);
+        break;
+    case HeavyFloods: {
+        int coastal[40], n = 0;
+        for (int i = 0; i < 40; i++) {
+            if (board[i].type == property && board[i].PropertyProperties.propertyGroup == yellow && board[i].owner == player_x) {
+                coastal[n++] = i;
+            }
+        }
+        if (n > 0) {
+            int idx = coastal[rand() % n];
+            printf("Heavy floods damage %s\n", board[idx].name);
+            damageBuilding(&board[idx]);
+        } else {
+            printf("No coastal property owned - no damage\n");
+        }
+        break;
+    }
+    case PoliticalRally: {
+        int owned[40], n = 0;
+        for (int i = 0; i < 40; i++) {
+            if (board[i].type == property && board[i].owner == player_x) {
+                owned[n++] = i;
+            }
+        }
+        if (n > 0) {
+            int idx = owned[rand() % n];
+            board[idx].isClosed = true;
+            printf("%s is closed for 2 rounds\n", board[idx].name);
+            addNatlEffect(player_x, card, 2, 0, idx);
+        } else {
+            printf("No property owned - nothing closed\n");
+        }
+        break;
+    }
+    case StockMarketRise:
+        printf("All property values increase by 10%% for 15 rounds\n");
+        stockMarketRise_activate(board);
+        addNatlEffect(player_x, card, 15, 0, -1);
+        break;
+    case EconomicDowntime:
+        printf("Property values decrease by 15%% for 15 rounds\n");
+        economicDownturn_activate(board);
+        addNatlEffect(player_x, card, 15, 0, -1);
+        break;
+    case HousingSubsidy_NationalEvent:
+        printf("House construction cost reduced by 30%% for 15 rounds\n");
+        housingSubsidy_activate(board);
+        addNatlEffect(player_x, card, 15, 0, -1);
+        break;
+    case InterestRateCut:
+        printf("Loan interest reduced by 2%% for 15 rounds\n");
+        addNatlEffect(player_x, card, 15, 0, -1);
+        break;
+    case InterestRateIncrease:
+        printf("Loan interest increased by 2%% for 15 rounds\n");
+        addNatlEffect(player_x, card, 15, 0, -1);
+        break;
+    case TaxAmnesty: {
+        player *all[4] = {playerObject->player_1, playerObject->player_2, playerObject->player_3, playerObject->player_4};
+        for (int i = 0; i < 4; i++) {
+            if (!all[i]->isBankrupt) {
+                all[i]->cash += 2000;
+                printf("%s received LKR 2000 tax amnesty\n", all[i]->name);
+            }
+        }
+        break;
+    }
+    case PowerFailure:
+        printf("Utility income halved for 3 rounds\n");
+        addNatlEffect(player_x, card, 3, 0, -1);
+        break;
+    case ForeignFunding:
+        printf("Commercial (orange + red) property values increase by 15%% for 15 rounds\n");
+        foreignFunding_activate(board);
+        addNatlEffect(player_x, card, 15, 0, -1);
+        break;
+    case PortExpansion:
+        printf("Railway station values increase by 20%% for 15 rounds\n");
+        portExpansion_activate(board);
+        addNatlEffect(player_x, card, 15, 0, -1);
+        break;
+    case FestivalSeason:
+        printf("Hotels receive 50%% additional rent for 15 rounds\n");
+        addNatlEffect(player_x, card, 15, 0, -1);
+        break;
+    case LabourStrike:
+        printf("Construction suspended for 2 rounds\n");
+        player_x->constructionSuspended = true;
+        addNatlEffect(player_x, card, 2, 0, -1);
+        break;
+    case InsuranceDiscount:
+        printf("Insurance premiums reduced by 20%% for 15 rounds\n");
+        addNatlEffect(player_x, card, 15, 0, -1);
+        break;
+    case PropertyRevaluation: {
+        groupType group = propertyRevaluation_activate(board);
+        printf("Random property group appreciates by 15%% for 15 rounds\n");
+        addNatlEffect(player_x, card, 15, group, -1);
+        break;
+    }
+    case CurrencyDepreciation:
+        printf("Construction costs increase by 10%% for 15 rounds\n");
+        currencyDepreciation_activate(board);
+        addNatlEffect(player_x, card, 15, 0, -1);
+        break;
+    case GovernmentGrant: {
+        player *all[4] = {playerObject->player_1, playerObject->player_2, playerObject->player_3, playerObject->player_4};
+        int solvent[4], n = 0;
+        for (int i = 0; i < 4; i++) {
+            if (!all[i]->isBankrupt) {
+                solvent[n++] = i;
+            }
+        }
+        if (n > 0) {
+            int idx = solvent[rand() % n];
+            all[idx]->cash += 5000;
+            printf("%s received LKR 5000 government grant\n", all[idx]->name);
+        }
+        break;
+    }
+    case NationalDisaster: {
+        int developed[40], n = 0;
+        for (int i = 0; i < 40; i++) {
+            if (board[i].type == property && (board[i].PropertyProperties.noOfHouses > 0 || board[i].PropertyProperties.noOfHotels > 0)) {
+                developed[n++] = i;
+            }
+        }
+        if (n > 0) {
+            int idx = developed[rand() % n];
+            printf("National disaster damages %s\n", board[idx].name);
+            damageBuilding(&board[idx]);
+        } else {
+            printf("No developed property - no damage\n");
+        }
+        break;
+    }
+    }
+    printf("=========================================================\n");
+}
+
+void decayNationalEventEffects(player *player_x, square *board) {
+    int i = 0;
+    while (i < player_x->numActiveNatlEffects) {
+        player_x->activeNatlEffects[i].roundsRemaining--;
+        if (player_x->activeNatlEffects[i].roundsRemaining > 0) {
+            i++;
+            continue;
+        }
+
+        NationalEventType effect = player_x->activeNatlEffects[i].effect;
+        switch (effect) {
+        case StockMarketRise:
+            stockMarketRise_deactivate(board);
+            break;
+        case EconomicDowntime:
+            economicDownturn_deactivate(board);
+            break;
+        case HousingSubsidy_NationalEvent:
+            housingSubsidy_deactivate(board);
+            break;
+        case ForeignFunding:
+            foreignFunding_deactivate(board);
+            break;
+        case PortExpansion:
+            portExpansion_deactivate(board);
+            break;
+        case CurrencyDepreciation:
+            currencyDepreciation_deactivate(board);
+            break;
+        case PropertyRevaluation:
+            propertyRevaluation_deactivate(board, player_x->activeNatlEffects[i].affectedGroup);
+            break;
+        case PoliticalRally:
+            board[player_x->activeNatlEffects[i].affectedSquare].isClosed = false;
+            printf("%s is reopened\n", board[player_x->activeNatlEffects[i].affectedSquare].name);
+            break;
+        case LabourStrike:
+            player_x->constructionSuspended = false;
+            break;
+        default:
+            break;
+        }
+        printf("%s effect expired for %s\n", getNatlEventName(effect), player_x->name);
+
+        for (int j = i; j < player_x->numActiveNatlEffects - 1; j++) {
+            player_x->activeNatlEffects[j] = player_x->activeNatlEffects[j + 1];
+        }
+        player_x->numActiveNatlEffects--;
+    }
 }
 
 void regionalDevelopmentActivate(int *topreigionaldevelopmentcard,

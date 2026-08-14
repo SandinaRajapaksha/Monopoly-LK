@@ -13,6 +13,8 @@ void resolveSquare(player *player_x, square *board, context *contextOfGame, play
         player_x->hasDebt = false;
     }
 
+    decayNationalEventEffects(player_x, board);
+
     squareType squareToResolve = board[player_x->currentSquare].type;
     switch (squareToResolve) {
     case go:
@@ -28,7 +30,7 @@ void resolveSquare(player *player_x, square *board, context *contextOfGame, play
         resolveUtility(player_x, board, contextOfGame, playerObject);
         break;
     case event:
-        resolveEvent(player_x, board);
+        resolveEvent(player_x, board, contextOfGame, playerObject);
         break;
     case insure:
         resolveInsure(player_x, board);
@@ -172,7 +174,9 @@ void resolveUtility(player *player_x, square *board, context *contextOfTheGame, 
         break;
     }
 }
-void resolveEvent(player *player_x, square *board) {}
+void resolveEvent(player *player_x, square *board, context *contextOfTheGame, playerPointers *playerObject) {
+    nationalEventActivate(player_x, board, contextOfTheGame, playerObject);
+}
 void resolveInsure(player *player_x, square *board) {}
 void resolveTax(player *player_x, square *board, context *contextOfTheGame) {
     int taxAmount = doubleToInt((double)player_x->cash * (double)contextOfTheGame->currentTaxRate / 100.0000);
@@ -450,6 +454,11 @@ void resolveProperty(player *player_x, square *board,
 
     // if property owned by the player
     else if (board[player_x->currentSquare].owner == player_x) {
+
+        if (player_x->constructionSuspended == true) {
+            printf("%s cannot construct buildings (Labour Strike) ...\n", player_x->name);
+            return;
+        }
 
         bool eligibleForHouse = checkForMonopoly(player_x, board);
 

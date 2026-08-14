@@ -36,100 +36,6 @@ typedef enum {
 
 typedef enum { inside = 401,
                outside } jailStatus;
-typedef struct {
-    playerType playerID;
-    char *name;
-    int rank;
-    int diceRoll;
-    int currentSquare;
-    int totalsteps;
-    int cash;
-    int netWorth;
-    jailStatus Jail;
-    int jailRoundCounter;
-    int noOfHousesOwned;
-    int noOfHotelsOwned;
-    bool hasDebt;
-    int noOfProperties;
-    int outStandingLoan;
-    bool isBankrupt;
-    int MaxElegibleLoanAmount;
-    int loanRepaymentRoundCount;
-    int laps;
-    int loantakigLap;
-    int noOfRailways;
-    int noOfUtilities;
-} player;
-
-typedef enum { cannotMortgage,
-               mortgagedToBank,
-               noMortgage } mortgageType;
-
-typedef enum {
-    brown = 8001,
-    lightBlue,
-    pink,
-    orange,
-    red,
-    yellow,
-    green,
-    darkBlue
-} groupType;
-
-typedef enum {
-    gotoJail = 6001,
-    JailOrVisiting,
-    FreeParking
-
-} specialityType;
-
-typedef enum {
-    none,
-    Ceylinco,
-    SL_Insurance
-} insurance;
-
-typedef struct sq {
-
-    int squareID;
-    char *name;
-    squareType type;
-    player *owner;
-    mortgageType mortgageStatus;
-    int mortgageValue;
-    int curruntValue;
-
-    struct {
-        int baseRentOfRailway;
-        int baseRentOfRailway_2_owned;
-        int baseRentOfRailway_3_owned;
-        int baseRentOfRailway_4_owned;
-    } railwayProperties;
-
-    struct {
-        int initialPrice;
-        groupType propertyGroup;
-        int baseRental;
-        int houseConstructionCost;
-        int hotelConstructionCost;
-        insurance insuranceCompany;
-        int noOfHouses;
-        int noOfHotels;
-        int currentRentalofProperty;
-
-    } PropertyProperties;
-
-    struct {
-        int taxAmount;
-    } TaxSquareProperties;
-    struct {
-        specialityType specililtyOfSquare;
-    } specialityProperties;
-    struct {
-        int currentUtilityRent;
-    } utilityProperties;
-
-} square;
 
 // event_related types
 typedef enum {
@@ -172,6 +78,7 @@ typedef enum {
 
     TourismHype = 3001,
     FuelShortage,
+    HeavyFloods,
     PoliticalRally,
     StockMarketRise,
     EconomicDowntime,
@@ -218,6 +125,110 @@ typedef enum {
 
 } dynamicPropertyMarketEventType;
 
+typedef enum {
+    brown = 8001,
+    lightBlue,
+    pink,
+    orange,
+    red,
+    yellow,
+    green,
+    darkBlue
+} groupType;
+
+typedef struct {
+    playerType playerID;
+    char *name;
+    int rank;
+    int diceRoll;
+    int currentSquare;
+    int totalsteps;
+    int cash;
+    int netWorth;
+    jailStatus Jail;
+    int jailRoundCounter;
+    int noOfHousesOwned;
+    int noOfHotelsOwned;
+    bool hasDebt;
+    int noOfProperties;
+    int outStandingLoan;
+    bool isBankrupt;
+    int MaxElegibleLoanAmount;
+    int loanRepaymentRoundCount;
+    int laps;
+    int loantakigLap;
+    int noOfRailways;
+    int noOfUtilities;
+    int numActiveNatlEffects;
+    struct {
+        NationalEventType effect;
+        int roundsRemaining;
+        groupType affectedGroup;
+        int affectedSquare;
+    } activeNatlEffects[5];
+    bool constructionSuspended;
+} player;
+
+typedef enum { cannotMortgage,
+               mortgagedToBank,
+               noMortgage } mortgageType;
+
+typedef enum {
+    gotoJail = 6001,
+    JailOrVisiting,
+    FreeParking
+
+} specialityType;
+
+typedef enum {
+    none,
+    Ceylinco,
+    SL_Insurance
+} insurance;
+
+typedef struct sq {
+
+    int squareID;
+    char *name;
+    squareType type;
+    player *owner;
+    mortgageType mortgageStatus;
+    int mortgageValue;
+    int curruntValue;
+    bool isClosed;
+
+    struct {
+        int baseRentOfRailway;
+        int baseRentOfRailway_2_owned;
+        int baseRentOfRailway_3_owned;
+        int baseRentOfRailway_4_owned;
+    } railwayProperties;
+
+    struct {
+        int initialPrice;
+        groupType propertyGroup;
+        int baseRental;
+        int houseConstructionCost;
+        int hotelConstructionCost;
+        insurance insuranceCompany;
+        int noOfHouses;
+        int noOfHotels;
+        int currentRentalofProperty;
+
+    } PropertyProperties;
+
+    struct {
+        int taxAmount;
+    } TaxSquareProperties;
+    struct {
+        specialityType specililtyOfSquare;
+    } specialityProperties;
+    struct {
+        int currentUtilityRent;
+    } utilityProperties;
+
+} square;
+
 typedef struct {
     int currentInflation;
     economicEventCardType currentActiveEconEvent;
@@ -228,6 +239,7 @@ typedef struct {
     int currentTaxRate;
     int rounfThatDisasterHappend;
     disaster currentDisaster;
+    int topNationalEventCard;
 
 } context;
 
@@ -248,7 +260,8 @@ void econEventActivate(square *, context *);
 void govRegulationsActivate(square *);
 void dynamicPropertyEventActivate(square *);
 // card decks and draws
-void nationalEventActivate(int *, square *);
+void nationalEventActivate(player *, square *, context *, playerPointers *);
+void decayNationalEventEffects(player *, square *);
 void regionalDevelopmentActivate(int *, square *);
 
 void initializeTurnOrder(player *, player *, player *, player *, player *,
@@ -271,7 +284,7 @@ bool riskTkrRailwayBuyCondition(player *, square *);
 bool consBankerRailwayBuyCondition(player *, square *);
 bool opprtTrdrRailwayBuyCondition(player *, square *, context *);
 void resolveUtility(player *, square *, context *, playerPointers *);
-void resolveEvent(player *, square *);
+void resolveEvent(player *, square *, context *, playerPointers *);
 void resolveInsure(player *, square *);
 void resolveTax(player *, square *, context *);
 void resolveBank(player *, square *, context *);

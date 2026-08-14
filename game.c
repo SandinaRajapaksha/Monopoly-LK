@@ -18,8 +18,8 @@ void startGame(void) {
     contextOfTheGame.currentTaxRate = INITIAL_TAX_RATE;
     contextOfTheGame.rounfThatDisasterHappend = -1;
     contextOfTheGame.currentDisaster = -1;
+    contextOfTheGame.topNationalEventCard = 0;
 
-    int topNationalEventCard = 0;
     int topreigionaldevelopmentcard = 0;
     contextOfTheGame.currentBoardRound = 1;
 
