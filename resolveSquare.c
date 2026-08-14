@@ -13,7 +13,7 @@ void resolveSquare(player *player_x, square *board, context *contextOfGame, play
         player_x->hasDebt = false;
     }
 
-    decayNationalEventEffects(player_x, board);
+    decayNationalEventEffects(player_x, board, contextOfGame);
 
     squareType squareToResolve = board[player_x->currentSquare].type;
     switch (squareToResolve) {

@@ -58,34 +58,54 @@ void resolveBank(player *player_x, square *board, context *contextOfTheGame) {
             // if player has monopoly and cannot afford buildings in cash , he gest a loan.
 
             if (playerHasaMonopoly(player_x, board) && player_x->cash <= 5000) {
-                player_x->hasDebt = true;
-                player_x->cash += player_x->MaxElegibleLoanAmount;
-                player_x->outStandingLoan = player_x->MaxElegibleLoanAmount;
-                printf("%s borrowed a loan of LKR %d from the Bank of Ceylon\n", player_x->name, player_x->MaxElegibleLoanAmount);
+                if (player_x->MaxElegibleLoanAmount > 0) {
+                    player_x->hasDebt = true;
+                    int loanAmount = player_x->MaxElegibleLoanAmount;
+                    int rate = (contextOfTheGame->currentInterestRate > 0) ? contextOfTheGame->currentInterestRate : 0;
+                    int loanInterest = doubleToInt((double)loanAmount * (double)rate / 100.0);
+                    player_x->cash += loanAmount;
+                    player_x->outStandingLoan = loanAmount + loanInterest;
+                    printf("%s borrowed a loan of LKR %d at %d%% interest from the Bank of Ceylon\n", player_x->name, loanAmount, contextOfTheGame->currentInterestRate);
+                }
                 break;
             }
             break;
         case conservativeBanker:
             if (player_x->netWorth < 5000) {
-                player_x->hasDebt = true;
-                player_x->cash += player_x->MaxElegibleLoanAmount;
-                player_x->outStandingLoan = player_x->MaxElegibleLoanAmount;
-                printf("%s borrowed a loan of LKR %d from the Bank of Ceylon\n", player_x->name, player_x->MaxElegibleLoanAmount);
+                if (player_x->MaxElegibleLoanAmount > 0) {
+                    player_x->hasDebt = true;
+                    int loanAmount = player_x->MaxElegibleLoanAmount;
+                    int rate = (contextOfTheGame->currentInterestRate > 0) ? contextOfTheGame->currentInterestRate : 0;
+                    int loanInterest = doubleToInt((double)loanAmount * (double)rate / 100.0);
+                    player_x->cash += loanAmount;
+                    player_x->outStandingLoan = loanAmount + loanInterest;
+                    printf("%s borrowed a loan of LKR %d at %d%% interest from the Bank of Ceylon\n", player_x->name, loanAmount, contextOfTheGame->currentInterestRate);
+                }
                 break;
             }
             break;
         case riskTaker:
-            player_x->hasDebt = true;
-            player_x->cash += player_x->MaxElegibleLoanAmount;
-            player_x->outStandingLoan = player_x->MaxElegibleLoanAmount;
-            printf("%s borrowed a loan of LKR %d from the Bank of Ceylon\n", player_x->name, player_x->MaxElegibleLoanAmount);
+            if (player_x->MaxElegibleLoanAmount > 0) {
+                player_x->hasDebt = true;
+                int loanAmount = player_x->MaxElegibleLoanAmount;
+                int rate = (contextOfTheGame->currentInterestRate > 0) ? contextOfTheGame->currentInterestRate : 0;
+                int loanInterest = doubleToInt((double)loanAmount * (double)rate / 100.0);
+                player_x->cash += loanAmount;
+                player_x->outStandingLoan = loanAmount + loanInterest;
+                printf("%s borrowed a loan of LKR %d at %d%% interest from the Bank of Ceylon\n", player_x->name, loanAmount, contextOfTheGame->currentInterestRate);
+            }
             break;
         case opportunisticTrader:
             if (contextOfTheGame->currentActiveEconEvent == GovernmentHousingProgramme || contextOfTheGame->currentActiveEconEvent == StockMarketBoom) {
-                player_x->hasDebt = true;
-                player_x->cash += player_x->MaxElegibleLoanAmount;
-                player_x->outStandingLoan = player_x->MaxElegibleLoanAmount;
-                printf("%s borrowed a loan of LKR %d from the Bank of Ceylon\n", player_x->name, player_x->MaxElegibleLoanAmount);
+                if (player_x->MaxElegibleLoanAmount > 0) {
+                    player_x->hasDebt = true;
+                    int loanAmount = player_x->MaxElegibleLoanAmount;
+                    int rate = (contextOfTheGame->currentInterestRate > 0) ? contextOfTheGame->currentInterestRate : 0;
+                    int loanInterest = doubleToInt((double)loanAmount * (double)rate / 100.0);
+                    player_x->cash += loanAmount;
+                    player_x->outStandingLoan = loanAmount + loanInterest;
+                    printf("%s borrowed a loan of LKR %d at %d%% interest from the Bank of Ceylon\n", player_x->name, loanAmount, contextOfTheGame->currentInterestRate);
+                }
                 break;
             }
             break;

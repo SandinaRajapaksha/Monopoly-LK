@@ -105,9 +105,11 @@ void econEventActivate(square *board, context *contextOfTheGame) {
         } else if (contextOfTheGame->currentActiveEconEvent == EconomicRecession) {
             printf("Economic Recession is over... \n");
             recession_deActivate(board);
+            contextOfTheGame->currentInterestRate += 3;
         } else if (contextOfTheGame->currentActiveEconEvent == StockMarketBoom) {
             printf("Stock Market Boom is over... \n");
             StockMarketBoom_deActivate(board);
+            contextOfTheGame->currentInterestRate -= 2;
         } else if (contextOfTheGame->currentActiveEconEvent == GovernmentHousingProgramme) {
             printf("Government Housing Programme is over... \n");
             GovernmentHousingProgramme_deActivate(board);
@@ -141,10 +143,14 @@ void econEventActivate(square *board, context *contextOfTheGame) {
     } else if (randomEconEvent == EconomicRecession) {
         printf("Economic Recession happens... \n");
         recessionActivate(board);
+        contextOfTheGame->currentInterestRate -= 3;
+        printf("Central bank cuts loan interest to %d%%\n", contextOfTheGame->currentInterestRate);
 
     } else if (randomEconEvent == StockMarketBoom) {
         printf("Stock Market Boom happens... \n");
         StockMarketBoomActivate(board);
+        contextOfTheGame->currentInterestRate += 2;
+        printf("Loan interest raised to %d%%\n", contextOfTheGame->currentInterestRate);
 
     } else if (randomEconEvent == GovernmentHousingProgramme) {
         printf("Government Housing Programme happens... \n");
@@ -167,6 +173,8 @@ char *getGovRegulationName(govRegulationsType regulation) {
     switch (regulation) {
     case IncreasePropertyTax:
         return "Increase Property Tax";
+    case ReduceLoanInterest:
+        return "Reduce Loan Interest";
     case HousingSubsidy:
         return "Housing Subsidy";
     case LuxaryPropertyTax:
@@ -219,6 +227,9 @@ void govRegulationDeactivate(square *board, context *contextOfTheGame) {
     case IncreasePropertyTax:
         contextOfTheGame->currentTaxRate = doubleToInt(contextOfTheGame->currentTaxRate / 1.50);
         break;
+    case ReduceLoanInterest:
+        contextOfTheGame->currentInterestRate = doubleToInt(contextOfTheGame->currentInterestRate / 0.50);
+        break;
     case HousingSubsidy:
         housingSubsidy_gov_deactivate(board);
         break;
@@ -241,12 +252,12 @@ void govRegulationsActivate(square *board, context *contextOfTheGame, playerPoin
     }
 
     // random regulation
-    govRegulationsType govRegulations[6] = {
-        IncreasePropertyTax, HousingSubsidy,
+    govRegulationsType govRegulations[7] = {
+        IncreasePropertyTax, ReduceLoanInterest, HousingSubsidy,
         LuxaryPropertyTax, RailwayModernization, ElectricityTariffRevision,
         AntiSpeculantAct};
 
-    govRegulationsType regulation = govRegulations[rand() % 6];
+    govRegulationsType regulation = govRegulations[rand() % 7];
 
     printf("\n=========================================================\n");
     printf("Government Regulation : %s\n", getGovRegulationName(regulation));
@@ -256,6 +267,10 @@ void govRegulationsActivate(square *board, context *contextOfTheGame, playerPoin
     case IncreasePropertyTax:
         printf("Property tax rate increased by 50%% for 15 rounds\n");
         contextOfTheGame->currentTaxRate = doubleToInt(contextOfTheGame->currentTaxRate * 1.50);
+        break;
+    case ReduceLoanInterest:
+        printf("Loan interest reduced by 50%% for 15 rounds\n");
+        contextOfTheGame->currentInterestRate = doubleToInt(contextOfTheGame->currentInterestRate * 0.50);
         break;
     case HousingSubsidy:
         printf("House and hotel construction costs reduced by 20%% for 15 rounds\n");
@@ -611,10 +626,12 @@ void nationalEventActivate(player *player_x, square *board, context *contextOfTh
         break;
     case InterestRateCut:
         printf("Loan interest reduced by 2%% for 15 rounds\n");
+        contextOfTheGame->currentInterestRate -= 2;
         addNatlEffect(player_x, card, 15, 0, -1);
         break;
     case InterestRateIncrease:
         printf("Loan interest increased by 2%% for 15 rounds\n");
+        contextOfTheGame->currentInterestRate += 2;
         addNatlEffect(player_x, card, 15, 0, -1);
         break;
     case TaxAmnesty: {
@@ -700,7 +717,7 @@ void nationalEventActivate(player *player_x, square *board, context *contextOfTh
     printf("=========================================================\n");
 }
 
-void decayNationalEventEffects(player *player_x, square *board) {
+void decayNationalEventEffects(player *player_x, square *board, context *contextOfTheGame) {
     int i = 0;
     while (i < player_x->numActiveNatlEffects) {
         player_x->activeNatlEffects[i].roundsRemaining--;
@@ -738,6 +755,12 @@ void decayNationalEventEffects(player *player_x, square *board) {
             break;
         case LabourStrike:
             player_x->constructionSuspended = false;
+            break;
+        case InterestRateCut:
+            contextOfTheGame->currentInterestRate += 2;
+            break;
+        case InterestRateIncrease:
+            contextOfTheGame->currentInterestRate -= 2;
             break;
         default:
             break;

@@ -7,6 +7,7 @@
 #include <time.h>
 
 #define INITIAL_TAX_RATE 15
+#define INITIAL_INTEREST_RATE 8
 
 typedef struct {
     int rollValue;
@@ -292,7 +293,7 @@ void dynamicPropertyDecline_activate(square *, groupType);
 void dynamicPropertyDecline_deactivate(square *, groupType);
 // card decks and draws
 void nationalEventActivate(player *, square *, context *, playerPointers *);
-void decayNationalEventEffects(player *, square *);
+void decayNationalEventEffects(player *, square *, context *);
 void regionalDevelopmentActivate(square *, context *, playerPointers *);
 void decayRegionalDevelopmentEffects(context *, square *);
 char *getRegionalEventName(regionalDevelopmentType);
