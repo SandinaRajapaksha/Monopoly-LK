@@ -171,7 +171,7 @@ void govRegulationsActivate(square *board) {
         InsuranceRegulation, AntiSpeculantAct};
 }
 
-static const char *getNatlEventName(NationalEventType effect) {
+char *getNatlEventName(NationalEventType effect) {
     switch (effect) {
     case TourismHype:
         return "Tourism Hype";
@@ -217,7 +217,7 @@ static const char *getNatlEventName(NationalEventType effect) {
     return "Unknown";
 }
 
-static void addNatlEffect(player *player_x, NationalEventType effect, int rounds, groupType group, int squareIdx) {
+void addNatlEffect(player *player_x, NationalEventType effect, int rounds, groupType group, int squareIdx) {
     if (player_x->numActiveNatlEffects >= 5) {
         return;
     }
@@ -228,18 +228,18 @@ static void addNatlEffect(player *player_x, NationalEventType effect, int rounds
     player_x->activeNatlEffects[i].affectedSquare = squareIdx;
 }
 
-static void stockMarketRise_activate(square *board) {
+void stockMarketRise_activate(square *board) {
     for (int i = 0; i < 40; i++) {
         board[i].curruntValue = doubleToInt(board[i].curruntValue * 1.10);
     }
 }
-static void stockMarketRise_deactivate(square *board) {
+void stockMarketRise_deactivate(square *board) {
     for (int i = 0; i < 40; i++) {
         board[i].curruntValue = doubleToInt(board[i].curruntValue / 1.10);
     }
 }
 
-static void economicDownturn_activate(square *board) {
+void economicDownturn_activate(square *board) {
     for (int i = 0; i < 40; i++) {
         board[i].curruntValue = doubleToInt(board[i].curruntValue * 0.85);
         if (board[i].type == property) {
@@ -247,7 +247,7 @@ static void economicDownturn_activate(square *board) {
         }
     }
 }
-static void economicDownturn_deactivate(square *board) {
+void economicDownturn_deactivate(square *board) {
     for (int i = 0; i < 40; i++) {
         board[i].curruntValue = doubleToInt(board[i].curruntValue / 0.85);
         if (board[i].type == property) {
@@ -256,14 +256,14 @@ static void economicDownturn_deactivate(square *board) {
     }
 }
 
-static void housingSubsidy_activate(square *board) {
+void housingSubsidy_activate(square *board) {
     for (int i = 0; i < 40; i++) {
         if (board[i].type == property) {
             board[i].PropertyProperties.houseConstructionCost = doubleToInt(board[i].PropertyProperties.houseConstructionCost * 0.70);
         }
     }
 }
-static void housingSubsidy_deactivate(square *board) {
+void housingSubsidy_deactivate(square *board) {
     for (int i = 0; i < 40; i++) {
         if (board[i].type == property) {
             board[i].PropertyProperties.houseConstructionCost = doubleToInt(board[i].PropertyProperties.houseConstructionCost / 0.70);
@@ -271,7 +271,7 @@ static void housingSubsidy_deactivate(square *board) {
     }
 }
 
-static void foreignFunding_activate(square *board) {
+void foreignFunding_activate(square *board) {
     for (int i = 0; i < 40; i++) {
         if (board[i].type == property &&
             (board[i].PropertyProperties.propertyGroup == orange || board[i].PropertyProperties.propertyGroup == red)) {
@@ -279,7 +279,7 @@ static void foreignFunding_activate(square *board) {
         }
     }
 }
-static void foreignFunding_deactivate(square *board) {
+void foreignFunding_deactivate(square *board) {
     for (int i = 0; i < 40; i++) {
         if (board[i].type == property &&
             (board[i].PropertyProperties.propertyGroup == orange || board[i].PropertyProperties.propertyGroup == red)) {
@@ -288,14 +288,14 @@ static void foreignFunding_deactivate(square *board) {
     }
 }
 
-static void portExpansion_activate(square *board) {
+void portExpansion_activate(square *board) {
     for (int i = 0; i < 40; i++) {
         if (board[i].type == railway) {
             board[i].curruntValue = doubleToInt(board[i].curruntValue * 1.20);
         }
     }
 }
-static void portExpansion_deactivate(square *board) {
+void portExpansion_deactivate(square *board) {
     for (int i = 0; i < 40; i++) {
         if (board[i].type == railway) {
             board[i].curruntValue = doubleToInt(board[i].curruntValue / 1.20);
@@ -303,7 +303,7 @@ static void portExpansion_deactivate(square *board) {
     }
 }
 
-static void currencyDepreciation_activate(square *board) {
+void currencyDepreciation_activate(square *board) {
     for (int i = 0; i < 40; i++) {
         if (board[i].type == property) {
             board[i].PropertyProperties.houseConstructionCost = doubleToInt(board[i].PropertyProperties.houseConstructionCost * 1.10);
@@ -311,7 +311,7 @@ static void currencyDepreciation_activate(square *board) {
         }
     }
 }
-static void currencyDepreciation_deactivate(square *board) {
+void currencyDepreciation_deactivate(square *board) {
     for (int i = 0; i < 40; i++) {
         if (board[i].type == property) {
             board[i].PropertyProperties.houseConstructionCost = doubleToInt(board[i].PropertyProperties.houseConstructionCost / 1.10);
@@ -320,7 +320,7 @@ static void currencyDepreciation_deactivate(square *board) {
     }
 }
 
-static groupType propertyRevaluation_activate(square *board) {
+groupType propertyRevaluation_activate(square *board) {
     groupType group = (groupType)(brown + (rand() % 8));
     for (int i = 0; i < 40; i++) {
         if (board[i].type == property && board[i].PropertyProperties.propertyGroup == group) {
@@ -329,7 +329,7 @@ static groupType propertyRevaluation_activate(square *board) {
     }
     return group;
 }
-static void propertyRevaluation_deactivate(square *board, groupType group) {
+void propertyRevaluation_deactivate(square *board, groupType group) {
     for (int i = 0; i < 40; i++) {
         if (board[i].type == property && board[i].PropertyProperties.propertyGroup == group) {
             board[i].curruntValue = doubleToInt(board[i].curruntValue / 1.15);
@@ -337,7 +337,7 @@ static void propertyRevaluation_deactivate(square *board, groupType group) {
     }
 }
 
-static void recalcRent(square *sq) {
+void recalcRent(square *sq) {
     int n = (sq->PropertyProperties.noOfHotels == 1) ? 5 : sq->PropertyProperties.noOfHouses;
     switch (n) {
     case 1:
@@ -361,7 +361,7 @@ static void recalcRent(square *sq) {
     }
 }
 
-static void damageBuilding(square *sq) {
+void damageBuilding(square *sq) {
     if (sq->PropertyProperties.noOfHotels == 1) {
         sq->PropertyProperties.noOfHotels = 0;
         sq->owner->noOfHotelsOwned--;

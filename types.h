@@ -262,6 +262,24 @@ void dynamicPropertyEventActivate(square *);
 // card decks and draws
 void nationalEventActivate(player *, square *, context *, playerPointers *);
 void decayNationalEventEffects(player *, square *);
+char *getNatlEventName(NationalEventType);
+void addNatlEffect(player *, NationalEventType, int, groupType, int);
+void stockMarketRise_activate(square *);
+void stockMarketRise_deactivate(square *);
+void economicDownturn_activate(square *);
+void economicDownturn_deactivate(square *);
+void housingSubsidy_activate(square *);
+void housingSubsidy_deactivate(square *);
+void foreignFunding_activate(square *);
+void foreignFunding_deactivate(square *);
+void portExpansion_activate(square *);
+void portExpansion_deactivate(square *);
+void currencyDepreciation_activate(square *);
+void currencyDepreciation_deactivate(square *);
+groupType propertyRevaluation_activate(square *);
+void propertyRevaluation_deactivate(square *, groupType);
+void recalcRent(square *);
+void damageBuilding(square *);
 void regionalDevelopmentActivate(int *, square *);
 
 void initializeTurnOrder(player *, player *, player *, player *, player *,
