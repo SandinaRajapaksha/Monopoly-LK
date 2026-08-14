@@ -47,5 +47,66 @@ void printMarketConditions(context *contextofgame) {
         break;
     }
     printf("Rounds remaining : %d\n", roundsLeftEconEvent + 1);
+
+    // disaster
+    printf("\nDisaster\n------------------------------------------------------\n");
+    switch (contextofgame->currentDisaster) {
+    case fire:
+        printf("Fire\n");
+        break;
+    case flood:
+        printf("Flood\n");
+        break;
+    case riot:
+        printf("Riot\n");
+        break;
+    case buildingCollapse:
+        printf("Building Collapse\n");
+        break;
+    case electricalFailure:
+        printf("Electrical Failure\n");
+        break;
+    default:
+        printf("No disaster active\n");
+        break;
+    }
+
+    // tax and loan interest rates
+    printf("\nTax Rate\n------------------------------------------------------\n%d%%\n", contextofgame->currentTaxRate);
+    printf("\nLoan Interest Rate\n------------------------------------------------------\n%d%%\n", contextofgame->currentInterestRate);
+
+    // government regulation
+    printf("\nGovernment Regulation\n------------------------------------------------------\n");
+    if (contextofgame->currentActiveGovRegulation != (govRegulationsType)-1) {
+        printf("%s\nround remaining : %d\n",
+               getGovRegulationName(contextofgame->currentActiveGovRegulation),
+               contextofgame->govRegulationRoundsRemaining);
+    } else {
+        printf("No regulation active\n");
+    }
+
+    // dynamic property market boom / decline
+    printf("\nDynamic Property Market\n------------------------------------------------------\n");
+    if (contextofgame->dynamicEventRoundsRemaining > 0) {
+        printf("Boom group : %s\nDecline group : %s\nround remaining : %d\n",
+               getGroupName(contextofgame->dynamicBoomGroup),
+               getGroupName(contextofgame->dynamicDeclineGroup),
+               contextofgame->dynamicEventRoundsRemaining);
+    } else {
+        printf("No boom or decline active\n");
+    }
+
+    // regional development effects
+    printf("\nRegional Development Effects\n------------------------------------------------------\n");
+    if (contextofgame->numActiveRegionalEffects > 0) {
+        for (int i = 0; i < contextofgame->numActiveRegionalEffects; i++) {
+            printf("%s - round remaining : %d\n",
+                   getRegionalEventName(contextofgame->activeRegionalEffects[i].effect),
+                   contextofgame->activeRegionalEffects[i].roundsRemaining);
+        }
+    } else {
+        printf("No regional development effect active\n");
+    }
+
     printf("==============================================================\n\n\n\n");
 };

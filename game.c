@@ -36,7 +36,7 @@ void startGame(void) {
     square board[40];
 
     srand((unsigned int)time(NULL));
-    // srand(2);
+
     player aggressiveInvesterPlayer = {.playerID = aggresiveInvester,
                                        .name = "Aggressive Invester",
                                        .currentSquare = 1,
