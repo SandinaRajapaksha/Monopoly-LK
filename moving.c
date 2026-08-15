@@ -3,6 +3,8 @@
 #include <stdio.h>
 void move(player *player_x, square *board, context *contextOfTheGame, playerPointers *playerObject) {
 
+    processInsurancePayments(player_x, board, contextOfTheGame);
+
     diceRollType steps = dice_roller();
     int tempCurrentSquare = player_x->currentSquare;
     if (player_x->Jail == inside) {

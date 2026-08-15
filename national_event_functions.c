@@ -52,6 +52,7 @@ void HeavyMonsoonActivate(square *board) {
         }
     }
 }
+
 void HeavyMonsoon_deActivate(square *board) {
     for (int i = 0; i <= 39; i++) {
         if (board[i].type == property &&

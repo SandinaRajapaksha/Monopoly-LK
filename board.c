@@ -20,7 +20,8 @@ void initializeBoard(square *board, playerPointers *playerPointerObject) {
                         .PropertyProperties.currentRentalofProperty = 100,
                         .PropertyProperties.houseConstructionCost = 500,
                         .PropertyProperties.hotelConstructionCost = 2000,
-                        .PropertyProperties.insuranceCompany = none};
+                        .PropertyProperties.insuranceCompany = none,
+                        .PropertyProperties.insurancePolicy = nonePolicy};
 
     board[2] = (square){.squareID = 2,
                         .name = "Community Development Fund",
@@ -41,7 +42,8 @@ void initializeBoard(square *board, playerPointers *playerPointerObject) {
                         .PropertyProperties.currentRentalofProperty = 120,
                         .PropertyProperties.houseConstructionCost = 500,
                         .PropertyProperties.hotelConstructionCost = 2000,
-                        .PropertyProperties.insuranceCompany = none};
+                        .PropertyProperties.insuranceCompany = none,
+                        .PropertyProperties.insurancePolicy = nonePolicy};
     board[4] = (square){.squareID = 4,
                         .name = "Income Tax",
                         .type = tax,
@@ -73,7 +75,8 @@ void initializeBoard(square *board, playerPointers *playerPointerObject) {
                         .PropertyProperties.currentRentalofProperty = 180,
                         .PropertyProperties.houseConstructionCost = 750,
                         .PropertyProperties.hotelConstructionCost = 3000,
-                        .PropertyProperties.insuranceCompany = none};
+                        .PropertyProperties.insuranceCompany = none,
+                        .PropertyProperties.insurancePolicy = nonePolicy};
     board[7] = (square){.squareID = 7,
                         .name = "National Event Card",
                         .type = event,
@@ -93,7 +96,8 @@ void initializeBoard(square *board, playerPointers *playerPointerObject) {
                         .PropertyProperties.currentRentalofProperty = 200,
                         .PropertyProperties.houseConstructionCost = 750,
                         .PropertyProperties.hotelConstructionCost = 3000,
-                        .PropertyProperties.insuranceCompany = none};
+                        .PropertyProperties.insuranceCompany = none,
+                        .PropertyProperties.insurancePolicy = nonePolicy};
     board[9] = (square){.squareID = 9,
                         .name = "Mount Lavinia",
                         .type = property,
@@ -107,7 +111,8 @@ void initializeBoard(square *board, playerPointers *playerPointerObject) {
                         .PropertyProperties.currentRentalofProperty = 220,
                         .PropertyProperties.houseConstructionCost = 750,
                         .PropertyProperties.hotelConstructionCost = 3000,
-                        .PropertyProperties.insuranceCompany = none};
+                        .PropertyProperties.insuranceCompany = none,
+                        .PropertyProperties.insurancePolicy = nonePolicy};
     board[10] =
         (square){.squareID = 10,
                  .name = "Jail / Just Visiting",
@@ -129,7 +134,8 @@ void initializeBoard(square *board, playerPointers *playerPointerObject) {
                          .PropertyProperties.currentRentalofProperty = 260,
                          .PropertyProperties.houseConstructionCost = 1000,
                          .PropertyProperties.hotelConstructionCost = 4000,
-                         .PropertyProperties.insuranceCompany = none};
+                         .PropertyProperties.insuranceCompany = none,
+                         .PropertyProperties.insurancePolicy = nonePolicy};
     board[12] = (square){.squareID = 12,
                          .name = "Ceylon Electricity Board",
                          .type = utility,
@@ -150,7 +156,8 @@ void initializeBoard(square *board, playerPointers *playerPointerObject) {
                          .PropertyProperties.currentRentalofProperty = 280,
                          .PropertyProperties.houseConstructionCost = 1000,
                          .PropertyProperties.hotelConstructionCost = 4000,
-                         .PropertyProperties.insuranceCompany = none};
+                         .PropertyProperties.insuranceCompany = none,
+                         .PropertyProperties.insurancePolicy = nonePolicy};
     board[14] = (square){.squareID = 14,
                          .name = "Kottawa",
                          .type = property,
@@ -164,7 +171,8 @@ void initializeBoard(square *board, playerPointers *playerPointerObject) {
                          .PropertyProperties.currentRentalofProperty = 300,
                          .PropertyProperties.houseConstructionCost = 1000,
                          .PropertyProperties.hotelConstructionCost = 4000,
-                         .PropertyProperties.insuranceCompany = none};
+                         .PropertyProperties.insuranceCompany = none,
+                         .PropertyProperties.insurancePolicy = nonePolicy};
     board[15] = (square){.squareID = 15,
                          .name = "Kandy Railway Station",
                          .type = railway,
@@ -190,7 +198,8 @@ void initializeBoard(square *board, playerPointers *playerPointerObject) {
                          .PropertyProperties.currentRentalofProperty = 350,
                          .PropertyProperties.houseConstructionCost = 1250,
                          .PropertyProperties.hotelConstructionCost = 5000,
-                         .PropertyProperties.insuranceCompany = none};
+                         .PropertyProperties.insuranceCompany = none,
+                         .PropertyProperties.insurancePolicy = nonePolicy};
     board[17] = (square){.squareID = 17,
                          .name = "Sri Lanka Insurance",
                          .type = insure,
@@ -210,7 +219,8 @@ void initializeBoard(square *board, playerPointers *playerPointerObject) {
                          .PropertyProperties.currentRentalofProperty = 370,
                          .PropertyProperties.houseConstructionCost = 1250,
                          .PropertyProperties.hotelConstructionCost = 5000,
-                         .PropertyProperties.insuranceCompany = none};
+                         .PropertyProperties.insuranceCompany = none,
+                         .PropertyProperties.insurancePolicy = nonePolicy};
     board[19] = (square){.squareID = 19,
                          .name = "Ja-Ela",
                          .type = property,
@@ -224,7 +234,8 @@ void initializeBoard(square *board, playerPointers *playerPointerObject) {
                          .PropertyProperties.currentRentalofProperty = 400,
                          .PropertyProperties.houseConstructionCost = 1250,
                          .PropertyProperties.hotelConstructionCost = 5000,
-                         .PropertyProperties.insuranceCompany = none};
+                         .PropertyProperties.insuranceCompany = none,
+                         .PropertyProperties.insurancePolicy = nonePolicy};
     board[20] =
         (square){.squareID = 20,
                  .name = "Free Parking",
@@ -246,7 +257,8 @@ void initializeBoard(square *board, playerPointers *playerPointerObject) {
                          .PropertyProperties.currentRentalofProperty = 450,
                          .PropertyProperties.houseConstructionCost = 1500,
                          .PropertyProperties.hotelConstructionCost = 6000,
-                         .PropertyProperties.insuranceCompany = none};
+                         .PropertyProperties.insuranceCompany = none,
+                         .PropertyProperties.insurancePolicy = nonePolicy};
     board[22] = (square){.squareID = 22,
                          .name = "National Event Card",
                          .type = event,
@@ -266,7 +278,8 @@ void initializeBoard(square *board, playerPointers *playerPointerObject) {
                          .PropertyProperties.currentRentalofProperty = 480,
                          .PropertyProperties.houseConstructionCost = 1500,
                          .PropertyProperties.hotelConstructionCost = 6000,
-                         .PropertyProperties.insuranceCompany = none};
+                         .PropertyProperties.insuranceCompany = none,
+                         .PropertyProperties.insurancePolicy = nonePolicy};
     board[24] = (square){.squareID = 24,
                          .name = "Katugastota",
                          .type = property,
@@ -280,7 +293,8 @@ void initializeBoard(square *board, playerPointers *playerPointerObject) {
                          .PropertyProperties.currentRentalofProperty = 500,
                          .PropertyProperties.houseConstructionCost = 1500,
                          .PropertyProperties.hotelConstructionCost = 6000,
-                         .PropertyProperties.insuranceCompany = none};
+                         .PropertyProperties.insuranceCompany = none,
+                         .PropertyProperties.insurancePolicy = nonePolicy};
     board[25] = (square){.squareID = 25,
                          .name = "Galle Railway Station",
                          .type = railway,
@@ -305,7 +319,8 @@ void initializeBoard(square *board, playerPointers *playerPointerObject) {
                          .PropertyProperties.currentRentalofProperty = 600,
                          .PropertyProperties.houseConstructionCost = 2000,
                          .PropertyProperties.hotelConstructionCost = 8000,
-                         .PropertyProperties.insuranceCompany = none};
+                         .PropertyProperties.insuranceCompany = none,
+                         .PropertyProperties.insurancePolicy = nonePolicy};
     board[27] = (square){.squareID = 27,
                          .name = "Unawatuna",
                          .type = property,
@@ -319,7 +334,8 @@ void initializeBoard(square *board, playerPointers *playerPointerObject) {
                          .PropertyProperties.currentRentalofProperty = 620,
                          .PropertyProperties.houseConstructionCost = 2000,
                          .PropertyProperties.hotelConstructionCost = 8000,
-                         .PropertyProperties.insuranceCompany = none};
+                         .PropertyProperties.insuranceCompany = none,
+                         .PropertyProperties.insurancePolicy = nonePolicy};
     board[28] = (square){.squareID = 28,
                          .name = "National Water Supply and Drainage Board",
                          .type = utility,
@@ -340,7 +356,8 @@ void initializeBoard(square *board, playerPointers *playerPointerObject) {
                          .PropertyProperties.currentRentalofProperty = 650,
                          .PropertyProperties.houseConstructionCost = 2000,
                          .PropertyProperties.hotelConstructionCost = 8000,
-                         .PropertyProperties.insuranceCompany = none};
+                         .PropertyProperties.insuranceCompany = none,
+                         .PropertyProperties.insurancePolicy = nonePolicy};
     board[30] = (square){.squareID = 30,
                          .name = "Go To Jail",
                          .type = special,
@@ -361,7 +378,8 @@ void initializeBoard(square *board, playerPointers *playerPointerObject) {
                          .PropertyProperties.currentRentalofProperty = 750,
                          .PropertyProperties.houseConstructionCost = 2500,
                          .PropertyProperties.hotelConstructionCost = 10000,
-                         .PropertyProperties.insuranceCompany = none};
+                         .PropertyProperties.insuranceCompany = none,
+                         .PropertyProperties.insurancePolicy = nonePolicy};
     board[32] = (square){.squareID = 32,
                          .name = "Nallur",
                          .type = property,
@@ -375,7 +393,8 @@ void initializeBoard(square *board, playerPointers *playerPointerObject) {
                          .PropertyProperties.currentRentalofProperty = 780,
                          .PropertyProperties.houseConstructionCost = 2500,
                          .PropertyProperties.hotelConstructionCost = 10000,
-                         .PropertyProperties.insuranceCompany = none};
+                         .PropertyProperties.insuranceCompany = none,
+                         .PropertyProperties.insurancePolicy = nonePolicy};
     board[33] = (square){.squareID = 33,
                          .name = "Ceylinco Insurance",
                          .type = insure,
@@ -395,7 +414,8 @@ void initializeBoard(square *board, playerPointers *playerPointerObject) {
                          .PropertyProperties.currentRentalofProperty = 800,
                          .PropertyProperties.houseConstructionCost = 2500,
                          .PropertyProperties.hotelConstructionCost = 10000,
-                         .PropertyProperties.insuranceCompany = none};
+                         .PropertyProperties.insuranceCompany = none,
+                         .PropertyProperties.insurancePolicy = nonePolicy};
     board[35] = (square){.squareID = 35,
                          .name = "Jaffna Railway Station",
                          .type = railway,
@@ -426,7 +446,8 @@ void initializeBoard(square *board, playerPointers *playerPointerObject) {
                          .PropertyProperties.currentRentalofProperty = 1000,
                          .PropertyProperties.houseConstructionCost = 3000,
                          .PropertyProperties.hotelConstructionCost = 12000,
-                         .PropertyProperties.insuranceCompany = none};
+                         .PropertyProperties.insuranceCompany = none,
+                         .PropertyProperties.insurancePolicy = nonePolicy};
     board[38] = (square){.squareID = 38,
                          .name = "Bank of Ceylon",
                          .type = bank,
@@ -446,5 +467,6 @@ void initializeBoard(square *board, playerPointers *playerPointerObject) {
                          .PropertyProperties.currentRentalofProperty = 1200,
                          .PropertyProperties.houseConstructionCost = 3000,
                          .PropertyProperties.hotelConstructionCost = 12000,
-                         .PropertyProperties.insuranceCompany = none};
+                         .PropertyProperties.insuranceCompany = none,
+                         .PropertyProperties.insurancePolicy = nonePolicy};
 }

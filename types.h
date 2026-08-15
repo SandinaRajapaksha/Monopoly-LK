@@ -36,7 +36,8 @@ typedef enum {
 } playerType;
 
 typedef enum { inside = 401,
-               outside } jailStatus;
+               outside
+} jailStatus;
 
 // event_related types
 typedef enum {
@@ -168,11 +169,13 @@ typedef struct {
         int affectedSquare;
     } activeNatlEffects[5];
     bool constructionSuspended;
+    bool hasFacedDisaster;
 } player;
 
 typedef enum { cannotMortgage,
                mortgagedToBank,
-               noMortgage } mortgageType;
+               noMortgage
+} mortgageType;
 
 typedef enum {
     gotoJail = 6001,
@@ -186,6 +189,13 @@ typedef enum {
     Ceylinco,
     SL_Insurance
 } insurance;
+
+typedef enum {
+    nonePolicy,
+    basic,
+    comprehensive,
+    buisiness
+} insurancePolicies;
 
 typedef struct sq {
 
@@ -212,6 +222,8 @@ typedef struct sq {
         int houseConstructionCost;
         int hotelConstructionCost;
         insurance insuranceCompany;
+        insurancePolicies insurancePolicy;
+        int insuranceRoundsRemaining;
         int noOfHouses;
         int noOfHotels;
         int currentRentalofProperty;
@@ -357,6 +369,8 @@ bool opprtTrdrRailwayBuyCondition(player *, square *, context *);
 void resolveUtility(player *, square *, context *, playerPointers *);
 void resolveEvent(player *, square *, context *, playerPointers *);
 void resolveInsure(player *, square *);
+void processInsurancePayments(player *, square *, context *);
+void clearInsurance(square *);
 void resolveTax(player *, square *, context *);
 void resolveBank(player *, square *, context *);
 void resolveProperty(player *, square *, context *, playerPointers *);

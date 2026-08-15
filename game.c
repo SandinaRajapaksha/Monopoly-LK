@@ -224,8 +224,34 @@ void startGame(void) {
     }
 
     if (winner) {
-        printf("\n\n\n\n====================================================================\n");
-        printf("\nWinner: %s with net worth LKR %d\n", winner->name, winner->netWorth);
-        printf("\n====================================================================\n");
+        int totalPropertyValue = 0;
+        for (int i = 0; i < 40; i++) {
+            if (board[i].owner != winner) {
+                continue;
+            }
+            if (board[i].mortgageStatus == mortgagedToBank) {
+                totalPropertyValue += board[i].mortgageValue;
+            } else if (board[i].type == property) {
+                totalPropertyValue += board[i].curruntValue;
+                totalPropertyValue += board[i].PropertyProperties.noOfHouses * board[i].PropertyProperties.houseConstructionCost;
+                totalPropertyValue += board[i].PropertyProperties.noOfHotels * board[i].PropertyProperties.hotelConstructionCost;
+            } else {
+                totalPropertyValue += board[i].curruntValue;
+            }
+        }
+
+        printf("\n\n\n\n");
+        printf("============================================================\n");
+        printf("GAME OVER\n");
+        printf("Winner\n%s\n", winner->name);
+        printf("Total Cash\nLKR %d\n", winner->cash);
+        printf("Total Property Value\nLKR %d\n", totalPropertyValue);
+        if (winner->outStandingLoan > 0) {
+            printf("Outstanding Loans\nLKR %d\n", winner->outStandingLoan);
+        } else {
+            printf("Outstanding Loans\nNone\n");
+        }
+        printf("Net Worth\nLKR %d\n", winner->netWorth);
+        printf("============================================================\n");
     }
 }

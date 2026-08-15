@@ -61,7 +61,10 @@ void resolveBank(player *player_x, square *board, context *contextOfTheGame) {
                 if (player_x->MaxElegibleLoanAmount > 0) {
                     player_x->hasDebt = true;
                     int loanAmount = player_x->MaxElegibleLoanAmount;
-                    int rate = (contextOfTheGame->currentInterestRate > 0) ? contextOfTheGame->currentInterestRate : 0;
+                    int rate = 0;
+                    if (contextOfTheGame->currentInterestRate > 0) {
+                        rate = contextOfTheGame->currentInterestRate;
+                    }
                     int loanInterest = doubleToInt((double)loanAmount * (double)rate / 100.0);
                     player_x->cash += loanAmount;
                     player_x->outStandingLoan = loanAmount + loanInterest;
@@ -75,7 +78,10 @@ void resolveBank(player *player_x, square *board, context *contextOfTheGame) {
                 if (player_x->MaxElegibleLoanAmount > 0) {
                     player_x->hasDebt = true;
                     int loanAmount = player_x->MaxElegibleLoanAmount;
-                    int rate = (contextOfTheGame->currentInterestRate > 0) ? contextOfTheGame->currentInterestRate : 0;
+                    int rate = 0;
+                    if (contextOfTheGame->currentInterestRate > 0) {
+                        rate = contextOfTheGame->currentInterestRate;
+                    }
                     int loanInterest = doubleToInt((double)loanAmount * (double)rate / 100.0);
                     player_x->cash += loanAmount;
                     player_x->outStandingLoan = loanAmount + loanInterest;
@@ -88,7 +94,10 @@ void resolveBank(player *player_x, square *board, context *contextOfTheGame) {
             if (player_x->MaxElegibleLoanAmount > 0) {
                 player_x->hasDebt = true;
                 int loanAmount = player_x->MaxElegibleLoanAmount;
-                int rate = (contextOfTheGame->currentInterestRate > 0) ? contextOfTheGame->currentInterestRate : 0;
+                int rate = 0;
+                if (contextOfTheGame->currentInterestRate > 0) {
+                    rate = contextOfTheGame->currentInterestRate;
+                }
                 int loanInterest = doubleToInt((double)loanAmount * (double)rate / 100.0);
                 player_x->cash += loanAmount;
                 player_x->outStandingLoan = loanAmount + loanInterest;
@@ -100,7 +109,10 @@ void resolveBank(player *player_x, square *board, context *contextOfTheGame) {
                 if (player_x->MaxElegibleLoanAmount > 0) {
                     player_x->hasDebt = true;
                     int loanAmount = player_x->MaxElegibleLoanAmount;
-                    int rate = (contextOfTheGame->currentInterestRate > 0) ? contextOfTheGame->currentInterestRate : 0;
+                    int rate = 0;
+                    if (contextOfTheGame->currentInterestRate > 0) {
+                        rate = contextOfTheGame->currentInterestRate;
+                    }
                     int loanInterest = doubleToInt((double)loanAmount * (double)rate / 100.0);
                     player_x->cash += loanAmount;
                     player_x->outStandingLoan = loanAmount + loanInterest;
@@ -230,8 +242,57 @@ void printWinner(player *winner, int HighestBid, square *auctionedItem) {
     printf("Bought %s for LKR %d\n\n", auctionedItem->name, HighestBid);
     printf("============================================================\n\n");
 };
+
+void clearInsurance(square *sq) {
+    sq->PropertyProperties.insuranceCompany = none;
+    sq->PropertyProperties.insurancePolicy = nonePolicy;
+    sq->PropertyProperties.insuranceRoundsRemaining = 0;
+}
+
+void processInsurancePayments(player *player_x, square *board, context *contextOfTheGame) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].owner != player_x || board[i].type != property ||
+            board[i].PropertyProperties.insuranceCompany == none ||
+            board[i].PropertyProperties.insuranceRoundsRemaining <= 0) {
+            continue;
+        }
+
+        int premiumPercent = 0;
+        switch (board[i].PropertyProperties.insurancePolicy) {
+        case basic:
+            premiumPercent = 5;
+            break;
+        case comprehensive:
+            premiumPercent = 10;
+            break;
+        case buisiness:
+            premiumPercent = 15;
+            break;
+        default:
+            break;
+        }
+        int premium = doubleToInt((double)board[i].curruntValue * (double)premiumPercent / 100.0);
+        int paid = player_x->cash;
+        if (player_x->cash >= premium) {
+            paid = premium;
+        }
+        player_x->cash -= paid;
+        printf("%s paid LKR %d insurance premium for %s\n", player_x->name, paid, board[i].name);
+
+        board[i].PropertyProperties.insuranceRoundsRemaining--;
+        if (board[i].PropertyProperties.insuranceRoundsRemaining == 0) {
+            printf("%s insurance policy on %s expired\n", player_x->name, board[i].name);
+            clearInsurance(&board[i]);
+        } else if (board[i].PropertyProperties.insuranceRoundsRemaining <= 3) {
+            printf("%s insurance policy on %s expires in %d rounds\n",
+                   player_x->name, board[i].name, board[i].PropertyProperties.insuranceRoundsRemaining);
+        }
+    }
+}
+
 void sellingAuction(player *player_x, player *player_1, player *player_2, player *player_3, player *player_4, square *board, context *contextOfGame, square *auctionItem) {
 
+    clearInsurance(auctionItem);
     if (player_x->hasDebt == true) {
         printf("Properties of %s are loan locked\n", player_x->name);
         printf("%s went bankrupt\n", player_x->name);
@@ -480,6 +541,8 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
             // sell to the bank at mortgage price
 
             player_x->cash += auctionItem->mortgageValue;
+            auctionItem->PropertyProperties.noOfHouses = 0;
+            auctionItem->PropertyProperties.noOfHotels = 0;
             auctionItem->owner = NULL;
             if (auctionItem->type == property) {
                 player_x->noOfProperties--;
@@ -544,6 +607,7 @@ void bankruptCheck(playerPointers *playerObject, int *noOfBankruptPlayers) {
 void bankruptAuction(player *player_x, square *board,
                      context *contextOfGame, square *auctionItem, playerPointers *playerPointerObject) {
 
+    clearInsurance(auctionItem);
     printf("============================================================\n\n");
     printf("Auction\n\n");
     printf("============================================================\n\n");
@@ -804,6 +868,8 @@ void bankruptAuction(player *player_x, square *board,
             if (auctionItem->type == utility) {
                 auctionItem->owner->noOfUtilities--;
             }
+            auctionItem->PropertyProperties.noOfHouses = 0;
+            auctionItem->PropertyProperties.noOfHotels = 0;
             auctionItem->owner = playerPointerObject->player_BANK;
             return;
         }
@@ -812,6 +878,7 @@ void bankruptAuction(player *player_x, square *board,
 
 void noBuyAuction(player *player_x, playerPointers *playerObject, square *board, context *contextOfGame, square *auctionItem) {
 
+    clearInsurance(auctionItem);
     printf("============================================================\n\n");
     printf("Auction\n\n");
     printf("============================================================\n\n");

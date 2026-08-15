@@ -1,6 +1,7 @@
 #include "types.h"
 #include <stdbool.h>
 #include <stdio.h>
+#include <string.h>
 
 void resolveSquare(player *player_x, square *board, context *contextOfGame, playerPointers *playerObject) {
     if (player_x->loantakigLap + 20 < contextOfGame->currentBoardRound && player_x->hasDebt == true) {
@@ -183,7 +184,95 @@ void resolveUtility(player *player_x, square *board, context *contextOfTheGame, 
 void resolveEvent(player *player_x, square *board, context *contextOfTheGame, playerPointers *playerObject) {
     nationalEventActivate(player_x, board, contextOfTheGame, playerObject);
 }
-void resolveInsure(player *player_x, square *board) {}
+void resolveInsure(player *player_x, square *board) {
+    insurance company = SL_Insurance;
+    if (strcmp(board[player_x->currentSquare].name, "Ceylinco Insurance") == 0) {
+        company = Ceylinco;
+    }
+
+    // an active policy is renewed, no new insurance is bought
+    for (int i = 0; i < 40; i++) {
+        if (board[i].owner == player_x && board[i].type == property &&
+            board[i].PropertyProperties.insuranceCompany != none &&
+            board[i].PropertyProperties.insuranceRoundsRemaining > 0) {
+            board[i].PropertyProperties.insuranceRoundsRemaining = 20;
+            printf("%s renewed insurance on %s (valid 20 rounds)\n", player_x->name, board[i].name);
+            return;
+        }
+    }
+
+    // insure the most valuable developed property (disasters only hit developed properties)
+    int best = -1;
+    for (int i = 0; i < 40; i++) {
+        if (board[i].owner == player_x && board[i].type == property &&
+            (board[i].PropertyProperties.noOfHouses > 0 || board[i].PropertyProperties.noOfHotels > 0) &&
+            (best == -1 || board[i].curruntValue > board[best].curruntValue)) {
+            best = i;
+        }
+    }
+    if (best == -1) {
+        printf("%s has no developed property to insure\n", player_x->name);
+        return;
+    }
+
+    // the insurance policy depends on the player behaviour
+    insurancePolicies policy = nonePolicy;
+    switch (player_x->playerID) {
+    case aggresiveInvester:
+        // basic insurance for all buildings
+        policy = basic;
+        break;
+    case conservativeBanker:
+        // gets comprehensive insurance for all developed properties
+        policy = comprehensive;
+        break;
+    case riskTaker:
+        // basic insurance only if a disaster ever happened to one of his properties
+        if (player_x->hasFacedDisaster) {
+            policy = basic;
+        }
+        break;
+    case opportunisticTrader:
+        // basic insurance for all properties
+        // buisinsess interuuption insurance for hotels
+        if (board[best].PropertyProperties.noOfHotels == 1) {
+            policy = buisiness;
+        } else {
+            policy = basic;
+        }
+        break;
+    default:
+        break;
+    }
+    if (policy == nonePolicy) {
+        printf("%s decided not to take insurance\n", player_x->name);
+        return;
+    }
+
+    int premiumPercent = 10;
+    if (policy == basic) {
+        premiumPercent = 5;
+    } else if (policy == buisiness) {
+        premiumPercent = 15;
+    }
+    int premium = doubleToInt((double)board[best].curruntValue * (double)premiumPercent / 100.0);
+    if (player_x->cash < premium) {
+        printf("%s cannot afford insurance premium (LKR %d) for %s\n", player_x->name, premium, board[best].name);
+        return;
+    }
+
+    board[best].PropertyProperties.insuranceCompany = company;
+    board[best].PropertyProperties.insurancePolicy = policy;
+    board[best].PropertyProperties.insuranceRoundsRemaining = 20;
+    char *policyName = "basic";
+    if (policy == comprehensive) {
+        policyName = "comprehensive";
+    } else if (policy == buisiness) {
+        policyName = "business";
+    }
+    printf("%s bought %s insurance for %s (premium LKR %d per round, valid 20 rounds)\n",
+           player_x->name, policyName, board[best].name, premium);
+}
 void resolveTax(player *player_x, square *board, context *contextOfTheGame) {
     int taxAmount = doubleToInt((double)player_x->cash * (double)contextOfTheGame->currentTaxRate / 100.0000);
     player_x->cash -= taxAmount;

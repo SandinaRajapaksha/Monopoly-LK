@@ -26,14 +26,16 @@ void disasterAcitivate(square *board, context *contextOfTheGame) {
     int countPropertiesWithBuildings = 0;
 
     for (int i = 0; i <= 39; i++) {
-        if (board[i].PropertyProperties.noOfHouses > 0 || board[i].PropertyProperties.noOfHotels > 0) {
+        if (board[i].owner != NULL &&
+            (board[i].PropertyProperties.noOfHouses > 0 || board[i].PropertyProperties.noOfHotels > 0)) {
             countPropertiesWithBuildings++;
         }
     }
 
     square *propertiesWithBuildings[countPropertiesWithBuildings];
     for (int i = 0, j = 0; i <= 39; i++) {
-        if (board[i].PropertyProperties.noOfHouses > 0 || board[i].PropertyProperties.noOfHotels > 0) {
+        if (board[i].owner != NULL &&
+            (board[i].PropertyProperties.noOfHouses > 0 || board[i].PropertyProperties.noOfHotels > 0)) {
             propertiesWithBuildings[j] = &board[i];
             j++;
         }
@@ -46,37 +48,83 @@ void disasterAcitivate(square *board, context *contextOfTheGame) {
         return;
     }
     int randomProperty = rand() % countPropertiesWithBuildings;
-    printf("Affected property : %s\nowner : %s\n", propertiesWithBuildings[randomProperty]->name, propertiesWithBuildings[randomProperty]->owner->name);
-    if (propertiesWithBuildings[randomProperty]->PropertyProperties.insuranceCompany != none) {
-        // insurance logic to be implemented
+    square *affected = propertiesWithBuildings[randomProperty];
+    printf("Affected property : %s\nowner : %s\n", affected->name, affected->owner->name);
+
+    int repairCost = 0;
+    bool hotelDestroyed = false;
+    int lostRent = affected->PropertyProperties.currentRentalofProperty;
+    if (affected->PropertyProperties.noOfHotels == 1) {
+        repairCost = affected->PropertyProperties.hotelConstructionCost;
+        affected->PropertyProperties.noOfHotels = 0;
+        affected->owner->noOfHotelsOwned--;
+        hotelDestroyed = true;
+        printf("Hotel destroyed at %s\n", affected->name);
+    } else if (affected->PropertyProperties.noOfHouses > 0) {
+        repairCost = affected->PropertyProperties.houseConstructionCost;
+        affected->PropertyProperties.noOfHouses--;
+        affected->owner->noOfHousesOwned--;
+        printf("A house destroyed at %s\n", affected->name);
     }
-    propertiesWithBuildings[randomProperty]->PropertyProperties.noOfHotels = 0;
+    recalcRent(affected);
+    affected->owner->hasFacedDisaster = true;
 
-    if (propertiesWithBuildings[randomProperty]->PropertyProperties.noOfHouses != 0) {
-        int total_loss_houses_value = propertiesWithBuildings[randomProperty]->PropertyProperties.noOfHouses *
-                                      propertiesWithBuildings[randomProperty]->PropertyProperties.houseConstructionCost;
-        // if not insured, repairing logic
-        if (propertiesWithBuildings[randomProperty]->owner->cash >= total_loss_houses_value) {
+    bool covered = false;
+    switch (affected->PropertyProperties.insurancePolicy) {
+    case basic:
+        covered = (contextOfTheGame->currentDisaster == fire || contextOfTheGame->currentDisaster == flood);
+        break;
+    case comprehensive:
+        covered = (contextOfTheGame->currentDisaster == fire || contextOfTheGame->currentDisaster == flood || contextOfTheGame->currentDisaster == riot);
+        break;
+    case buisiness:
+        covered = true;
+        break;
+    default:
+        break;
+    }
 
-            propertiesWithBuildings[randomProperty]->owner->cash -= propertiesWithBuildings[randomProperty]->PropertyProperties.houseConstructionCost;
-            printf("%s repaired the property by paying LKR %d\n", propertiesWithBuildings[randomProperty]->owner->name, total_loss_houses_value);
-
-        } else {
-            propertiesWithBuildings[randomProperty]->owner->noOfHousesOwned -= propertiesWithBuildings[randomProperty]->PropertyProperties.noOfHouses;
-            propertiesWithBuildings[randomProperty]->PropertyProperties.noOfHouses = 0;
+    if (covered) {
+        double coverageRatio = 1.00;
+        if (affected->PropertyProperties.insurancePolicy == basic) {
+            coverageRatio = 0.80;
         }
-    }
-    if (propertiesWithBuildings[randomProperty]->PropertyProperties.noOfHotels != 0) {
-        int total_loss_hotel_value = propertiesWithBuildings[randomProperty]->PropertyProperties.noOfHotels;
-        // if not insured, repairing logic
-        if (propertiesWithBuildings[randomProperty]->owner->cash >= total_loss_hotel_value) {
+        int compensation = doubleToInt(repairCost * coverageRatio);
+        if (affected->PropertyProperties.insurancePolicy == buisiness) {
+            compensation += 5 * lostRent;
+        }
+        affected->owner->cash += compensation;
+        printf("%s received LKR %d insurance compensation for %s\n", affected->owner->name, compensation, affected->name);
 
-            propertiesWithBuildings[randomProperty]->owner->cash -= propertiesWithBuildings[randomProperty]->PropertyProperties.hotelConstructionCost;
-            printf("%s repaired the property by paying LKR %d\n", propertiesWithBuildings[randomProperty]->name, total_loss_hotel_value);
+        // the compensation money plus the remaining cash is used to repair
+        if (affected->owner->cash >= repairCost) {
+            affected->owner->cash -= repairCost;
+            if (hotelDestroyed) {
+                affected->PropertyProperties.noOfHotels = 1;
+                affected->owner->noOfHotelsOwned++;
+            } else {
+                affected->PropertyProperties.noOfHouses++;
+                affected->owner->noOfHousesOwned++;
+            }
+            recalcRent(affected);
+            printf("%s repaired %s\n", affected->owner->name, affected->name);
         } else {
-
-            propertiesWithBuildings[randomProperty]->owner->noOfHotelsOwned--;
-            propertiesWithBuildings[randomProperty]->PropertyProperties.noOfHotels = 0;
+            printf("%s cannot afford repairs of %s\n", affected->owner->name, affected->name);
+        }
+    } else {
+        if (affected->owner->cash >= repairCost) {
+            affected->owner->cash -= repairCost;
+            if (hotelDestroyed) {
+                affected->PropertyProperties.noOfHotels = 1;
+                affected->owner->noOfHotelsOwned++;
+            } else {
+                affected->PropertyProperties.noOfHouses++;
+                affected->owner->noOfHousesOwned++;
+            }
+            recalcRent(affected);
+            printf("%s paid LKR %d for repairs of %s\n", affected->owner->name, repairCost, affected->name);
+        } else {
+            printf("%s cannot afford repairs of %s\n", affected->owner->name, affected->name);
         }
     }
 
@@ -284,7 +332,10 @@ void govRegulationsActivate(square *board, context *contextOfTheGame, playerPoin
             }
             for (int j = 0; j < 40; j++) {
                 if (board[j].type == property && board[j].PropertyProperties.propertyGroup == darkBlue && board[j].owner == all[i]) {
-                    int tax = (all[i]->cash >= 3000) ? 3000 : all[i]->cash;
+                    int tax = all[i]->cash;
+                    if (all[i]->cash >= 3000) {
+                        tax = 3000;
+                    }
                     all[i]->cash -= tax;
                     printf("%s paid LKR %d luxury property tax on %s\n", all[i]->name, tax, board[j].name);
                 }
@@ -308,7 +359,10 @@ void govRegulationsActivate(square *board, context *contextOfTheGame, playerPoin
             for (int j = 0; j < 40; j++) {
                 if (board[j].type == property && board[j].owner == all[i] &&
                     board[j].PropertyProperties.noOfHouses == 0 && board[j].PropertyProperties.noOfHotels == 0) {
-                    int fine = (all[i]->cash >= 1500) ? 1500 : all[i]->cash;
+                    int fine = all[i]->cash;
+                    if (all[i]->cash >= 1500) {
+                        fine = 1500;
+                    }
                     all[i]->cash -= fine;
                     printf("%s paid LKR %d anti-speculant fine on unimproved %s\n", all[i]->name, fine, board[j].name);
                 }
@@ -509,7 +563,10 @@ void propertyRevaluation_deactivate(square *board, groupType group) {
 }
 
 void recalcRent(square *sq) {
-    int n = (sq->PropertyProperties.noOfHotels == 1) ? 5 : sq->PropertyProperties.noOfHouses;
+    int n = sq->PropertyProperties.noOfHouses;
+    if (sq->PropertyProperties.noOfHotels == 1) {
+        n = 5;
+    }
     switch (n) {
     case 1:
         sq->PropertyProperties.currentRentalofProperty = 2 * sq->PropertyProperties.baseRental;
@@ -533,6 +590,10 @@ void recalcRent(square *sq) {
 }
 
 void damageBuilding(square *sq) {
+    if (sq->owner == NULL) {
+        printf("No owner - nothing damaged\n");
+        return;
+    }
     if (sq->PropertyProperties.noOfHotels == 1) {
         sq->PropertyProperties.noOfHotels = 0;
         sq->owner->noOfHotelsOwned--;
@@ -700,7 +761,8 @@ void nationalEventActivate(player *player_x, square *board, context *contextOfTh
     case NationalDisaster: {
         int developed[40], n = 0;
         for (int i = 0; i < 40; i++) {
-            if (board[i].type == property && (board[i].PropertyProperties.noOfHouses > 0 || board[i].PropertyProperties.noOfHotels > 0)) {
+            if (board[i].type == property && board[i].owner != NULL &&
+                (board[i].PropertyProperties.noOfHouses > 0 || board[i].PropertyProperties.noOfHotels > 0)) {
                 developed[n++] = i;
             }
         }
@@ -1039,7 +1101,10 @@ void regionalDevelopmentActivate(square *board, context *contextOfTheGame, playe
         player *all[4] = {playerObject->player_1, playerObject->player_2, playerObject->player_3, playerObject->player_4};
         for (int i = 0; i < 4; i++) {
             if (!all[i]->isBankrupt) {
-                int levy = (all[i]->cash >= 1500) ? 1500 : all[i]->cash;
+                int levy = all[i]->cash;
+                if (all[i]->cash >= 1500) {
+                    levy = 1500;
+                }
                 all[i]->cash -= levy;
                 printf("%s paid LKR %d electricity surcharge\n", all[i]->name, levy);
             }
