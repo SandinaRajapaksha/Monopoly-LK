@@ -1,6 +1,19 @@
 #include "types.h"
 #include <stdbool.h>
 
+bool OpportTraderBuyCondition(int incomePerLanding, int price, int currentLoanInterestRate) {
+    double expectedLandings = 1.5; // 3 opponents x 20 rounds x 1/40
+
+    if (price <= 0) {
+        return false;
+    }
+
+    double projectedIncome = incomePerLanding * expectedLandings;
+    double roi20 = (projectedIncome / price) * 100.0;
+
+    return roi20 > (double)currentLoanInterestRate;
+}
+
 void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerObject, context *contextOfTheGame) {
     square *currentSquare = &board[player_x->currentSquare];
     int owedRent = 0;

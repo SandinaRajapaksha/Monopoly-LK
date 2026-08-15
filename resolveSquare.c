@@ -435,7 +435,11 @@ void resolveProperty(player *player_x, square *board,
             break;
 
         case opportunisticTrader:
-            if ((player_x->cash > board[player_x->currentSquare].PropertyProperties.initialPrice) && (contextOfTheGame->currentActiveEconEvent != EconomicRecession) && (contextOfTheGame->currentInflation > 0)) {
+            if ((player_x->cash > board[player_x->currentSquare].PropertyProperties.initialPrice) &&
+                (contextOfTheGame->currentActiveEconEvent != EconomicRecession) &&
+                OpportTraderBuyCondition(board[player_x->currentSquare].PropertyProperties.currentRentalofProperty,
+                                         board[player_x->currentSquare].curruntValue,
+                                         contextOfTheGame->currentInterestRate)) {
 
                 player_x->cash -= board[player_x->currentSquare].PropertyProperties.initialPrice;
                 board[player_x->currentSquare].owner = player_x;

@@ -408,4 +408,5 @@ int doubleToInt(double);
 void noBuyAuction(player *player_x, playerPointers *playerObject, square *board, context *contextOfGame, square *auctionItem);
 
 void disasterAcitivate(square *board, context *contextOfTheGame);
+bool OpportTraderBuyCondition(int incomePerLanding, int price, int currentLoanInterestRate);
 #endif
