@@ -182,6 +182,38 @@ void resolveUtility(player *player_x, square *board, context *contextOfTheGame, 
     }
 }
 void resolveEvent(player *player_x, square *board, context *contextOfTheGame, playerPointers *playerObject) {
+    if (board[player_x->currentSquare].squareID == 2) {
+        networthEvaluate(playerObject->player_1,
+                         playerObject->player_2,
+                         playerObject->player_3,
+                         playerObject->player_4,
+                         board);
+        int assetValue = player_x->netWorth - player_x->cash;
+        if (player_x->hasDebt == true) {
+            assetValue += player_x->MaxElegibleLoanAmount;
+        }
+        int fundAmount = doubleToInt(assetValue * 0.1);
+
+        if (player_x->cash < fundAmount) {
+            for (int i = 0; i <= 39 && player_x->cash < fundAmount; i++) {
+                if (board[i].owner == player_x && !player_x->isBankrupt) {
+                    sellingAuction(player_x, playerObject->player_1,
+                                   playerObject->player_2,
+                                   playerObject->player_3,
+                                   playerObject->player_4, board,
+                                   contextOfTheGame, &board[i]);
+                }
+            }
+        }
+        if (player_x->cash >= fundAmount) {
+            player_x->cash -= fundAmount;
+            printf("%s played LKR %d to community development fund\n", player_x->name, fundAmount);
+        } else {
+            printf("%s went bankrupt\n", player_x->name);
+            player_x->isBankrupt = true;
+        }
+    }
+
     nationalEventActivate(player_x, board, contextOfTheGame, playerObject);
 }
 void resolveInsure(player *player_x, square *board) {
