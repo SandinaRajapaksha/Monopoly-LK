@@ -216,7 +216,7 @@ void startGame(void) {
     } else {
         int maxNetWorth = -1;
         for (int i = 0; i < 4; i++) {
-            if (players[i]->netWorth > maxNetWorth) {
+            if (!players[i]->isBankrupt && players[i]->netWorth > maxNetWorth) {
                 maxNetWorth = players[i]->netWorth;
                 winner = players[i];
             }

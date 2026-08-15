@@ -290,7 +290,7 @@ void processInsurancePayments(player *player_x, square *board, context *contextO
     }
 }
 
-void sellingAuction(player *player_x, player *player_1, player *player_2, player *player_3, player *player_4, square *board, context *contextOfGame, square *auctionItem) {
+void sellingAuction(player *player_x, player *player_1, player *player_2, player *player_3, player *player_4, square *board, context *contextOfGame, square *auctionItem, player *playerBANK) {
 
     clearInsurance(auctionItem);
     if (player_x->hasDebt == true) {
@@ -543,7 +543,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
             player_x->cash += auctionItem->mortgageValue;
             auctionItem->PropertyProperties.noOfHouses = 0;
             auctionItem->PropertyProperties.noOfHotels = 0;
-            auctionItem->owner = NULL;
+            auctionItem->owner = playerBANK;
             if (auctionItem->type == property) {
                 player_x->noOfProperties--;
             }
@@ -573,6 +573,13 @@ bool payRent(player *player_x, square *board) {
             .PropertyProperties.currentRentalofProperty;
 
     // owner gets paid
+
+    if (board[player_x->currentSquare].owner == NULL) {
+        printf("%s payed %d as the rent of %s to the Bank of Ceylon\n", player_x->name,
+               board[player_x->currentSquare].PropertyProperties.currentRentalofProperty,
+               board[player_x->currentSquare].name);
+        return true;
+    }
 
     board[player_x->currentSquare].owner->cash =
         board[player_x->currentSquare].owner->cash +

@@ -114,7 +114,8 @@ void resolveUtility(player *player_x, square *board, context *contextOfTheGame, 
         return;
     }
 
-    if (board[player_x->currentSquare].owner->playerID == bankOfCeylon) {
+    if (board[player_x->currentSquare].owner == NULL ||
+        board[player_x->currentSquare].owner->playerID == bankOfCeylon) {
         // buy logic and return
         switch (player_x->playerID) {
         case aggresiveInvester:
@@ -144,6 +145,10 @@ void resolveUtility(player *player_x, square *board, context *contextOfTheGame, 
         default:
             break;
         }
+    }
+
+    if (board[player_x->currentSquare].owner == NULL) {
+        return;
     }
 
     switch (board[player_x->currentSquare].owner->noOfUtilities) {
@@ -201,7 +206,8 @@ void resolveEvent(player *player_x, square *board, context *contextOfTheGame, pl
                                    playerObject->player_2,
                                    playerObject->player_3,
                                    playerObject->player_4, board,
-                                   contextOfTheGame, &board[i]);
+                                   contextOfTheGame, &board[i],
+                                   playerObject->player_BANK);
                 }
             }
         }
@@ -313,7 +319,8 @@ void resolveTax(player *player_x, square *board, context *contextOfTheGame) {
 
 void resolveRailway(player *player_x, square *board, playerPointers *playerObject, context *contextOfTheGame) {
     // if ownwed by bank
-    if (board[player_x->currentSquare].owner->playerID == bankOfCeylon) {
+    if (board[player_x->currentSquare].owner == NULL ||
+        board[player_x->currentSquare].owner->playerID == bankOfCeylon) {
         switch (player_x->playerID) {
         case aggresiveInvester:
             if (aggrRailwayBuyCondition(player_x, board)) {
@@ -407,7 +414,8 @@ void resolveProperty(player *player_x, square *board,
                      context *contextOfTheGame, playerPointers *playerObject) {
 
     // if property owns by bank
-    if (board[player_x->currentSquare].owner->playerID == bankOfCeylon) {
+    if (board[player_x->currentSquare].owner == NULL ||
+        board[player_x->currentSquare].owner->playerID == bankOfCeylon) {
         playerType currentPlayer = player_x->playerID;
 
         switch (currentPlayer) {
@@ -601,7 +609,8 @@ void resolveProperty(player *player_x, square *board,
             // test case
 
             // sellingAuction(player_x, playerObject->player_1, playerObject->player_2,
-            //                playerObject->player_3, playerObject->player_4, board, contextOfTheGame, &board[player_x->currentSquare]);
+            //                playerObject->player_3, playerObject->player_4, board, contextOfTheGame, &board[player_x->currentSquare],
+            //                playerObject->player_BANK);
 
             if (eligibleForHouse && (board[player_x->currentSquare].PropertyProperties.houseConstructionCost <= player_x->cash)) {
                 // build house

@@ -46,7 +46,8 @@ void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerOb
                 sellingAuction(player_x, playerObject->player_1,
                                playerObject->player_2,
                                playerObject->player_3,
-                               playerObject->player_4, board, contextOfTheGame, &board[i]);
+                               playerObject->player_4, board, contextOfTheGame, &board[i],
+                               playerObject->player_BANK);
                 if (player_x->cash >= owedRent) {
                     player_x->cash -= owedRent;
                     currentSquare->owner->cash += owedRent;
@@ -60,7 +61,8 @@ void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerOb
                 sellingAuction(player_x, playerObject->player_1,
                                playerObject->player_2,
                                playerObject->player_3,
-                               playerObject->player_4, board, contextOfTheGame, &board[i]);
+                               playerObject->player_4, board, contextOfTheGame, &board[i],
+                               playerObject->player_BANK);
                 if (player_x->cash >= owedRent) {
                     player_x->cash -= owedRent;
                     currentSquare->owner->cash += owedRent;
@@ -74,7 +76,8 @@ void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerOb
                 sellingAuction(player_x, playerObject->player_1,
                                playerObject->player_2,
                                playerObject->player_3,
-                               playerObject->player_4, board, contextOfTheGame, &board[i]);
+                               playerObject->player_4, board, contextOfTheGame, &board[i],
+                               playerObject->player_BANK);
                 if (player_x->cash >= owedRent) {
                     player_x->cash -= owedRent;
                     currentSquare->owner->cash += owedRent;
@@ -88,7 +91,8 @@ void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerOb
                 sellingAuction(player_x, playerObject->player_1,
                                playerObject->player_2,
                                playerObject->player_3,
-                               playerObject->player_4, board, contextOfTheGame, &board[i]);
+                               playerObject->player_4, board, contextOfTheGame, &board[i],
+                               playerObject->player_BANK);
                 if (player_x->cash >= owedRent) {
                     player_x->cash -= owedRent;
                     currentSquare->owner->cash += owedRent;
@@ -102,7 +106,8 @@ void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerOb
                 sellingAuction(player_x, playerObject->player_1,
                                playerObject->player_2,
                                playerObject->player_3,
-                               playerObject->player_4, board, contextOfTheGame, &board[i]);
+                               playerObject->player_4, board, contextOfTheGame, &board[i],
+                               playerObject->player_BANK);
                 if (player_x->cash >= owedRent) {
                     player_x->cash -= owedRent;
                     currentSquare->owner->cash += owedRent;
@@ -116,7 +121,8 @@ void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerOb
                 sellingAuction(player_x, playerObject->player_1,
                                playerObject->player_2,
                                playerObject->player_3,
-                               playerObject->player_4, board, contextOfTheGame, &board[i]);
+                               playerObject->player_4, board, contextOfTheGame, &board[i],
+                               playerObject->player_BANK);
                 if (player_x->cash >= owedRent) {
                     player_x->cash -= owedRent;
                     currentSquare->owner->cash += owedRent;
@@ -130,7 +136,8 @@ void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerOb
                 sellingAuction(player_x, playerObject->player_1,
                                playerObject->player_2,
                                playerObject->player_3,
-                               playerObject->player_4, board, contextOfTheGame, &board[i]);
+                               playerObject->player_4, board, contextOfTheGame, &board[i],
+                               playerObject->player_BANK);
                 if (player_x->cash >= owedRent) {
                     player_x->cash -= owedRent;
                     currentSquare->owner->cash += owedRent;
@@ -144,7 +151,8 @@ void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerOb
                 sellingAuction(player_x, playerObject->player_1,
                                playerObject->player_2,
                                playerObject->player_3,
-                               playerObject->player_4, board, contextOfTheGame, &board[i]);
+                               playerObject->player_4, board, contextOfTheGame, &board[i],
+                               playerObject->player_BANK);
                 if (player_x->cash >= owedRent) {
                     player_x->cash -= owedRent;
                     currentSquare->owner->cash += owedRent;
@@ -158,7 +166,8 @@ void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerOb
                 sellingAuction(player_x, playerObject->player_1,
                                playerObject->player_2,
                                playerObject->player_3,
-                               playerObject->player_4, board, contextOfTheGame, &board[i]);
+                               playerObject->player_4, board, contextOfTheGame, &board[i],
+                               playerObject->player_BANK);
                 if (player_x->cash >= owedRent) {
                     player_x->cash -= owedRent;
                     currentSquare->owner->cash += owedRent;
@@ -172,7 +181,8 @@ void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerOb
                 sellingAuction(player_x, playerObject->player_1,
                                playerObject->player_2,
                                playerObject->player_3,
-                               playerObject->player_4, board, contextOfTheGame, &board[i]);
+                               playerObject->player_4, board, contextOfTheGame, &board[i],
+                               playerObject->player_BANK);
                 if (player_x->cash >= owedRent) {
                     player_x->cash -= owedRent;
                     currentSquare->owner->cash += owedRent;
