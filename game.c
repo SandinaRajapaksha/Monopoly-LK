@@ -121,7 +121,7 @@ void startGame(void) {
 
             move(&player_1, board, &contextOfTheGame, &playerPointerObject);
             networthEvaluate(&player_1, &player_2, &player_3, &player_4, board);
-            bankruptCheck(&playerPointerObject, &noOfBankruptPlayer);
+            bankruptCheck(&playerPointerObject, &noOfBankruptPlayer, board);
             if (noOfBankruptPlayer == 3) {
                 break;
             }
@@ -130,7 +130,7 @@ void startGame(void) {
 
             move(&player_2, board, &contextOfTheGame, &playerPointerObject);
             networthEvaluate(&player_1, &player_2, &player_3, &player_4, board);
-            bankruptCheck(&playerPointerObject, &noOfBankruptPlayer);
+            bankruptCheck(&playerPointerObject, &noOfBankruptPlayer, board);
             if (noOfBankruptPlayer == 3) {
                 break;
             }
@@ -139,7 +139,7 @@ void startGame(void) {
 
             move(&player_3, board, &contextOfTheGame, &playerPointerObject);
             networthEvaluate(&player_1, &player_2, &player_3, &player_4, board);
-            bankruptCheck(&playerPointerObject, &noOfBankruptPlayer);
+            bankruptCheck(&playerPointerObject, &noOfBankruptPlayer, board);
             if (noOfBankruptPlayer == 3) {
                 break;
             }
@@ -148,7 +148,7 @@ void startGame(void) {
 
             move(&player_4, board, &contextOfTheGame, &playerPointerObject);
             networthEvaluate(&player_1, &player_2, &player_3, &player_4, board);
-            bankruptCheck(&playerPointerObject, &noOfBankruptPlayer);
+            bankruptCheck(&playerPointerObject, &noOfBankruptPlayer, board);
             if (noOfBankruptPlayer == 3) {
                 break;
             }
@@ -156,7 +156,7 @@ void startGame(void) {
 
         networthEvaluate(&player_1, &player_2, &player_3, &player_4, board);
 
-        bankruptCheck(&playerPointerObject, &noOfBankruptPlayer);
+        bankruptCheck(&playerPointerObject, &noOfBankruptPlayer, board);
         if (noOfBankruptPlayer == 3) {
             break;
         }

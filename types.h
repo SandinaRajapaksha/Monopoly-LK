@@ -401,7 +401,8 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
 void printWinner(player *winner, int HighestBid, square *auctionedItem);
 bool payRent(player *player_x, square *board);
 void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerObject, context *contextOfTheGame);
-void bankruptCheck(playerPointers *playerObject, int *);
+void bankruptCheck(playerPointers *playerObject, int *, square *board);
+void transferAssetsToBank(player *player_x, square *board, player *playerBANK);
 void bankruptAuction(player *player_x, square *board,
                      context *contextOfGame, square *auctionItem, playerPointers *playerPointerObject);
 int doubleToInt(double);

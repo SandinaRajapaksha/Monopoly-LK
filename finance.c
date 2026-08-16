@@ -315,6 +315,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
         printf("Properties of %s are loan locked\n", player_x->name);
         printf("%s went bankrupt\n", player_x->name);
         player_x->isBankrupt = true;
+        transferAssetsToBank(player_x, board, playerBANK);
         return;
     }
 
@@ -606,7 +607,29 @@ bool payRent(player *player_x, square *board) {
 
     return true;
 }
-void bankruptCheck(playerPointers *playerObject, int *noOfBankruptPlayers) {
+void transferAssetsToBank(player *player_x, square *board, player *playerBANK) {
+    for (int i = 0; i < 40; i++) {
+        if (board[i].owner != player_x) {
+            continue;
+        }
+        if (board[i].type == property) {
+            player_x->noOfProperties--;
+        } else if (board[i].type == railway) {
+            player_x->noOfRailways--;
+        } else if (board[i].type == utility) {
+            player_x->noOfUtilities--;
+        }
+        board[i].PropertyProperties.noOfHouses = 0;
+        board[i].PropertyProperties.noOfHotels = 0;
+        board[i].mortgageStatus = noMortgage;
+        clearInsurance(&board[i]);
+        board[i].owner = playerBANK;
+        printf("%s's %s transferred to the Bank of Ceylon\n", player_x->name,
+               board[i].name);
+    }
+}
+
+void bankruptCheck(playerPointers *playerObject, int *noOfBankruptPlayers, square *board) {
     *noOfBankruptPlayers = 0;
     player *players[4] = {playerObject->player_1, playerObject->player_2, playerObject->player_3, playerObject->player_4};
     *noOfBankruptPlayers = 0;
@@ -614,6 +637,7 @@ void bankruptCheck(playerPointers *playerObject, int *noOfBankruptPlayers) {
         if (players[i]->netWorth <= 0) {
             if (!players[i]->isBankrupt) {
                 printf("\n%s went Bankrupt\n", players[i]->name);
+                transferAssetsToBank(players[i], board, playerObject->player_BANK);
             }
             players[i]->isBankrupt = true;
         }
