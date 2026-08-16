@@ -122,24 +122,28 @@ void resolveUtility(player *player_x, square *board, context *contextOfTheGame, 
             if (aggrRailwayBuyCondition(player_x, board)) {
                 board[player_x->currentSquare].owner = player_x;
                 player_x->noOfUtilities++;
+                player_x->cash -= board[player_x->currentSquare].curruntValue;
             }
             break;
         case riskTaker:
             if (riskTkrRailwayBuyCondition(player_x, board)) {
                 board[player_x->currentSquare].owner = player_x;
                 player_x->noOfUtilities++;
+                player_x->cash -= board[player_x->currentSquare].curruntValue;
             }
             break;
         case conservativeBanker:
             if (consBankerRailwayBuyCondition(player_x, board)) {
                 board[player_x->currentSquare].owner = player_x;
                 player_x->noOfUtilities++;
+                player_x->cash -= board[player_x->currentSquare].curruntValue;
             }
             break;
         case opportunisticTrader:
             if (opprtTrdrRailwayBuyCondition(player_x, board, contextOfTheGame)) {
                 board[player_x->currentSquare].owner = player_x;
                 player_x->noOfUtilities++;
+                player_x->cash -= board[player_x->currentSquare].curruntValue;
             }
             break;
         default:
@@ -326,6 +330,7 @@ void resolveRailway(player *player_x, square *board, playerPointers *playerObjec
             if (aggrRailwayBuyCondition(player_x, board)) {
                 board[player_x->currentSquare].owner = player_x;
                 player_x->noOfRailways++;
+                player_x->cash -= board[player_x->currentSquare].curruntValue;
             } else {
                 noBuyAuction(player_x, playerObject, board, contextOfTheGame, &board[player_x->currentSquare]);
             }
@@ -334,6 +339,7 @@ void resolveRailway(player *player_x, square *board, playerPointers *playerObjec
             if (riskTkrRailwayBuyCondition(player_x, board)) {
                 board[player_x->currentSquare].owner = player_x;
                 player_x->noOfRailways++;
+                player_x->cash -= board[player_x->currentSquare].curruntValue;
             } else {
                 noBuyAuction(player_x, playerObject, board, contextOfTheGame, &board[player_x->currentSquare]);
             }
@@ -342,6 +348,7 @@ void resolveRailway(player *player_x, square *board, playerPointers *playerObjec
             if (consBankerRailwayBuyCondition(player_x, board)) {
                 board[player_x->currentSquare].owner = player_x;
                 player_x->noOfRailways++;
+                player_x->cash -= board[player_x->currentSquare].curruntValue;
             } else {
                 noBuyAuction(player_x, playerObject, board, contextOfTheGame, &board[player_x->currentSquare]);
             }
@@ -350,6 +357,7 @@ void resolveRailway(player *player_x, square *board, playerPointers *playerObjec
             if (opprtTrdrRailwayBuyCondition(player_x, board, contextOfTheGame)) {
                 board[player_x->currentSquare].owner = player_x;
                 player_x->noOfRailways++;
+                player_x->cash -= board[player_x->currentSquare].curruntValue;
             } else {
                 noBuyAuction(player_x, playerObject, board, contextOfTheGame, &board[player_x->currentSquare]);
             }
