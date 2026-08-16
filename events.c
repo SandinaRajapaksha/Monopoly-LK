@@ -1316,13 +1316,15 @@ void inflationRateRelease(square *board, context *contextofgame) { // parameters
            "release : %d %% \n\n",
            contextofgame->currentBoardRound, contextofgame->currentInflation);
 
+    double multiplier = 1.0000 + (double)contextofgame->currentInflation / 100.0;
+
     for (int i = 0; i <= 39; i++) {
 
-        board[i].curruntValue = board[i].curruntValue * doubleToInt(1.0000 + (double)contextofgame->currentInflation / (double)100);
-        board[i].PropertyProperties.currentRentalofProperty = board[i].PropertyProperties.currentRentalofProperty * doubleToInt(1.0000 + (double)contextofgame->currentInflation / (double)100);
-        board[i].PropertyProperties.initialPrice = board[i].PropertyProperties.initialPrice * doubleToInt(1.0000 + (double)contextofgame->currentInflation / (double)100);
-        board[i].PropertyProperties.houseConstructionCost = board[i].PropertyProperties.houseConstructionCost * doubleToInt(1.0000 + (double)contextofgame->currentInflation / (double)100);
-        board[i].PropertyProperties.hotelConstructionCost = board[i].PropertyProperties.hotelConstructionCost * doubleToInt(1.0000 + (double)contextofgame->currentInflation / (double)100);
+        board[i].curruntValue = doubleToInt((double)board[i].curruntValue * multiplier);
+        board[i].PropertyProperties.currentRentalofProperty = doubleToInt((double)board[i].PropertyProperties.currentRentalofProperty * multiplier);
+        board[i].PropertyProperties.initialPrice = doubleToInt((double)board[i].PropertyProperties.initialPrice * multiplier);
+        board[i].PropertyProperties.houseConstructionCost = doubleToInt((double)board[i].PropertyProperties.houseConstructionCost * multiplier);
+        board[i].PropertyProperties.hotelConstructionCost = doubleToInt((double)board[i].PropertyProperties.hotelConstructionCost * multiplier);
     }
     contextofgame->roundThatInflationHappened = contextofgame->currentBoardRound;
 }
