@@ -57,7 +57,9 @@ void disasterAcitivate(square *board, context *contextOfTheGame) {
     if (affected->PropertyProperties.noOfHotels == 1) {
         repairCost = affected->PropertyProperties.hotelConstructionCost;
         affected->PropertyProperties.noOfHotels = 0;
-        affected->owner->noOfHotelsOwned--;
+        if (affected->owner->noOfHotelsOwned > 0) {
+            affected->owner->noOfHotelsOwned--;
+        }
         hotelDestroyed = true;
         printf("Hotel destroyed at %s\n", affected->name);
     } else if (affected->PropertyProperties.noOfHouses > 0) {
@@ -596,7 +598,9 @@ void damageBuilding(square *sq) {
     }
     if (sq->PropertyProperties.noOfHotels == 1) {
         sq->PropertyProperties.noOfHotels = 0;
-        sq->owner->noOfHotelsOwned--;
+        if (sq->owner->noOfHotelsOwned > 0) {
+            sq->owner->noOfHotelsOwned--;
+        }
         printf("Hotel destroyed at %s\n", sq->name);
     } else if (sq->PropertyProperties.noOfHouses > 0) {
         sq->PropertyProperties.noOfHouses--;

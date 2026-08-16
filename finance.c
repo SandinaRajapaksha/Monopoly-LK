@@ -294,6 +294,20 @@ void processInsurancePayments(player *player_x, square *board, context *contextO
     }
 }
 
+void stripBuildingsForTransfer(square *sq) {
+    if (sq->owner != NULL) {
+        if (sq->PropertyProperties.noOfHotels == 1 && sq->owner->noOfHotelsOwned > 0) {
+            sq->owner->noOfHotelsOwned--;
+        }
+        sq->owner->noOfHousesOwned -= sq->PropertyProperties.noOfHouses;
+        if (sq->owner->noOfHousesOwned < 0) {
+            sq->owner->noOfHousesOwned = 0;
+        }
+    }
+    sq->PropertyProperties.noOfHouses = 0;
+    sq->PropertyProperties.noOfHotels = 0;
+}
+
 void sellingAuction(player *player_x, player *player_1, player *player_2, player *player_3, player *player_4, square *board, context *contextOfGame, square *auctionItem, player *playerBANK) {
 
     clearInsurance(auctionItem);
@@ -343,8 +357,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
             case aggresiveInvester:
                 if (HighestBidder->playerID == aggresiveInvester) {
                     // buys and win
-                    auctionItem->PropertyProperties.noOfHouses = 0;
-                    auctionItem->PropertyProperties.noOfHotels = 0;
+                    stripBuildingsForTransfer(auctionItem);
                     // transfer funds to the owner
                     auctionItem->owner->cash += HighestBid;
                     if (auctionItem->type == property) {
@@ -385,8 +398,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
             case riskTaker:
                 if (HighestBidder->playerID == riskTaker) {
                     // buys and win
-                    auctionItem->PropertyProperties.noOfHouses = 0;
-                    auctionItem->PropertyProperties.noOfHotels = 0;
+                    stripBuildingsForTransfer(auctionItem);
                     // transfer funds to the owner
                     auctionItem->owner->cash += HighestBid;
                     if (auctionItem->type == property) {
@@ -428,8 +440,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
             case conservativeBanker:
                 if (HighestBidder->playerID == conservativeBanker) {
                     // buys and win
-                    auctionItem->PropertyProperties.noOfHouses = 0;
-                    auctionItem->PropertyProperties.noOfHotels = 0;
+                    stripBuildingsForTransfer(auctionItem);
                     // transfer funds to the owner
                     auctionItem->owner->cash += HighestBid;
                     if (auctionItem->type == property) {
@@ -471,8 +482,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
             case opportunisticTrader:
                 if (HighestBidder->playerID == opportunisticTrader) {
                     // buys and win
-                    auctionItem->PropertyProperties.noOfHouses = 0;
-                    auctionItem->PropertyProperties.noOfHotels = 0;
+                    stripBuildingsForTransfer(auctionItem);
                     // transfer funds to the owner
                     auctionItem->owner->cash += HighestBid;
                     if (auctionItem->type == property) {
@@ -515,8 +525,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
             }
         }
         if (HighestBidder != player_x) {
-            auctionItem->PropertyProperties.noOfHouses = 0;
-            auctionItem->PropertyProperties.noOfHotels = 0;
+            stripBuildingsForTransfer(auctionItem);
             auctionItem->owner->cash += HighestBid;
             if (auctionItem->type == property) {
                 auctionItem->owner->noOfProperties--;
@@ -545,8 +554,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
             // sell to the bank at mortgage price
 
             player_x->cash += auctionItem->mortgageValue;
-            auctionItem->PropertyProperties.noOfHouses = 0;
-            auctionItem->PropertyProperties.noOfHotels = 0;
+            stripBuildingsForTransfer(auctionItem);
             auctionItem->owner = playerBANK;
             if (auctionItem->type == property) {
                 player_x->noOfProperties--;
@@ -670,8 +678,7 @@ void bankruptAuction(player *player_x, square *board,
             case aggresiveInvester:
                 if (HighestBidder->playerID == aggresiveInvester) {
                     // buys and win
-                    auctionItem->PropertyProperties.noOfHouses = 0;
-                    auctionItem->PropertyProperties.noOfHotels = 0;
+                    stripBuildingsForTransfer(auctionItem);
                     // transfer funds to the owner
                     auctionItem->owner->cash += HighestBid;
                     if (auctionItem->type == property) {
@@ -712,8 +719,7 @@ void bankruptAuction(player *player_x, square *board,
             case riskTaker:
                 if (HighestBidder->playerID == riskTaker) {
                     // buys and win
-                    auctionItem->PropertyProperties.noOfHouses = 0;
-                    auctionItem->PropertyProperties.noOfHotels = 0;
+                    stripBuildingsForTransfer(auctionItem);
                     // transfer funds to the owner
                     auctionItem->owner->cash += HighestBid;
                     if (auctionItem->type == property) {
@@ -754,8 +760,7 @@ void bankruptAuction(player *player_x, square *board,
             case conservativeBanker:
                 if (HighestBidder->playerID == conservativeBanker) {
                     // buys and win
-                    auctionItem->PropertyProperties.noOfHouses = 0;
-                    auctionItem->PropertyProperties.noOfHotels = 0;
+                    stripBuildingsForTransfer(auctionItem);
                     // transfer funds to the owner
                     auctionItem->owner->cash += HighestBid;
                     if (auctionItem->type == property) {
@@ -796,8 +801,7 @@ void bankruptAuction(player *player_x, square *board,
             case opportunisticTrader:
                 if (HighestBidder->playerID == opportunisticTrader) {
                     // buys and win
-                    auctionItem->PropertyProperties.noOfHouses = 0;
-                    auctionItem->PropertyProperties.noOfHotels = 0;
+                    stripBuildingsForTransfer(auctionItem);
                     // transfer funds to the owner
                     auctionItem->owner->cash += HighestBid;
                     if (auctionItem->type == property) {
@@ -839,8 +843,7 @@ void bankruptAuction(player *player_x, square *board,
             }
         }
         if (HighestBidder != player_x) {
-            auctionItem->PropertyProperties.noOfHouses = 0;
-            auctionItem->PropertyProperties.noOfHotels = 0;
+            stripBuildingsForTransfer(auctionItem);
             auctionItem->owner->cash += HighestBid;
             if (auctionItem->type == property) {
                 auctionItem->owner->noOfProperties--;
@@ -879,8 +882,7 @@ void bankruptAuction(player *player_x, square *board,
             if (auctionItem->type == utility) {
                 auctionItem->owner->noOfUtilities--;
             }
-            auctionItem->PropertyProperties.noOfHouses = 0;
-            auctionItem->PropertyProperties.noOfHotels = 0;
+            stripBuildingsForTransfer(auctionItem);
             auctionItem->owner = playerPointerObject->player_BANK;
             return;
         }
@@ -923,8 +925,7 @@ void noBuyAuction(player *player_x, playerPointers *playerObject, square *board,
             case aggresiveInvester:
                 if (HighestBidder->playerID == aggresiveInvester) {
                     // buys and win
-                    auctionItem->PropertyProperties.noOfHouses = 0;
-                    auctionItem->PropertyProperties.noOfHotels = 0;
+                    stripBuildingsForTransfer(auctionItem);
 
                     // pay the bid and get ownership
                     auctionItem->owner = bidders[i];
@@ -955,8 +956,7 @@ void noBuyAuction(player *player_x, playerPointers *playerObject, square *board,
             case riskTaker:
                 if (HighestBidder->playerID == riskTaker) {
                     // buys and win
-                    auctionItem->PropertyProperties.noOfHouses = 0;
-                    auctionItem->PropertyProperties.noOfHotels = 0;
+                    stripBuildingsForTransfer(auctionItem);
                     // pay the bid and get ownership
                     auctionItem->owner = bidders[i];
                     bidders[i]->cash -= HighestBid;
@@ -985,8 +985,7 @@ void noBuyAuction(player *player_x, playerPointers *playerObject, square *board,
             case conservativeBanker:
                 if (HighestBidder->playerID == conservativeBanker) {
                     // buys and win
-                    auctionItem->PropertyProperties.noOfHouses = 0;
-                    auctionItem->PropertyProperties.noOfHotels = 0;
+                    stripBuildingsForTransfer(auctionItem);
 
                     // pay the bid and get ownership
                     auctionItem->owner = bidders[i];
@@ -1016,8 +1015,7 @@ void noBuyAuction(player *player_x, playerPointers *playerObject, square *board,
             case opportunisticTrader:
                 if (HighestBidder->playerID == opportunisticTrader) {
                     // buys and win
-                    auctionItem->PropertyProperties.noOfHouses = 0;
-                    auctionItem->PropertyProperties.noOfHotels = 0;
+                    stripBuildingsForTransfer(auctionItem);
 
                     // pay the bid and get ownership
                     auctionItem->owner = bidders[i];
@@ -1048,8 +1046,7 @@ void noBuyAuction(player *player_x, playerPointers *playerObject, square *board,
             }
         }
         if (HighestBidder != playerObject->player_BANK) {
-            auctionItem->PropertyProperties.noOfHouses = 0;
-            auctionItem->PropertyProperties.noOfHotels = 0;
+            stripBuildingsForTransfer(auctionItem);
             auctionItem->owner = HighestBidder;
 
             HighestBidder->cash -= HighestBid;

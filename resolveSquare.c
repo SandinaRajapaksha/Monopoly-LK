@@ -640,7 +640,7 @@ void resolveProperty(player *player_x, square *board,
                     player_x->cash -= board[player_x->currentSquare].PropertyProperties.hotelConstructionCost;
                     board[player_x->currentSquare].PropertyProperties.noOfHotels = 1;
 
-                    player_x->noOfHotelsOwned = 1;
+                    player_x->noOfHotelsOwned++;
                     player_x->noOfHousesOwned -= 4;
                     board[player_x->currentSquare].PropertyProperties.noOfHouses = 0;
                     board[player_x->currentSquare].PropertyProperties.currentRentalofProperty = 10 * board[player_x->currentSquare].PropertyProperties.baseRental;
@@ -686,7 +686,7 @@ void resolveProperty(player *player_x, square *board,
                     player_x->cash -= board[player_x->currentSquare].PropertyProperties.hotelConstructionCost;
                     board[player_x->currentSquare].PropertyProperties.noOfHotels = 1;
 
-                    player_x->noOfHotelsOwned = 1;
+                    player_x->noOfHotelsOwned++;
                     board[player_x->currentSquare].PropertyProperties.noOfHouses = 0;
                     player_x->noOfHousesOwned -= 4;
                     board[player_x->currentSquare].PropertyProperties.currentRentalofProperty = 10 * board[player_x->currentSquare].PropertyProperties.baseRental;
@@ -729,7 +729,7 @@ void resolveProperty(player *player_x, square *board,
                     player_x->cash -= board[player_x->currentSquare].PropertyProperties.hotelConstructionCost;
                     board[player_x->currentSquare].PropertyProperties.noOfHotels = 1;
 
-                    player_x->noOfHotelsOwned = 1;
+                    player_x->noOfHotelsOwned++;
                     board[player_x->currentSquare].PropertyProperties.noOfHouses = 0;
                     player_x->noOfHousesOwned -= 4;
                     board[player_x->currentSquare].PropertyProperties.currentRentalofProperty = 10 * board[player_x->currentSquare].PropertyProperties.baseRental;
@@ -771,7 +771,7 @@ void resolveProperty(player *player_x, square *board,
                     player_x->cash -= board[player_x->currentSquare].PropertyProperties.hotelConstructionCost;
                     board[player_x->currentSquare].PropertyProperties.noOfHotels = 1;
 
-                    player_x->noOfHotelsOwned = 1;
+                    player_x->noOfHotelsOwned++;
                     board[player_x->currentSquare].PropertyProperties.noOfHouses = 0;
                     player_x->noOfHousesOwned -= 4;
                     board[player_x->currentSquare].PropertyProperties.currentRentalofProperty = 10 * board[player_x->currentSquare].PropertyProperties.baseRental;
