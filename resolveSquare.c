@@ -245,7 +245,7 @@ void resolveInsure(player *player_x, square *board) {
         company = Ceylinco;
     }
 
-    // an active policy is renewed, no new insurance is bought
+    // renew the active policy
     for (int i = 0; i < 40; i++) {
         if (board[i].owner == player_x && board[i].type == property &&
             board[i].PropertyProperties.insuranceCompany != none &&
@@ -256,7 +256,7 @@ void resolveInsure(player *player_x, square *board) {
         }
     }
 
-    // insure the most valuable developed property (disasters only hit developed properties)
+    // insure the most valuable developed property
     int best = -1;
     for (int i = 0; i < 40; i++) {
         if (board[i].owner == player_x && board[i].type == property &&
@@ -270,30 +270,31 @@ void resolveInsure(player *player_x, square *board) {
         return;
     }
 
-    // the insurance policy depends on the player behaviour
+    // policy depends on the player behaviour
     insurancePolicies policy = nonePolicy;
     switch (player_x->playerID) {
     case aggresiveInvester:
-        // basic insurance for all buildings
-        policy = basic;
+        // basic for houses comprehensive for hotels
+        if (board[best].PropertyProperties.noOfHotels == 1) {
+            policy = comprehensive;
+        } else {
+            policy = basic;
+        }
         break;
     case conservativeBanker:
-        // gets comprehensive insurance for all developed properties
+        // comprehensive insurance for all properties
         policy = comprehensive;
         break;
     case riskTaker:
-        // basic insurance only if a disaster ever happened to one of his properties
+        // basic insurance only after a disaster
         if (player_x->hasFacedDisaster) {
             policy = basic;
         }
         break;
     case opportunisticTrader:
-        // basic insurance for all properties
-        // buisinsess interuuption insurance for hotels
-        if (board[best].PropertyProperties.noOfHotels == 1) {
-            policy = buisiness;
-        } else {
-            policy = basic;
+        // comprehensive only for high value developments
+        if (board[best].curruntValue >= 8000) {
+            policy = comprehensive;
         }
         break;
     default:
@@ -335,7 +336,7 @@ void resolveTax(player *player_x, square *board, context *contextOfTheGame) {
 }
 
 void resolveRailway(player *player_x, square *board, playerPointers *playerObject, context *contextOfTheGame) {
-    // if ownwed by bank
+    // owned by the bank
     if (board[player_x->currentSquare].owner == NULL ||
         board[player_x->currentSquare].owner->playerID == bankOfCeylon) {
         switch (player_x->playerID) {
@@ -429,12 +430,11 @@ void resolveRailway(player *player_x, square *board, playerPointers *playerObjec
             break;
         }
     }
-    // if owne
 }
 void resolveProperty(player *player_x, square *board,
                      context *contextOfTheGame, playerPointers *playerObject) {
 
-    // if property owns by bank
+    // property owned by the bank
     if (board[player_x->currentSquare].owner == NULL ||
         board[player_x->currentSquare].owner->playerID == bankOfCeylon) {
         playerType currentPlayer = player_x->playerID;
@@ -445,6 +445,7 @@ void resolveProperty(player *player_x, square *board,
             if ((player_x->cash >
                  (1000 + board[player_x->currentSquare]
                              .PropertyProperties.initialPrice)) &&
+                (board[player_x->currentSquare].owner != NULL) &&
                 (board[player_x->currentSquare].owner->playerID !=
                  aggresiveInvester)) {
 
@@ -628,11 +629,6 @@ void resolveProperty(player *player_x, square *board,
         switch (currentPlayer) {
 
         case aggresiveInvester:
-            // test case
-
-            // sellingAuction(player_x, playerObject->player_1, playerObject->player_2,
-            //                playerObject->player_3, playerObject->player_4, board, contextOfTheGame, &board[player_x->currentSquare],
-            //                playerObject->player_BANK);
 
             if (eligibleForHouse && (board[player_x->currentSquare].PropertyProperties.houseConstructionCost <= player_x->cash)) {
                 // build house
@@ -725,7 +721,7 @@ void resolveProperty(player *player_x, square *board,
             if (eligibleForHouse && (board[player_x->currentSquare].PropertyProperties.houseConstructionCost <= player_x->cash)) {
                 // build house
                 if (board[player_x->currentSquare].PropertyProperties.noOfHouses >= 4 &&
-                    ((player_x->cash - board[player_x->currentSquare].PropertyProperties.hotelConstructionCost) > player_x->cash / 2)) {
+                    (player_x->cash >= board[player_x->currentSquare].PropertyProperties.hotelConstructionCost)) {
 
                     player_x->cash -= board[player_x->currentSquare].PropertyProperties.hotelConstructionCost;
                     board[player_x->currentSquare].PropertyProperties.noOfHotels = 1;
@@ -814,7 +810,7 @@ void resolveProperty(player *player_x, square *board,
 
 bool checkForMonopoly(player *player_x, square *board) {
 
-    // does the player own the full group?
+    // does the player own the full group
     groupType CurrentGroup = board[player_x->currentSquare].PropertyProperties.propertyGroup;
     bool ownsAMonopoly = true;
     for (int i = 0; i < 40; i++) {
@@ -824,7 +820,7 @@ bool checkForMonopoly(player *player_x, square *board) {
         }
     }
 
-    // houses must be evenly spread before the next build
+    // houses must be spread evenly
     int currentNoOfHouses;
     if (board[player_x->currentSquare].PropertyProperties.noOfHotels == 1) {
         currentNoOfHouses = 5;

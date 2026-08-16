@@ -2,7 +2,7 @@
 #include <stdbool.h>
 
 bool OpportTraderBuyCondition(int incomePerLanding, int price, int currentLoanInterestRate) {
-    double expectedLandings = 1.5; // 3 opponents x 20 rounds x 1/40
+    double expectedLandings = 1.5; // 3 opponents 20 rounds 1 in 40
 
     if (price <= 0) {
         return false;
@@ -202,7 +202,7 @@ void AggrNoCashAuction(square *board, player *player_x, playerPointers *playerOb
     }
 }
 
-// railway buy behavour
+// railway buy behaviour
 bool aggrRailwayBuyCondition(player *player_x, square *board) {
 
     if (player_x->cash - board[player_x->currentSquare].curruntValue >= 2000) {

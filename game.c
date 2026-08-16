@@ -4,7 +4,6 @@
 #define INITIAL_PRICE 30000
 
 void startGame(void) {
-    //
 
     // event counters
 
@@ -164,14 +163,14 @@ void startGame(void) {
         roundCounter(&contextOfTheGame, &player_1, &player_2, &player_3,
                      &player_4);
 
-        // round-based effects tick only when a new round actually starts
+        // effects tick only on new rounds
         if (contextOfTheGame.currentBoardRound != previousRound) {
             decayRegionalDevelopmentEffects(&contextOfTheGame, board);
             decayDynamicPropertyEffects(&contextOfTheGame, board);
             decayGovRegulationEffects(&contextOfTheGame, board);
         }
 
-        // trigger events after a set number of rounds
+        // events trigger after set rounds
         if ((contextOfTheGame.currentBoardRound % 15 == 0) &&
             (contextOfTheGame.currentBoardRound != contextOfTheGame.roundThatEconEventHappened)) {
             econEventActivate(board, &contextOfTheGame);
@@ -225,18 +224,39 @@ void startGame(void) {
 
     if (winner) {
         int totalPropertyValue = 0;
+        int propertiesOwned = 0;
+        int railwaysOwned = 0;
+        int utilitiesOwned = 0;
+        int housesOwned = 0;
+        int hotelsOwned = 0;
+        int mortgagedCount = 0;
+        int insuredCount = 0;
         for (int i = 0; i < 40; i++) {
             if (board[i].owner != winner) {
                 continue;
             }
             if (board[i].mortgageStatus == mortgagedToBank) {
                 totalPropertyValue += board[i].mortgageValue;
+                mortgagedCount++;
             } else if (board[i].type == property) {
                 totalPropertyValue += board[i].curruntValue;
                 totalPropertyValue += board[i].PropertyProperties.noOfHouses * board[i].PropertyProperties.houseConstructionCost;
                 totalPropertyValue += board[i].PropertyProperties.noOfHotels * board[i].PropertyProperties.hotelConstructionCost;
+                housesOwned += board[i].PropertyProperties.noOfHouses;
+                hotelsOwned += board[i].PropertyProperties.noOfHotels;
             } else {
                 totalPropertyValue += board[i].curruntValue;
+            }
+            if (board[i].type == property) {
+                propertiesOwned++;
+            } else if (board[i].type == railway) {
+                railwaysOwned++;
+            } else if (board[i].type == utility) {
+                utilitiesOwned++;
+            }
+            if (board[i].PropertyProperties.insuranceCompany != none &&
+                board[i].PropertyProperties.insuranceRoundsRemaining > 0) {
+                insuredCount++;
             }
         }
 
@@ -246,6 +266,13 @@ void startGame(void) {
         printf("Winner\n%s\n", winner->name);
         printf("Total Cash\nLKR %d\n", winner->cash);
         printf("Total Property Value\nLKR %d\n", totalPropertyValue);
+        printf("Properties Owned\n%d\n", propertiesOwned);
+        printf("Railways Owned\n%d\n", railwaysOwned);
+        printf("Utilities Owned\n%d\n", utilitiesOwned);
+        printf("Houses Owned\n%d\n", housesOwned);
+        printf("Hotels Owned\n%d\n", hotelsOwned);
+        printf("Mortgaged Properties\n%d\n", mortgagedCount);
+        printf("Insured Properties\n%d\n", insuredCount);
         if (winner->outStandingLoan > 0) {
             printf("Outstanding Loans\nLKR %d\n", winner->outStandingLoan);
         } else {

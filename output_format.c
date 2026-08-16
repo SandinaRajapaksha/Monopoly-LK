@@ -14,7 +14,7 @@ void printMarketConditions(context *contextofgame) {
         printf("\nInflation\n-------------------------------------------------\n(-%d%%)\n\n", -contextofgame->currentInflation);
     }
 
-    // econ event
+    // economic event
     printf("\nEconomic Event\n------------------------------------------------------\n");
 
     switch (contextofgame->currentActiveEconEvent) {
@@ -85,7 +85,7 @@ void printMarketConditions(context *contextofgame) {
         printf("No regulation active\n");
     }
 
-    // dynamic property market boom / decline
+    // dynamic property market boom and decline
     printf("\nDynamic Property Market\n------------------------------------------------------\n");
     if (contextofgame->dynamicEventRoundsRemaining > 0) {
         printf("Boom group : %s\nDecline group : %s\nround remaining : %d\n",

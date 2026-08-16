@@ -13,7 +13,7 @@ typedef struct {
     int rollValue;
     bool doublesRolled;
 } diceRollType;
-// square
+// square types
 typedef enum {
     go,
     special,
@@ -39,7 +39,7 @@ typedef enum { inside = 401,
                outside
 } jailStatus;
 
-// event_related types
+// event related types
 typedef enum {
 
     TourismBoom = 1001,
@@ -60,7 +60,7 @@ typedef enum {
     electricalFailure
 } disaster;
 
-// goverment regulation types
+// government regulation types
 typedef enum {
 
     IncreasePropertyTax = 2001,
@@ -101,7 +101,7 @@ typedef enum {
 
 } NationalEventType;
 
-// regional development type
+// regional development types
 
 typedef enum {
 
@@ -282,16 +282,17 @@ typedef struct {
     player *player_BANK;
 
 } playerPointers;
-// function Prototypes
+// function prototypes
 
 void startGame(void);
 void initializeBoard(square *, playerPointers *);
-//  randomly choosen after round count
+// randomly chosen after round count
 void econEventActivate(square *, context *);
 void govRegulationsActivate(square *, context *, playerPointers *);
 void govRegulationDeactivate(square *, context *);
 void decayGovRegulationEffects(context *, square *);
 char *getGovRegulationName(govRegulationsType);
+char *getEconEventName(economicEventCardType);
 void housingSubsidy_gov_activate(square *);
 void housingSubsidy_gov_deactivate(square *);
 void railwayModernization_activate(square *);
@@ -380,7 +381,7 @@ void buidBuilding(player *, square *);
 void networthEvaluate(player *, player *, player *, player *, square *);
 bool playerHasaMonopoly(player *, square *);
 void printMarketConditions(context *);
-// econ event functions
+// economic event functions
 void tourismBoomActivate(square *);
 void tourismBoom_Deactivate(square *);
 void FuelCrisisActivate(square *);

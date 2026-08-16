@@ -55,7 +55,7 @@ void resolveBank(player *player_x, square *board, context *contextOfTheGame, pla
         switch (tempPlayer) {
 
         case aggresiveInvester:
-            // if player has monopoly and cannot afford buildings in cash , he gest a loan.
+            // loan if monopoly and low cash
 
             if (playerHasaMonopoly(player_x, board) && player_x->cash <= 5000) {
                 if (player_x->MaxElegibleLoanAmount > 0) {
@@ -93,7 +93,7 @@ void resolveBank(player *player_x, square *board, context *contextOfTheGame, pla
             }
             break;
         case riskTaker:
-            if (player_x->cash <= 5000 && player_x->MaxElegibleLoanAmount > 0) {
+            if (player_x->MaxElegibleLoanAmount > 0) {
                 player_x->hasDebt = true;
                 player_x->loantakigLap = contextOfTheGame->currentBoardRound;
                 int loanAmount = player_x->MaxElegibleLoanAmount;
@@ -133,8 +133,7 @@ void resolveBank(player *player_x, square *board, context *contextOfTheGame, pla
         // paying loans
         playerType tempPlayer = player_x->playerID;
         if (player_x->hasDebt == true && player_x->MaxElegibleLoanAmount > player_x->cash) {
-            // the player cannot repay from cash alone; auction properties
-            // until the loan can be covered
+            // auction properties when cash cannot repay the loan
             for (int i = 0; i <= 39 && player_x->hasDebt == true && !player_x->isBankrupt; i++) {
                 if (board[i].owner == player_x) {
                     sellingAuction(player_x, playerObject->player_1,
@@ -165,7 +164,7 @@ void resolveBank(player *player_x, square *board, context *contextOfTheGame, pla
             }
             break;
         case conservativeBanker:
-            if (player_x->cash > 2 * player_x->outStandingLoan) {
+            if (player_x->cash >= player_x->outStandingLoan) {
                 player_x->cash -= player_x->outStandingLoan;
                 player_x->hasDebt = false;
                 printf("%s fully repaid the loan of %d to the Bank of Ceylon\n", player_x->name, player_x->outStandingLoan);
@@ -474,7 +473,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                     printWinner(bidders[i], HighestBid, auctionItem);
                     return;
                 }
-                bool conditionConserBanker = ((bidders[i]->cash - HighestBid + 250) > bidders[i]->cash / 2) && (HighestBid < auctionItem->curruntValue / (0.75));
+                bool conditionConserBanker = ((bidders[i]->cash - HighestBid + 250) > bidders[i]->cash / 2) && (HighestBid + 250 < auctionItem->curruntValue);
                 if (conditionConserBanker) {
                     conserBankerHighestBid = HighestBid + 250;
                     HighestBid = conserBankerHighestBid;
@@ -817,7 +816,7 @@ void bankruptAuction(player *player_x, square *board,
                     printWinner(bidders[i], HighestBid, auctionItem);
                     return;
                 }
-                bool conditionConserBanker = ((bidders[i]->cash - HighestBid + 250) > bidders[i]->cash / 2) && (HighestBid < auctionItem->curruntValue / (0.75));
+                bool conditionConserBanker = ((bidders[i]->cash - HighestBid + 250) > bidders[i]->cash / 2) && (HighestBid + 250 < auctionItem->curruntValue);
                 if (conditionConserBanker) {
                     conserBankerHighestBid = HighestBid + 250;
                     HighestBid = conserBankerHighestBid;
@@ -897,7 +896,7 @@ void bankruptAuction(player *player_x, square *board,
             return;
         }
         if (HighestBidder == player_x) {
-            // bakn owns property
+            // bank owns the property
             printf("No one bought item in the auction.\n");
             printf("Bank owns %s\n\n", auctionItem->name);
             printf("============================================================\n\n");
@@ -1031,7 +1030,7 @@ void noBuyAuction(player *player_x, playerPointers *playerObject, square *board,
                     printWinner(bidders[i], HighestBid, auctionItem);
                     return;
                 }
-                bool conditionConserBanker = ((bidders[i]->cash - HighestBid + 250) > bidders[i]->cash / 2) && (HighestBid < auctionItem->curruntValue / (0.75));
+                bool conditionConserBanker = ((bidders[i]->cash - HighestBid + 250) > bidders[i]->cash / 2) && (HighestBid + 250 < auctionItem->curruntValue);
                 if (conditionConserBanker) {
                     conserBankerHighestBid = HighestBid + 250;
                     HighestBid = conserBankerHighestBid;

@@ -98,7 +98,7 @@ void disasterAcitivate(square *board, context *contextOfTheGame) {
         affected->owner->cash += compensation;
         printf("%s received LKR %d insurance compensation for %s\n", affected->owner->name, compensation, affected->name);
 
-        // the compensation money plus the remaining cash is used to repair
+        // repairs use the compensation and cash
         if (affected->owner->cash >= repairCost) {
             affected->owner->cash -= repairCost;
             if (hotelDestroyed) {
@@ -176,42 +176,43 @@ void econEventActivate(square *board, context *contextOfTheGame) {
     int randomEconEvent = econEvents[rand() % 8];
     contextOfTheGame->currentActiveEconEvent = randomEconEvent;
 
-    printf("\nRound %d economic event happens now, \n",
-           contextOfTheGame->currentBoardRound);
+    printf("\n=========================================================\n");
+    printf("Economic Event : %s\n", getEconEventName(randomEconEvent));
+    printf("---------------------------------------------------------\n");
     if (randomEconEvent == TourismBoom) {
-        printf("Tourism Boom Happens...\n");
+        printf("Hotels earn double rent and coastal property values rise by 15%%\n");
         tourismBoomActivate(board);
 
     } else if (randomEconEvent == FuelCrisis) {
-        printf("Fuel Crisis happens... \n");
+        printf("Railway rents double and construction costs rise by 20%%\n");
         FuelCrisisActivate(board);
 
     } else if (randomEconEvent == HeavyMonsoon) {
-        printf("Heavy Monsoon happens ...\n");
+        printf("Coastal property values drop by 10%%\n");
         HeavyMonsoonActivate(board);
 
     } else if (randomEconEvent == EconomicRecession) {
-        printf("Economic Recession happens... \n");
+        printf("Property values drop by 15%% and rents by 10%%\n");
         recessionActivate(board);
         contextOfTheGame->currentInterestRate -= 3;
         printf("Central bank cuts loan interest to %d%%\n", contextOfTheGame->currentInterestRate);
 
     } else if (randomEconEvent == StockMarketBoom) {
-        printf("Stock Market Boom happens... \n");
+        printf("Property values rise by 10%%\n");
         StockMarketBoomActivate(board);
         contextOfTheGame->currentInterestRate += 2;
         printf("Loan interest raised to %d%%\n", contextOfTheGame->currentInterestRate);
 
     } else if (randomEconEvent == GovernmentHousingProgramme) {
-        printf("Government Housing Programme happens... \n");
+        printf("House construction costs reduced by 25%%\n");
         GovernmentHousingProgrammeActivate(board);
 
     } else if (randomEconEvent == ForeignInvestment) {
-        printf("Foreign Investment happens... \n");
+        printf("Orange and red group property values rise by 20%%\n");
         ForeignInvestmentActivate(board);
 
     } else if (randomEconEvent == PoliticalUnrest) {
-        printf("Political Unrest happens... \n");
+        printf("Hotel rents drop by 50%%\n");
         PoliticalUnrestActivate(board);
     }
     printf("\n");
@@ -235,6 +236,29 @@ char *getGovRegulationName(govRegulationsType regulation) {
         return "Electricity Tariff Revision";
     case AntiSpeculantAct:
         return "Anti-Speculant Act";
+    default:
+        return "Unknown";
+    }
+}
+
+char *getEconEventName(economicEventCardType event) {
+    switch (event) {
+    case TourismBoom:
+        return "Tourism Boom";
+    case FuelCrisis:
+        return "Fuel Crisis";
+    case HeavyMonsoon:
+        return "Heavy Monsoon";
+    case EconomicRecession:
+        return "Economic Recession";
+    case StockMarketBoom:
+        return "Stock Market Boom";
+    case GovernmentHousingProgramme:
+        return "Government Housing Programme";
+    case ForeignInvestment:
+        return "Foreign Investment";
+    case PoliticalUnrest:
+        return "Political Unrest";
     default:
         return "Unknown";
     }
@@ -294,7 +318,7 @@ void govRegulationDeactivate(square *board, context *contextOfTheGame) {
 }
 
 void govRegulationsActivate(square *board, context *contextOfTheGame, playerPointers *playerObject) {
-    // end any leftover regulation from a previous draw first
+    // clear the previous regulation first
     if (contextOfTheGame->govRegulationRoundsRemaining > 0 &&
         contextOfTheGame->currentActiveGovRegulation != (govRegulationsType)-1) {
         govRegulationDeactivate(board, contextOfTheGame);
@@ -614,7 +638,7 @@ void damageBuilding(square *sq) {
 }
 
 void nationalEventActivate(player *player_x, square *board, context *contextOfTheGame, playerPointers *playerObject) {
-    // 20-card deck, top card drawn, then returned to the bottom
+    // top card drawn then returned to the bottom
     NationalEventType deck[20] = {
         TourismHype, FuelShortage, HeavyFloods, PoliticalRally,
         StockMarketRise, EconomicDowntime, HousingSubsidy_NationalEvent,
@@ -1019,7 +1043,7 @@ void waterShortage_deactivate(square *board) {
 }
 
 void regionalDevelopmentActivate(square *board, context *contextOfTheGame, playerPointers *playerObject) {
-    // 12-card deck, top card drawn, then returned to the bottom
+    // top card drawn then returned to the bottom
     regionalDevelopmentType deck[12] = {
         southernTourismBoom, portCityExpansion, itIndustryGrowth,
         nothernDevelopmentProgramme, teaExportBoom, airPortExpansion,
@@ -1241,7 +1265,7 @@ void dynamicPropertyDecline_deactivate(square *board, groupType group) {
 }
 
 void dynamicPropertyEventActivate(square *board, context *contextOfTheGame) {
-    // end any leftover effects from a previous review first
+    // clear the previous effects first
     if (contextOfTheGame->dynamicEventRoundsRemaining > 0) {
         if (contextOfTheGame->dynamicBoomGroup != (groupType)-1) {
             dynamicPropertyBoom_deactivate(board, contextOfTheGame->dynamicBoomGroup);
@@ -1251,12 +1275,12 @@ void dynamicPropertyEventActivate(square *board, context *contextOfTheGame) {
         }
     }
 
-    // random boom group - same group cannot boom in consecutive reviews
+    // random boom group not repeated twice
     groupType boomGroup = (groupType)(brown + (rand() % 8));
     while (boomGroup == contextOfTheGame->lastDynamicBoomGroup) {
         boomGroup = (groupType)(brown + (rand() % 8));
     }
-    // random decline group - different from the boom group, cannot decline consecutively
+    // random decline group not the boom group
     groupType declineGroup = (groupType)(brown + (rand() % 8));
     while (declineGroup == boomGroup || declineGroup == contextOfTheGame->lastDynamicDeclineGroup) {
         declineGroup = (groupType)(brown + (rand() % 8));
@@ -1308,7 +1332,7 @@ void decayDynamicPropertyEffects(context *contextOfTheGame, square *board) {
 void inflationRateRelease(square *board, context *contextofgame) { // parameters to be added
     // random event after 10 rounds
     int inflationRates[6] = {-3, 0, 2, 5, 8, 12};
-    // all the other shit
+    // inflation values
     int randomInflation = inflationRates[rand() % 6];
     contextofgame->currentInflation = randomInflation;
 

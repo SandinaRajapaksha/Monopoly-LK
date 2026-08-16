@@ -47,7 +47,7 @@ void FuelCrisis_Deactivate(square *board) {
 void HeavyMonsoonActivate(square *board) {
     for (int i = 0; i <= 39; i++) {
         if (board[i].type == property &&
-            board[i].PropertyProperties.propertyGroup == yellow) { // Galle Fort, Unawatuna, Hikkaduwa
+            board[i].PropertyProperties.propertyGroup == yellow) { // Galle Fort Unawatuna Hikkaduwa
             board[i].curruntValue = board[i].curruntValue * 0.9;
         }
     }
