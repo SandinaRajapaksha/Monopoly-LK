@@ -473,7 +473,7 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                     printWinner(bidders[i], HighestBid, auctionItem);
                     return;
                 }
-                bool conditionConserBanker = ((bidders[i]->cash - HighestBid + 250) > bidders[i]->cash / 2) && (HighestBid + 250 < auctionItem->curruntValue);
+                bool conditionConserBanker = ((bidders[i]->cash - (HighestBid + 250)) > bidders[i]->cash / 2) && (HighestBid + 250 < auctionItem->curruntValue);
                 if (conditionConserBanker) {
                     conserBankerHighestBid = HighestBid + 250;
                     HighestBid = conserBankerHighestBid;
@@ -515,7 +515,11 @@ void sellingAuction(player *player_x, player *player_1, player *player_2, player
                     printWinner(bidders[i], HighestBid, auctionItem);
                     return;
                 }
-                bool conditionOppotTrader = ((bidders[i]->cash > HighestBid + 250) && (HighestBid < 4000)); // to be implemented
+                bool conditionOppotTrader = (bidders[i]->cash > HighestBid + 250) &&
+                                            (contextOfGame->currentActiveEconEvent != EconomicRecession) &&
+                                            OpportTraderBuyCondition(auctionItem->PropertyProperties.currentRentalofProperty,
+                                                                     HighestBid + 250,
+                                                                     contextOfGame->currentInterestRate);
                 if (conditionOppotTrader) {
                     opportTraderHighestBid = HighestBid + 250;
                     HighestBid = opportTraderHighestBid;
@@ -816,7 +820,7 @@ void bankruptAuction(player *player_x, square *board,
                     printWinner(bidders[i], HighestBid, auctionItem);
                     return;
                 }
-                bool conditionConserBanker = ((bidders[i]->cash - HighestBid + 250) > bidders[i]->cash / 2) && (HighestBid + 250 < auctionItem->curruntValue);
+                bool conditionConserBanker = ((bidders[i]->cash - (HighestBid + 250)) > bidders[i]->cash / 2) && (HighestBid + 250 < auctionItem->curruntValue);
                 if (conditionConserBanker) {
                     conserBankerHighestBid = HighestBid + 250;
                     HighestBid = conserBankerHighestBid;
@@ -857,7 +861,11 @@ void bankruptAuction(player *player_x, square *board,
                     printWinner(bidders[i], HighestBid, auctionItem);
                     return;
                 }
-                bool conditionOppotTrader = ((bidders[i]->cash > HighestBid + 250) && (HighestBid < 4000)); // to be implemented
+                bool conditionOppotTrader = (bidders[i]->cash > HighestBid + 250) &&
+                                            (contextOfGame->currentActiveEconEvent != EconomicRecession) &&
+                                            OpportTraderBuyCondition(auctionItem->PropertyProperties.currentRentalofProperty,
+                                                                     HighestBid + 250,
+                                                                     contextOfGame->currentInterestRate);
                 if (conditionOppotTrader) {
                     opportTraderHighestBid = HighestBid + 250;
                     HighestBid = opportTraderHighestBid;
@@ -1030,7 +1038,7 @@ void noBuyAuction(player *player_x, playerPointers *playerObject, square *board,
                     printWinner(bidders[i], HighestBid, auctionItem);
                     return;
                 }
-                bool conditionConserBanker = ((bidders[i]->cash - HighestBid + 250) > bidders[i]->cash / 2) && (HighestBid + 250 < auctionItem->curruntValue);
+                bool conditionConserBanker = ((bidders[i]->cash - (HighestBid + 250)) > bidders[i]->cash / 2) && (HighestBid + 250 < auctionItem->curruntValue);
                 if (conditionConserBanker) {
                     conserBankerHighestBid = HighestBid + 250;
                     HighestBid = conserBankerHighestBid;
@@ -1060,7 +1068,11 @@ void noBuyAuction(player *player_x, playerPointers *playerObject, square *board,
                     printWinner(bidders[i], HighestBid, auctionItem);
                     return;
                 }
-                bool conditionOppotTrader = ((bidders[i]->cash > HighestBid + 250) && (HighestBid < 4000)); // to be implemented
+                bool conditionOppotTrader = (bidders[i]->cash > HighestBid + 250) &&
+                                            (contextOfGame->currentActiveEconEvent != EconomicRecession) &&
+                                            OpportTraderBuyCondition(auctionItem->PropertyProperties.currentRentalofProperty,
+                                                                     HighestBid + 250,
+                                                                     contextOfGame->currentInterestRate);
                 if (conditionOppotTrader) {
                     opportTraderHighestBid = HighestBid + 250;
                     HighestBid = opportTraderHighestBid;

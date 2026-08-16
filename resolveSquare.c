@@ -477,7 +477,6 @@ void resolveProperty(player *player_x, square *board,
                 player_x->noOfProperties++;
             } else {
                 noBuyAuction(player_x, playerObject, board, contextOfTheGame, &board[player_x->currentSquare]);
-                // auction logic to be implemented
             }
             break;
 
@@ -492,7 +491,6 @@ void resolveProperty(player *player_x, square *board,
                 player_x->noOfProperties++;
             } else {
                 noBuyAuction(player_x, playerObject, board, contextOfTheGame, &board[player_x->currentSquare]);
-                // auction logic
             }
             break;
 
@@ -510,7 +508,6 @@ void resolveProperty(player *player_x, square *board,
 
                 player_x->noOfProperties++;
             } else {
-                // auction logic
                 noBuyAuction(player_x, playerObject, board, contextOfTheGame, &board[player_x->currentSquare]);
             }
             break;
