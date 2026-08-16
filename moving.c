@@ -6,6 +6,7 @@ void move(player *player_x, square *board, context *contextOfTheGame, playerPoin
     processInsurancePayments(player_x, board, contextOfTheGame);
 
     diceRollType steps = dice_roller();
+    player_x->diceRoll = steps.rollValue;
     int tempCurrentSquare = player_x->currentSquare;
     if (player_x->Jail == inside) {
 
