@@ -60,6 +60,7 @@ void resolveBank(player *player_x, square *board, context *contextOfTheGame) {
             if (playerHasaMonopoly(player_x, board) && player_x->cash <= 5000) {
                 if (player_x->MaxElegibleLoanAmount > 0) {
                     player_x->hasDebt = true;
+                    player_x->loantakigLap = contextOfTheGame->currentBoardRound;
                     int loanAmount = player_x->MaxElegibleLoanAmount;
                     int rate = 0;
                     if (contextOfTheGame->currentInterestRate > 0) {
@@ -77,6 +78,7 @@ void resolveBank(player *player_x, square *board, context *contextOfTheGame) {
             if (player_x->netWorth < 5000) {
                 if (player_x->MaxElegibleLoanAmount > 0) {
                     player_x->hasDebt = true;
+                    player_x->loantakigLap = contextOfTheGame->currentBoardRound;
                     int loanAmount = player_x->MaxElegibleLoanAmount;
                     int rate = 0;
                     if (contextOfTheGame->currentInterestRate > 0) {
@@ -93,6 +95,7 @@ void resolveBank(player *player_x, square *board, context *contextOfTheGame) {
         case riskTaker:
             if (player_x->MaxElegibleLoanAmount > 0) {
                 player_x->hasDebt = true;
+                player_x->loantakigLap = contextOfTheGame->currentBoardRound;
                 int loanAmount = player_x->MaxElegibleLoanAmount;
                 int rate = 0;
                 if (contextOfTheGame->currentInterestRate > 0) {
@@ -108,6 +111,7 @@ void resolveBank(player *player_x, square *board, context *contextOfTheGame) {
             if (contextOfTheGame->currentActiveEconEvent == GovernmentHousingProgramme || contextOfTheGame->currentActiveEconEvent == StockMarketBoom) {
                 if (player_x->MaxElegibleLoanAmount > 0) {
                     player_x->hasDebt = true;
+                    player_x->loantakigLap = contextOfTheGame->currentBoardRound;
                     int loanAmount = player_x->MaxElegibleLoanAmount;
                     int rate = 0;
                     if (contextOfTheGame->currentInterestRate > 0) {
