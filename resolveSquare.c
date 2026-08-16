@@ -6,12 +6,25 @@
 void resolveSquare(player *player_x, square *board, context *contextOfGame, playerPointers *playerObject) {
     if (player_x->loantakigLap + 20 < contextOfGame->currentBoardRound && player_x->hasDebt == true) {
         printf("\n%s failed to replay debt. All assets transfered to the Bank...\nAuction starts now ...\n", player_x->name);
-        for (int i = 0; i <= 39; i++) {
+        for (int i = 0; i <= 39 && !player_x->isBankrupt; i++) {
             if (board[i].owner == player_x) {
                 bankruptAuction(player_x, board, contextOfGame, &board[i], playerObject);
             }
         }
+        if (player_x->cash > 0) {
+            printf("%s's remaining cash of LKR %d was transfered to the Bank of Ceylon\n", player_x->name, player_x->cash);
+            playerObject->player_BANK->cash += player_x->cash;
+            player_x->cash = 0;
+        }
+        if (player_x->outStandingLoan > 0) {
+            printf("%s's outstanding loan of LKR %d was written off\n", player_x->name, player_x->outStandingLoan);
+            player_x->outStandingLoan = 0;
+        }
         player_x->hasDebt = false;
+        if (!player_x->isBankrupt) {
+            player_x->isBankrupt = true;
+            printf("\n%s went bankrupt\n", player_x->name);
+        }
     }
 
     decayNationalEventEffects(player_x, board, contextOfGame);
