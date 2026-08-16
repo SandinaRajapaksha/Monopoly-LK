@@ -93,7 +93,7 @@ void resolveBank(player *player_x, square *board, context *contextOfTheGame, pla
             }
             break;
         case riskTaker:
-            if (player_x->MaxElegibleLoanAmount > 0) {
+            if (player_x->cash <= 5000 && player_x->MaxElegibleLoanAmount > 0) {
                 player_x->hasDebt = true;
                 player_x->loantakigLap = contextOfTheGame->currentBoardRound;
                 int loanAmount = player_x->MaxElegibleLoanAmount;
