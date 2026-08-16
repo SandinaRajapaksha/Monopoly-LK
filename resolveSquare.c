@@ -378,7 +378,7 @@ void resolveRailway(player *player_x, square *board, playerPointers *playerObjec
         default:
             break;
         }
-
+        return;
     } else if (board[player_x->currentSquare].owner->playerID != player_x->playerID) {
         switch (board[player_x->currentSquare].owner->noOfRailways) {
         case 1: {
@@ -517,6 +517,7 @@ void resolveProperty(player *player_x, square *board,
         default:
             break;
         }
+        return;
     }
     // if property owned by another player
     else if (board[player_x->currentSquare].owner->playerID !=
