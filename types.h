@@ -372,7 +372,7 @@ void resolveInsure(player *, square *);
 void processInsurancePayments(player *, square *, context *);
 void clearInsurance(square *);
 void resolveTax(player *, square *, context *);
-void resolveBank(player *, square *, context *);
+void resolveBank(player *, square *, context *, playerPointers *);
 void resolveProperty(player *, square *, context *, playerPointers *);
 void jailLogic(player *, bool);
 bool checkForMonopoly(player *, square *);

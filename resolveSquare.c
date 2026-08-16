@@ -53,7 +53,7 @@ void resolveSquare(player *player_x, square *board, context *contextOfGame, play
         resolveTax(player_x, board, contextOfGame);
         break;
     case bank:
-        resolveBank(player_x, board, contextOfGame);
+        resolveBank(player_x, board, contextOfGame, playerObject);
         break;
     case property:
         resolveProperty(player_x, board, contextOfGame, playerObject);

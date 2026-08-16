@@ -46,7 +46,7 @@ void networthEvaluate(player *player_1, player *player_2, player *player_3, play
         players[i]->MaxElegibleLoanAmount = totalMortgageValuesofPlayer * 0.75;
     }
 }
-void resolveBank(player *player_x, square *board, context *contextOfTheGame) {
+void resolveBank(player *player_x, square *board, context *contextOfTheGame, playerPointers *playerObject) {
 
     playerType tempPlayer = player_x->playerID;
 
@@ -133,7 +133,18 @@ void resolveBank(player *player_x, square *board, context *contextOfTheGame) {
         // paying loans
         playerType tempPlayer = player_x->playerID;
         if (player_x->hasDebt == true && player_x->MaxElegibleLoanAmount > player_x->cash) {
-            // auction
+            // the player cannot repay from cash alone; auction properties
+            // until the loan can be covered
+            for (int i = 0; i <= 39 && player_x->hasDebt == true && !player_x->isBankrupt; i++) {
+                if (board[i].owner == player_x) {
+                    sellingAuction(player_x, playerObject->player_1,
+                                   playerObject->player_2,
+                                   playerObject->player_3,
+                                   playerObject->player_4, board,
+                                   contextOfTheGame, &board[i],
+                                   playerObject->player_BANK);
+                }
+            }
         }
         switch (tempPlayer) {
 
@@ -311,13 +322,6 @@ void stripBuildingsForTransfer(square *sq) {
 void sellingAuction(player *player_x, player *player_1, player *player_2, player *player_3, player *player_4, square *board, context *contextOfGame, square *auctionItem, player *playerBANK) {
 
     clearInsurance(auctionItem);
-    if (player_x->hasDebt == true) {
-        printf("Properties of %s are loan locked\n", player_x->name);
-        printf("%s went bankrupt\n", player_x->name);
-        player_x->isBankrupt = true;
-        transferAssetsToBank(player_x, board, playerBANK);
-        return;
-    }
 
     printf("============================================================\n\n");
     printf("Auction\n\n");
